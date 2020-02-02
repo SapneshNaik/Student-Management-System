@@ -15,14 +15,17 @@ class CreateAdminsTable extends Migration
     {
         Schema::create('admins', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigIncrements('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('prefix',10);
             $table->string('first_name',50);
             $table->string('last_name',50);
             $table->boolean('is_super_admin')->default(false);
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->softDeletes();
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

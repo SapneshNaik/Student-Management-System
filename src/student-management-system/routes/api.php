@@ -17,3 +17,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+Route::post('login', 'Auth\AdminAuthController@login')->name('admin.login');
+Route::post('register', 'Auth\AdminAuthController@register')->name('admin.register');
+
+Route::group([
+    'middleware' => 'auth:api'
+], function () {
+    Route::get('logout', 'Auth\AdminAuthController@logout')->name('admin.logout');
+    Route::get('user', 'Auth\AdminAuthController@user');
+});
+
+

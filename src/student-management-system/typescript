@@ -1,0 +1,12 @@
+Script started on 2020-02-02 12:11:19+05:30 [TERM="xterm" TTY="/dev/pty2" COLUMNS="172" LINES="52"]
+]0;/cygdrive/c/Users/sapneshn/Documents/SMS/Student-Management-System/src/student-management-system
+[32msapneshn@sapneshn-MOBL [33m/cygdrive/c/Users/sapneshn/Documents/SMS/Student-Management-System/src/student-management-system[0m
+$ ls
+_ide_helper.php  artisan    composer.json  config    package.json	phpunit.xml  README.md	routes	    storage  typescript  webpack.mix.js
+app		 bootstrap  composer.lock  database  package-lock.json	public	     resources	server.php  tests    vendor
+]0;/cygdrive/c/Users/sapneshn/Documents/SMS/Student-Management-System/src/student-management-system
+[32msapneshn@sapneshn-MOBL [33m/cygdrive/c/Users/sapneshn/Documents/SMS/Student-Management-System/src/student-management-system[0m
+$ exit
+exit
+
+Script done on 2020-02-02 12:11:23+05:30 [COMMAND_EXIT_CODE="0"]

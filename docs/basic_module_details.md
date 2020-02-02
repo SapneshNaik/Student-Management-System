@@ -129,8 +129,8 @@ Roles can be defined as a logical collection of permissions. Every role has the 
   1. Student
   2. Parent
   3. Staff
-     1. Teaching
-     2. Non-teaching
+     1. Teaching (role)
+     2. Non-teaching (role)
   4. Admin
      - All permissions
 

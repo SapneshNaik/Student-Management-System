@@ -17,15 +17,22 @@ use Illuminate\Http\Request;
 //    return $request->user();
 //});
 
+Route::group([
+    'prefix' => 'v1'
+], function(){
+    Route::post('login', 'Auth\AuthController@login')->name('login');
 
-Route::post('login', 'Auth\AuthController@login')->name('login');
-Route::post('register', 'Auth\AuthController@register')->name('register');
 
-//Route::group([
-//    'middleware' => 'auth:api'
-//], function () {
-//    Route::get('logout', 'Auth\AdminAuthController@logout')->name('logout');
-//    Route::get('user', 'Auth\AdminAuthController@user');
-//});
+    Route::group([
+        'middleware' => 'auth:api'
+    ], function () {
+        //only authenticated users can register users, ex Admin/Staff with the right role
+        Route::post('register', 'Auth\AuthController@register')->name('register');
+        Route::get('logout', 'Auth\AdminAuthController@logout')->name('logout');
+        Route::get('user', 'Auth\AdminAuthController@user');
+    });
+});
+
+
 
 

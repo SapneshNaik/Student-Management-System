@@ -1,5 +1,16 @@
 # Student-Management-System
 
+## Setup 
+
+$ php artisan migrate
+
+$ php artisan passport:install
+
+$ php artisan sms:setup_system
+
+$ php artisan sms:super_admin
+
+
 ## Development Steps:
 
 1. Laravel IDE Helper plugin for PhpStorm (https://github.com/barryvdh/laravel-ide-helper)

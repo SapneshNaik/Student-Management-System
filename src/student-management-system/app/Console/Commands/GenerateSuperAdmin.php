@@ -97,6 +97,8 @@ class GenerateSuperAdmin extends Command
 
         try {
             $admin = Admin::create($admin_input);
+            $user->assignRole('Super Admin', 'Admin');
+
         } catch (Exception $e){
             $user->forceDelete();
         }

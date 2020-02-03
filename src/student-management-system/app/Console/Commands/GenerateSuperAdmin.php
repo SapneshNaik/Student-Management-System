@@ -49,7 +49,7 @@ class GenerateSuperAdmin extends Command
         $phone_number = $this->ask('What is Super Admin phone number?');
         $password = $this->secret('What is Super Admin password (min: 6 digits)?');
         $password_confirmation = $this->secret('Confirm Super Admin password:');
-        $base_role = 'admin';
+        $base_role = 'Admin';
 
         $prefix = $this->choice('What is Super Admin prefix?', Constants::PREFIXES, 0);
         $first_name = $this->ask('What is Super Admin first name?');
@@ -75,9 +75,11 @@ class GenerateSuperAdmin extends Command
         $user_input['password'] = bcrypt($password);
 
         $user = User::create($user_input);
+        $user->setStatus('Active');
 
         $user_id = $user->id;
 
+        //TODO: add login_id and phone number validation
         $admin_input = compact(['prefix',
             'first_name',
             'last_name',

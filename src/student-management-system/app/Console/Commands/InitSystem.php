@@ -54,21 +54,17 @@ class InitSystem extends Command
         $teachingStaff = Role::updateOrCreate(['name' => Constants::ROLES['TEACHING_STAFF'], 'guard_name' => 'api']);
         $this->info("Created Teaching Staff Role");
 
-        $registerStudentsPerm = Permission::updateOrCreate(['name' => Constants::PERMISSIONS['REGISTER_STUDENT'],
-            'guard_name' => 'api']);
-        $this->info("Created Register Students Permission");
+        foreach (Constants::PERMISSIONS as $perm=>$value){
+            $perm = Permission::updateOrCreate(['name' => $value,
+                'guard_name' => 'api']);
+            $this->info("Created ".$value." Permission");
 
-        $registerStaffPerm = Permission::updateOrCreate(['name' => Constants::PERMISSIONS['REGISTER_STAFF'],
-            'guard_name' => 'api']);
-        $this->info("Created Register Staff Permission");
-
-        $registerAdminPerm = Permission::updateOrCreate(['name' => Constants::PERMISSIONS['REGISTER_ADMIN'],
-            'guard_name' => 'api']);
-        $this->info("Created Register Admin Permission");
-
-        $registerStudentsPerm->syncRoles([$admin]);
-
-        $admin->givePermissionTo($registerStaffPerm);
+            if($value == Constants::PERMISSIONS['REGISTER_STUDENT']
+                || $value == Constants::PERMISSIONS['REGISTER_STAFF']){
+                $admin->givePermissionTo($perm);
+                $this->info("Giving \"".$value. "\" permission to Admin role");
+            }
+        }
 
         $this->info("Setup Complete");
     }

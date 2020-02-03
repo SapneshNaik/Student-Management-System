@@ -20,6 +20,7 @@ class ActiveUser
         if($request->user() == null || $request->user()->canLogin()){
             return $response;
         } else {
+            //TODO: revoke any existing tokens
             return response()->json([
                 'message' => 'User login disabled'
             ], 401);

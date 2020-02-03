@@ -20,8 +20,10 @@ class User extends Authenticatable
         'login_id',
         'email',
         'phone_number',
+        'alternate_phone_number',
         'password',
-        'base_role'
+        'base_role',
+        'last_updated_by'
     ];
     /**p
      * The attributes that should be hidden for arrays.
@@ -29,7 +31,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'last_updated_by', 'deleted_at', 'created_at', 'updated_at'
+        'password', 'remember_token', 'deleted_at', 'created_at', 'updated_at'
     ];
 
     function setStatus($status){

@@ -5,6 +5,7 @@ namespace App\Http\Validators;
 
 
 use App\Constants;
+use App\Models\User;
 use Illuminate\Validation\Rule;
 use Validator;
 
@@ -16,11 +17,10 @@ class AuthValidator
         $req = 'nullable';
         return Validator::make($data, [
             'email' => 'required|email|unique:users|max:50',
-            'login_id' => 'required|max:50|unique:users',
-            'phone_number' => 'required|max:13',
-            'alternate_phone_number' => 'nullable|max:13',
+            'login_id' => 'required|max:50|unique:users|alpha_dash',
+            'phone_number' => 'required|max:13|min:10',
+            'alternate_phone_number' => 'nullable|max:13|min:10',
             'base_role' => ['required', Rule::in(Constants::BASE_ROLE)],
-            'last_updated_by' => ''.$req.'|numeric|exists:users,id',
             'password' => 'required|confirmed|string|min:6',
         ]);
     }
@@ -32,6 +32,18 @@ class AuthValidator
             'last_name' => 'required|max:50',
             'is_super_admin' => 'sometimes|required|boolean',
             'user_id' => 'required|exists:users,id',
+        ]);
+    }
+
+    public static function userUpdateValidator(array $data, User $user){
+
+//        $req = $is_super_admin ? 'nullable' : 'required';
+        $req = 'nullable';
+        return Validator::make($data, [
+            'email' => 'sometimes|email|unique:users,email,'.$user->id.'|max:50',
+            'phone_number' => 'sometimes|max:13|min:10',
+            'alternate_phone_number' => 'sometimes|max:13|min:10',
+            'password' => 'sometimes|confirmed|string|min:6',
         ]);
     }
 }

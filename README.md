@@ -22,6 +22,8 @@
 4. php artisan passport:install
 5. php artisan make:middleware Cors
    php artisan make:model -a app/Models/Admin --api
+   
+   https://stackoverflow.com/questions/34748097/phpstorm-exclude-vendor-from-search-but-keep-intellisense
 
 
 

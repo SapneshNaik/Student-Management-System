@@ -20,7 +20,7 @@ use App\Constants;
 Route::group([
     'prefix' => 'v1'
 ], function(){
-    //TODO: Custom middleware to preevnt login from non-admissioned students
+    //Non Auth routes
     Route::post('login', 'Auth\AuthController@login')
         ->name('login')->middleware('can_login');
 
@@ -36,10 +36,33 @@ Route::group([
                 .Constants::PERMISSIONS['REGISTER_STUDENT'].'|'
                 .Constants::PERMISSIONS['REGISTER_ADMIN'].'');
 
-
         Route::get('logout', 'Auth\AuthController@logout')->name('logout');
-        Route::get('profile', 'Auth\AuthController@profile')->name('profile');
+
+        //User Routes
+
+        Route::get('/user', '\App\Http\Controllers\UserController@profile')
+            ->name('user.profile');
+
+        Route::get('/users', '\App\Http\Controllers\UserController@index')
+            ->name('users.index')
+            ->middleware('permission:'.Constants::PERMISSIONS['VIEW_ALL_USERS'].'');
+
+        Route::get('/users/{user}', '\App\Http\Controllers\UserController@show')
+            ->name('users.show')
+            ->middleware('permission:'.Constants::PERMISSIONS['VIEW_ALL_USERS'].'');
+
+        //TODO: Add check for own profile or edit all user perm in controller
+        Route::put('/users/{user}', '\App\Http\Controllers\UserController@update')
+            ->name('users.update');
+
+        Route::delete('/users/{user}', '\App\Http\Controllers\UserController@delete')
+            ->name('users.delete')
+            ->middleware('permission:'.Constants::PERMISSIONS['DELETE_ALL_USERS'].'');
+
     });
+
+
+
 });
 
 

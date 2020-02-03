@@ -11,60 +11,6 @@ use Validator;
 
 class AuthController extends Controller
 {
-//    /**
-//     * Display a listing of the resource.
-//     *
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function index()
-//    {
-//        //
-//    }
-//
-//    /**
-//     * Store a newly created resource in storage.
-//     *
-//     * @param  \Illuminate\Http\Request  $request
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function store(Request $request)
-//    {
-//        //
-//    }
-//
-//    /**
-//     * Display the specified resource.
-//     *
-//     * @param  int  $id
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function show($id)
-//    {
-//        //
-//    }
-//
-//    /**
-//     * Update the specified resource in storage.
-//     *
-//     * @param  \Illuminate\Http\Request  $request
-//     * @param  int  $id
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function update(Request $request, $id)
-//    {
-//        //
-//    }
-//
-//    /**
-//     * Remove the specified resource from storage.
-//     *
-//     * @param  int  $id
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function destroy($id)
-//    {
-//        //
-//    }
 
     public function login(Request $request) {
 
@@ -92,6 +38,7 @@ class AuthController extends Controller
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
 //        if ($request->remember_me)
+        //TODO: expire token immdideately and see what happens on access requests and how to get new token
 //            $token->expires_at = Carbon::now()->addWeeks(1);
         $token->save();
 
@@ -122,6 +69,15 @@ class AuthController extends Controller
         ], 201);
     }
 
+    public function logout(Request $request)
+    {
+        $request->user()->token()->revoke();
+        return response()->json([
+            'message' => 'Successfully logged out'
+        ]);
+    }
+
+
     /**
      * @param Request $request
      * @return User
@@ -139,23 +95,5 @@ class AuthController extends Controller
         $user->save();
 
         return $user;
-    }
-
-    public function logout(Request $request)
-    {
-        $request->user()->token()->revoke();
-        return response()->json([
-            'message' => 'Successfully logged out'
-        ]);
-    }
-
-    /**
-     * Get the authenticated User
-     *
-     * @return [json] user object
-     */
-    public function profile(Request $request)
-    {
-        return response()->json($request->user());
     }
 }

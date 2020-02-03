@@ -3,14 +3,12 @@
 namespace App\Console\Commands;
 
 use App\Constants;
-use App\Http\Controllers\Auth\AuthController;
+use App\Http\Validators\AuthValidator;
 use App\Models\Admin;
 use App\Models\User;
-use GuzzleHttp\Psr7\Request;
 use Illuminate\Console\Command;
 use Mockery\Exception;
-use Validator;
-use App\Http\Controllers\AdminController;
+
 
 class GenerateSuperAdmin extends Command
 {
@@ -66,7 +64,7 @@ class GenerateSuperAdmin extends Command
             'base_role']);
 
 
-        $userValidator = AuthController::userValidator($user_input, true);
+        $userValidator = AuthValidator::userValidator($user_input, true);
 
         if ($userValidator->fails()) {
             $this->printValidationErrors($userValidator);
@@ -86,7 +84,7 @@ class GenerateSuperAdmin extends Command
             'is_super_admin',
             'user_id']);
 
-        $adminValidator = AuthController::adminValidator($admin_input);
+        $adminValidator = AuthValidator::adminValidator($admin_input);
 
         if ($adminValidator->fails()) {
             $this->printValidationErrors($adminValidator);

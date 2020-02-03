@@ -1,7 +1,6 @@
 <?php
 
 use App\Constants;
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +21,8 @@ Route::group([
     'prefix' => 'v1'
 ], function(){
     //TODO: Custom middleware to preevnt login from non-admissioned students
-    Route::post('login', 'Auth\AuthController@login')->name('login');
+    Route::post('login', 'Auth\AuthController@login')
+        ->name('login')->middleware('can_login');
 
 
     Route::group([

@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Constants;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+use App\Http\Validators\AuthValidator;
 use Validator;
 
 class AuthController extends Controller
@@ -109,48 +108,25 @@ class AuthController extends Controller
     public function register(Request $request)
     {
 
-        $validator = self::userValidator($request->all(), false);
+        $validator = AuthValidator::userValidator($request->all(), false);
 
         if ($validator->fails()) {
             return response($validator->errors(), 400);
         }
 
-        $this->createUser($request);
+        $user = $this->createUser($request);
+        $user->setStatus('Active');
 
         return response()->json([
             'message' => 'Successfully created user!'
         ], 201);
     }
 
-    public static function userValidator(array $data, $is_super_admin){
-
-//        $req = $is_super_admin ? 'nullable' : 'required';
-        $req = 'nullable';
-        return Validator::make($data, [
-            'email' => 'required|email|unique:users|max:50',
-            'login_id' => 'required|max:50|unique:users',
-            'phone_number' => 'required|max:13',
-            'alternate_phone_number' => 'nullable|max:13',
-            'base_role' => 'required|in:admin,staff,student,parent',
-            'last_updated_by' => ''.$req.'|numeric|exists:users,id',
-            'password' => 'required|confirmed|string|min:6',
-        ]);
-    }
-
-    public static function adminValidator(array $data){
-        return Validator::make($data, [
-            'prefix' => ['required', Rule::in(Constants::PREFIXES)],
-            'first_name' => 'required|max:50',
-            'last_name' => 'required|max:50',
-            'is_super_admin' => 'sometimes|required|boolean',
-            'user_id' => 'required|exists:users,id',
-        ]);
-    }
-
     /**
      * @param Request $request
+     * @return User
      */
-    public function createUser(Request $request): void
+    public function createUser(Request $request): User
     {
         $user = new User;
         $user->login_id = $request->login_id;
@@ -161,6 +137,8 @@ class AuthController extends Controller
         $user->last_updated_by = auth()->id();
         $user->password = bcrypt($request->password);
         $user->save();
+
+        return $user;
     }
 
     public function logout(Request $request)

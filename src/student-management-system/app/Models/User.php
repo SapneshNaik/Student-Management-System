@@ -31,4 +31,13 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token', 'last_updated_by', 'deleted_at', 'created_at', 'updated_at'
     ];
+
+    function setStatus($status){
+        $this->status = $status;
+        $this->save();
+    }
+
+    function canLogin(): bool {
+        return $this->status == 'Active';
+    }
 }

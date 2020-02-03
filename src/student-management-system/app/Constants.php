@@ -18,4 +18,8 @@ class Constants
         'REGISTER_ADMIN' => 'Register Admin',
         'REGISTER_STAFF' => 'Register Staff',
     ];
+
+    public const USER_STATUS = ["Active", "Inactive", "Final Record"];
+
+    public const BASE_ROLE = ["Admin", "Staff", "Student", "Parent"];
 }

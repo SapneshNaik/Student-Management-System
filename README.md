@@ -2,18 +2,21 @@
 
 ## Setup 
 
-$ php artisan migrate
+`$ php artisan migrate
+`
 
-$ php artisan passport:install
+`$ php artisan passport:install
+`
 
-$ php artisan sms:setup_system
+`$ php artisan sms:setup_system
+`
 
-$ php artisan sms:super_admin
-
+`$ php artisan sms:super_admin
+`
 
 ## Development Steps:
 
-1. Laravel IDE Helper plugin for PhpStorm (https://github.com/barryvdh/laravel-ide-helper)
+1. Laravel IDE Helper plugin for PhpStorm (https://github.com/bar********ryvdh/laravel-ide-helper)
 2. Laravel Passport for authentication (https://medium.com/@flicher/laravel-rest-api-passport-authentication-for-ionic-app-3934713bcdf7)
 3. php artisan migrate
 4. php artisan passport:install

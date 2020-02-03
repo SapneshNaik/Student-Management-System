@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Constants;
 use Illuminate\Console\Command;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -40,22 +41,34 @@ class InitSystem extends Command
     public function handle()
     {
 
-        $super_admin = Role::create(['name' => 'Super Admin', 'guard_name' => 'api']);
+        $super_admin = Role::updateOrCreate(['name' => Constants::ROLES['SUPER_ADMIN'], 'guard_name' => 'api']);
         $this->info("Created Super Admin Role");
 
-        $admin = Role::create(['name' => 'Admin', 'guard_name' => 'api']);
+        $admin = Role::updateOrCreate(['name' => Constants::ROLES['ADMIN'], 'guard_name' => 'api']);
         $this->info("Created Admin Role");
 
-        $nonTeachingStaff = Role::create(['name' => 'Non Teaching Staff', 'guard_name' => 'api']);
+        $nonTeachingStaff = Role::updateOrCreate(['name' => Constants::ROLES['NON_TEACHING_STAFF'],
+            'guard_name' => 'api']);
         $this->info("Created Non Teaching Staff Role");
 
-        $teachingStaff = Role::create(['name' => 'Teaching Staff', 'guard_name' => 'api']);
+        $teachingStaff = Role::updateOrCreate(['name' => Constants::ROLES['TEACHING_STAFF'], 'guard_name' => 'api']);
         $this->info("Created Teaching Staff Role");
 
-        $registerStudentsPerm = Permission::create(['name' => 'Register Students', 'guard_name' => 'api']);
+        $registerStudentsPerm = Permission::updateOrCreate(['name' => Constants::PERMISSIONS['REGISTER_STUDENT'],
+            'guard_name' => 'api']);
         $this->info("Created Register Students Permission");
 
-        $registerStudentsPerm->syncRoles([$admin, $nonTeachingStaff]);
+        $registerStaffPerm = Permission::updateOrCreate(['name' => Constants::PERMISSIONS['REGISTER_STAFF'],
+            'guard_name' => 'api']);
+        $this->info("Created Register Staff Permission");
+
+        $registerAdminPerm = Permission::updateOrCreate(['name' => Constants::PERMISSIONS['REGISTER_ADMIN'],
+            'guard_name' => 'api']);
+        $this->info("Created Register Admin Permission");
+
+        $registerStudentsPerm->syncRoles([$admin]);
+
+        $admin->givePermissionTo($registerStaffPerm);
 
         $this->info("Setup Complete");
     }

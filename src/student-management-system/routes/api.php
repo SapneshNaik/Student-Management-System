@@ -1,5 +1,6 @@
 <?php
 
+use App\Constants;
 use Illuminate\Http\Request;
 
 /*
@@ -20,16 +21,24 @@ use Illuminate\Http\Request;
 Route::group([
     'prefix' => 'v1'
 ], function(){
+    //TODO: Custom middleware to preevnt login from non-admissioned students
     Route::post('login', 'Auth\AuthController@login')->name('login');
 
 
     Route::group([
         'middleware' => 'auth:api'
     ], function () {
-        //only authenticated users can register users, ex Admin/Staff with the right role
-        Route::post('register', 'Auth\AuthController@register')->name('register');
-        Route::get('logout', 'Auth\AdminAuthController@logout')->name('logout');
-        Route::get('user', 'Auth\AdminAuthController@user');
+        //only authenticated users can register admin/staff/students,
+        Route::post('register', 'Auth\AuthController@register')
+            ->name('register')
+            ->middleware('permission:'
+                .Constants::PERMISSIONS['REGISTER_STAFF'].'|'
+                .Constants::PERMISSIONS['REGISTER_STUDENT'].'|'
+                .Constants::PERMISSIONS['REGISTER_ADMIN'].'');
+
+
+        Route::get('logout', 'Auth\AuthController@logout')->name('logout');
+        Route::get('profile', 'Auth\AuthController@profile')->name('profile');
     });
 });
 

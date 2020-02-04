@@ -6,6 +6,29 @@ class Constants
 {
     public const PREFIXES = ["Mr.", "Mrs.", "Miss", "Dr.", "Ms.", "Prof.", "Rev.", "Lady.", "Sir."];
 
+    public const GENDER = ['Male', 'Female', 'Other'];
+
+    public const RELATIONSHIP = ['Father', 'Mother', 'Other'];
+
+    public const RELIGIONS = ['Hinduism',
+        'Islam',
+        'Christianity',
+        'Sikhism',
+        'Buddhism',
+        'Jainism',
+        'Zoroastrianism',
+        'Other'];
+
+    public const BLOOD_GROUP =  [
+        "A+",
+        "A-",
+        "B+",
+        "B-",
+        "AB+",
+        "O+",
+        "O-"
+    ];
+
     public const ROLES = [
         'SUPER_ADMIN' => "Super Admin",
         'ADMIN' => "Admin",
@@ -18,6 +41,7 @@ class Constants
         'REGISTER_STUDENT' => 'Register Student',
         'REGISTER_ADMIN' => 'Register Admin',
         'REGISTER_STAFF' => 'Register Staff',
+        'REGISTER_PARENT' => 'Register Parent',
 
         //CRUD Perms
         'VIEW_ALL_USERS' => 'View All Users',
@@ -41,7 +65,7 @@ class Constants
         'DELETE_ALL_ADMINS' => 'Delete All Admins',
     ];
 
-    public const USER_STATUS = ["Active", "Inactive", "Final Record"];
+    public const USER_STATUS = ["Active", "Inactive", "Final Account"];
 
     public const BASE_ROLE = ["Admin", "Staff", "Student", "Parent"];
 }

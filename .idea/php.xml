@@ -115,6 +115,8 @@
       <path value="$PROJECT_DIR$/src/student-management-system/vendor/egulias/email-validator" />
       <path value="$PROJECT_DIR$/src/student-management-system/vendor/jakub-onderka/php-console-highlighter" />
       <path value="$PROJECT_DIR$/src/student-management-system/vendor/jakub-onderka/php-console-color" />
+      <path value="$PROJECT_DIR$/src/student-management-system/vendor/spatie/laravel-query-builder" />
+      <path value="$PROJECT_DIR$/src/student-management-system/vendor/pearl/aadhaar-validator" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />

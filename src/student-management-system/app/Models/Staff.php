@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Admin extends Model
+class Staff extends Model
 {
     //
     use SoftDeletes;
+
     protected $guarded = [''];
 
     public function user()

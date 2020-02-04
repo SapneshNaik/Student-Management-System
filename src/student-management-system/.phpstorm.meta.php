@@ -5,7 +5,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2020-02-02 18:09:16.
+    * Generated on 2020-02-04 10:08:18.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -43,6 +43,7 @@ namespace PHPSTORM_META {
         'Spatie\Permission\Contracts\Permission' => \Spatie\Permission\Models\Permission::class,
         'Spatie\Permission\Contracts\Role' => \Spatie\Permission\Models\Role::class,
         'Spatie\Permission\PermissionRegistrar' => \Spatie\Permission\PermissionRegistrar::class,
+        'Spatie\QueryBuilder\QueryBuilderRequest' => \Spatie\QueryBuilder\QueryBuilderRequest::class,
         'Whoops\Handler\HandlerInterface' => \Facade\Ignition\ErrorPage\IgnitionWhoopsHandler::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
@@ -200,6 +201,7 @@ namespace PHPSTORM_META {
         'Spatie\Permission\Contracts\Permission' => \Spatie\Permission\Models\Permission::class,
         'Spatie\Permission\Contracts\Role' => \Spatie\Permission\Models\Role::class,
         'Spatie\Permission\PermissionRegistrar' => \Spatie\Permission\PermissionRegistrar::class,
+        'Spatie\QueryBuilder\QueryBuilderRequest' => \Spatie\QueryBuilder\QueryBuilderRequest::class,
         'Whoops\Handler\HandlerInterface' => \Facade\Ignition\ErrorPage\IgnitionWhoopsHandler::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
@@ -357,6 +359,7 @@ namespace PHPSTORM_META {
         'Spatie\Permission\Contracts\Permission' => \Spatie\Permission\Models\Permission::class,
         'Spatie\Permission\Contracts\Role' => \Spatie\Permission\Models\Role::class,
         'Spatie\Permission\PermissionRegistrar' => \Spatie\Permission\PermissionRegistrar::class,
+        'Spatie\QueryBuilder\QueryBuilderRequest' => \Spatie\QueryBuilder\QueryBuilderRequest::class,
         'Whoops\Handler\HandlerInterface' => \Facade\Ignition\ErrorPage\IgnitionWhoopsHandler::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
@@ -514,6 +517,7 @@ namespace PHPSTORM_META {
         'Spatie\Permission\Contracts\Permission' => \Spatie\Permission\Models\Permission::class,
         'Spatie\Permission\Contracts\Role' => \Spatie\Permission\Models\Role::class,
         'Spatie\Permission\PermissionRegistrar' => \Spatie\Permission\PermissionRegistrar::class,
+        'Spatie\QueryBuilder\QueryBuilderRequest' => \Spatie\QueryBuilder\QueryBuilderRequest::class,
         'Whoops\Handler\HandlerInterface' => \Facade\Ignition\ErrorPage\IgnitionWhoopsHandler::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
@@ -671,6 +675,7 @@ namespace PHPSTORM_META {
         'Spatie\Permission\Contracts\Permission' => \Spatie\Permission\Models\Permission::class,
         'Spatie\Permission\Contracts\Role' => \Spatie\Permission\Models\Role::class,
         'Spatie\Permission\PermissionRegistrar' => \Spatie\Permission\PermissionRegistrar::class,
+        'Spatie\QueryBuilder\QueryBuilderRequest' => \Spatie\QueryBuilder\QueryBuilderRequest::class,
         'Whoops\Handler\HandlerInterface' => \Facade\Ignition\ErrorPage\IgnitionWhoopsHandler::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
@@ -828,6 +833,7 @@ namespace PHPSTORM_META {
         'Spatie\Permission\Contracts\Permission' => \Spatie\Permission\Models\Permission::class,
         'Spatie\Permission\Contracts\Role' => \Spatie\Permission\Models\Role::class,
         'Spatie\Permission\PermissionRegistrar' => \Spatie\Permission\PermissionRegistrar::class,
+        'Spatie\QueryBuilder\QueryBuilderRequest' => \Spatie\QueryBuilder\QueryBuilderRequest::class,
         'Whoops\Handler\HandlerInterface' => \Facade\Ignition\ErrorPage\IgnitionWhoopsHandler::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
@@ -985,6 +991,7 @@ namespace PHPSTORM_META {
         'Spatie\Permission\Contracts\Permission' => \Spatie\Permission\Models\Permission::class,
         'Spatie\Permission\Contracts\Role' => \Spatie\Permission\Models\Role::class,
         'Spatie\Permission\PermissionRegistrar' => \Spatie\Permission\PermissionRegistrar::class,
+        'Spatie\QueryBuilder\QueryBuilderRequest' => \Spatie\QueryBuilder\QueryBuilderRequest::class,
         'Whoops\Handler\HandlerInterface' => \Facade\Ignition\ErrorPage\IgnitionWhoopsHandler::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,
@@ -1142,6 +1149,7 @@ namespace PHPSTORM_META {
         'Spatie\Permission\Contracts\Permission' => \Spatie\Permission\Models\Permission::class,
         'Spatie\Permission\Contracts\Role' => \Spatie\Permission\Models\Role::class,
         'Spatie\Permission\PermissionRegistrar' => \Spatie\Permission\PermissionRegistrar::class,
+        'Spatie\QueryBuilder\QueryBuilderRequest' => \Spatie\QueryBuilder\QueryBuilderRequest::class,
         'Whoops\Handler\HandlerInterface' => \Facade\Ignition\ErrorPage\IgnitionWhoopsHandler::class,
         'auth' => \Illuminate\Auth\AuthManager::class,
         'auth.driver' => \Illuminate\Auth\SessionGuard::class,

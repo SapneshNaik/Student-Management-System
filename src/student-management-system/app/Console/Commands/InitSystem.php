@@ -54,15 +54,16 @@ class InitSystem extends Command
         $teachingStaff = Role::updateOrCreate(['name' => Constants::ROLES['TEACHING_STAFF'], 'guard_name' => 'api']);
         $this->info("Created Teaching Staff Role");
 
-        foreach (Constants::PERMISSIONS as $perm=>$value){
+        foreach (Constants::PERMISSIONS as $perm => $value) {
             $perm = Permission::updateOrCreate(['name' => $value,
                 'guard_name' => 'api']);
-            $this->info("Created ".$value." Permission");
+            $this->info("Created " . $value . " Permission");
 
-            if($value == Constants::PERMISSIONS['REGISTER_STUDENT']
-                || $value == Constants::PERMISSIONS['REGISTER_STAFF']){
+            if ($value == Constants::PERMISSIONS['REGISTER_STUDENT']
+                || $value == Constants::PERMISSIONS['REGISTER_STAFF']
+                || $value == Constants::PERMISSIONS['REGISTER_PARENT']) {
                 $admin->givePermissionTo($perm);
-                $this->info("Giving \"".$value. "\" permission to Admin role");
+                $this->info("Giving \"" . $value . "\" permission to Admin role");
             }
         }
 

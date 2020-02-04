@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Constants;
-use App\Http\Validators\AuthValidator;
+use App\Http\Validators\RoleValidator;
 use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Console\Command;
@@ -64,7 +64,7 @@ class GenerateSuperAdmin extends Command
             'base_role']);
 
 
-        $userValidator = AuthValidator::userValidator($user_input, true);
+        $userValidator = RoleValidator::userValidator($user_input, true);
 
         if ($userValidator->fails()) {
             $this->printValidationErrors($userValidator);
@@ -79,14 +79,14 @@ class GenerateSuperAdmin extends Command
 
         $user_id = $user->id;
 
-        //TODO: add login_id and phone number validation
+        //TODO: add login_id and phone number validation [PARTIAL]
         $admin_input = compact(['prefix',
             'first_name',
             'last_name',
             'is_super_admin',
             'user_id']);
 
-        $adminValidator = AuthValidator::adminValidator($admin_input);
+        $adminValidator = RoleValidator::adminValidator($admin_input);
 
         if ($adminValidator->fails()) {
             $this->printValidationErrors($adminValidator);

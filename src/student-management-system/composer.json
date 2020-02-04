@@ -13,7 +13,9 @@
         "laravel/framework": "^6.2",
         "laravel/passport": "^8.3",
         "laravel/tinker": "^2.0",
-        "spatie/laravel-permission": "^3.6"
+        "pearl/aadhaar-validator": "^1.0",
+        "spatie/laravel-permission": "^3.6",
+        "spatie/laravel-query-builder": "^2.5"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.6",

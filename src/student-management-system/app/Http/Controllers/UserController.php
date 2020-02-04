@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Constants;
-use App\Http\Validators\AuthValidator;
+use App\Http\Validators\RoleValidator;
 use App\Models\User;
 use DB;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class UserController extends Controller
 {
@@ -25,14 +28,23 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return LengthAwarePaginator
+     * @return Paginator
      */
     public function index()
     {
         //TODO:: Implement query filters
 
         // return DB::table('users')->simplePaginate(15); --> this ignores eloquent $hideen so use eloquent
-        return User::simplePaginate(15);
+//        return User::simplePaginate(15);
+        return  QueryBuilder::for(User::class)
+            ->allowedFilters([AllowedFilter::exact('email'),
+                AllowedFilter::exact('base_role'),
+                AllowedFilter::exact('phone_number'),
+                AllowedFilter::exact('alternate_phone_number'),
+                AllowedFilter::exact('status'),
+                AllowedFilter::exact('email'),])
+            ->allowedIncludes(['student', 'admin', 'staff', 'parent'])
+            ->simplePaginate(15);
     }
 
     /**
@@ -65,10 +77,10 @@ class UserController extends Controller
 
             $update_data['last_updated_by'] = auth()->id();
 
-            $validator = AuthValidator::userUpdateValidator($update_data, $user);
+            $validator = RoleValidator::userUpdateValidator($update_data, $user);
 
             if ($validator->fails()) {
-                return response($validator->errors(), 400);
+                return response()->json($validator->errors(), 400);
             }
 
 //            return $update_data;

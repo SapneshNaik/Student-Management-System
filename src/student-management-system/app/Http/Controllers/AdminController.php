@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Constants;
+use App\Http\Helpers\ControllerHelper;
 use App\Http\Validators\RoleValidator;
 use App\Models\Admin;
 use App\Models\Student;
@@ -10,6 +11,7 @@ use App\Models\User;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -24,13 +26,7 @@ class AdminController extends Controller
      */
     public function profile(Request $request)
     {
-        if (!$request->user()->isOfType('Admin')) {
-            return response()->json([
-                'message' => $request->user()->base_role . ' does not have a student profile'],
-                400);
-        }
-
-        return response()->json($request->user()->admin);
+        return ControllerHelper::getProfile($request->user(), 'Admin');
     }
 
     /**
@@ -50,9 +46,10 @@ class AdminController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param User $user
      * @return JsonResponse
+     * @throws ValidationException
      */
     public function store(Request $request, User $user)
     {
@@ -69,7 +66,7 @@ class AdminController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $student = Admin::create(array_merge($request->all(), ['user_id' => $user->id,
+        $student = Admin::create(array_merge($validator->validated(), ['user_id' => $user->id,
             'is_super_admin' => false]));
 
         return response()->json([
@@ -85,70 +82,56 @@ class AdminController extends Controller
      */
     public function show(User $user)
     {
-        if (!$user->isOfType('Admin')) {
-            return response()->json([
-                'message' => $user->base_role . ' does not have a Admin profile'],
-                400);
-        }
-
-        //TODO:: replcae with relationship [DONE]
-        return $user->admin;
+        return ControllerHelper::getProfile($user, 'Admin');
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param User $user
      * @return JsonResponse
+     * @throws ValidationException
      */
     public function update(Request $request, User $user)
     {
-        if (!$user->isOfType('Admin')) {
-            return response()->json([
-                'message' => $user->base_role . ' does not have a Admin profile'],
-                400);
+        $show_response = $this->show($user);
+        if($show_response->status() != 200){
+            return $show_response;
         }
 
         //If user being edited is a super user and its being done by someone other than the same user or another
         // super admin.
-        if($user->hasRole(Constants::ROLES['SUPER_ADMIN'])
-            && $user != $request->user()  //user being edited is not same as logged in user
-            && !$request->user()->isSuperAdmin()){ //if logged in user is not a super
+        //TODO: refactor
+        if($user->isSuperAdmin() && !$request->user()->isSuperAdmin()){ //if logged in user is not a super
             // admin role
             return response()->json([
-                'message' => $request->user()->base_role . ' cannot update a Super Admin profile'],
+                'message' => $request->user()->base_role . ' cannot update a '.Constants::ROLES['SUPER_ADMIN'].' profile'],
                 400);
         }
 
-        if ($request->user() == $user || $request->user()->can(Constants::PERMISSIONS['EDIT_ALL_ADMINS'])) {
-            $update_data = $request->only('prefix',
-                'first_name',
-                'last_name',
-                'is_super_admin');
-
+        if (ControllerHelper::userEditsOwnProfileOrHasPermission($request, $user, Constants::PERMISSIONS['EDIT_ALL_ADMINS'])) {
             //TODO: TEST BELOW SCENARIO
             if(($request->has('is_super_admin') && !$request->user()->isSuperAdmin())){
                 return response()->json([
-                    'message' => $request->user()->base_role . ' cannot update a
-                    Super Admin can upgrade or downgrade role'],
+                    'message' => $request->user()->base_role . ' cannot upgrade or downgrade role'],
                     400);
             }
 
-            $validator = RoleValidator::updateAdminValidator($update_data);
+            $validator = RoleValidator::updateAdminValidator($request->except('user_id'));
 
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 400);
             }
 
-            $user->admin->update($update_data);
+            $user->admin->update($validator->validated());
 
             return response()->json([], 204);
 
         } else {
             return response()->json([
-                'message' => 'Invalid User Id'
-            ], 400);
+                'message' => $request->user()->base_role.' does not have the permission to update other '.$user->base_role.' profile'
+            ], 403);
         }
 
     }

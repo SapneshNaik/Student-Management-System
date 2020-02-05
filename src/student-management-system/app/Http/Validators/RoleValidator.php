@@ -44,6 +44,7 @@ class RoleValidator
         return Validator::make($data, [
             'prefix' => ['required', Rule::in(Constants::PREFIXES)],
             'user_id' => 'required|exists:users,id|unique:students',
+            'parent_id' => 'sometimes|exists:users,id',
             'first_name' => 'required|max:50|min:3|alpha',
             'middle_name' => 'nullable|max:50|min:3|alpha',
             'last_name' => 'required|max:50|min:3|alpha',
@@ -59,8 +60,10 @@ class RoleValidator
 
     public static function updateStudentValidator(array $data, User $user){
 
+        //DONE: Make sure parent ID can be set/updated only once [DONE]
         return Validator::make($data, [
             'prefix' => ['sometimes', Rule::in(Constants::PREFIXES)],
+            'parent_id' => 'sometimes|exists:users,id',
             'first_name' => 'sometimes|max:50|min:3|alpha',
             'middle_name' => 'sometimes|max:50|min:3|alpha',
             'last_name' => 'sometimes|max:50|min:3|alpha',
@@ -81,10 +84,10 @@ class RoleValidator
     public static function adminValidator(array $data){
         return Validator::make($data, [
             'prefix' => ['required', Rule::in(Constants::PREFIXES)],
+            'user_id' => 'required|exists:users,id',
             'first_name' => 'required|max:50',
             'last_name' => 'required|max:50',
             'is_super_admin' => 'sometimes|required|boolean',
-            'user_id' => 'required|exists:users,id',
         ]);
     }
 
@@ -101,7 +104,7 @@ class RoleValidator
 
         return Validator::make($data, [
             'prefix' => ['required', Rule::in(Constants::PREFIXES)],
-            'user_id' => 'required|exists:users,id|unique:students',
+            'user_id' => 'required|exists:users,id|unique:staff',
             'first_name' => 'required|max:50|min:3|alpha',
             'middle_name' => 'nullable|max:50|min:3|alpha',
             'last_name' => 'required|max:50|min:3|alpha',
@@ -125,6 +128,65 @@ class RoleValidator
                 'numeric',
                 new Aadhaar()],
             'passport_no' => 'sometimes|max:50|min:3|string',
+        ]);
+    }
+
+    public static function parentValidator(array $data){
+
+        return Validator::make($data, [
+            'user_id' => 'required|exists:users,id|unique:student_parents',
+            'father_full_name' => 'required|max:150|min:3',
+            'mother_full_name' => 'required|max:150|min:3',
+            'staff_id' => 'sometimes|exists:users,id|unique:student_parents',
+            'father_qualification' => 'required|max:50|min:3',
+            'mother_qualification' => 'required|max:50|min:3',
+            'father_contact_number' => 'required|max:13|min:10',
+            'mother_contact_number' => 'sometimes|max:13|min:10',
+            'father_profession' => 'required|max:50|min:1',
+            'mother_profession' => 'sometimes|max:50|min:1',
+            'father_designation' => 'required|max:50|min:1',
+            'mother_designation' => 'sometimes|max:50|min:1',
+            'father_net_annual_income' => 'required|numeric',
+            'mother_net_annual_income' => 'sometimes|numeric',
+            'father_pan' => 'required|max:10|min:1',
+            'mother_pan' => 'sometimes|max:10|min:1',
+            'is_father_alumni' => 'required|boolean',
+            'is_mother_alumni' => 'sometimes|boolean',
+            //TODO: fields below required if father or mother alumni, add in update also
+            //TODO: not working debug
+            'father_joining_year' => 'sometimes|required_if:is_father_alumni,true|digits:4',
+            'mother_joining_year' => 'sometimes|required_if:is_mother_alumni,true|digits:4',
+            'father_leaving_year' => 'sometimes|required_if:is_father_alumni,true|digits:4',
+            'mother_leaving_year' => 'sometimes|required_if:is_mother_alumni,true|digits:4',
+        ]);
+    }
+
+    public static function updateParentValidator(array $data){
+
+        return Validator::make($data, [
+            'father_full_name' => 'sometimes|max:150|min:3',
+            'mother_full_name' => 'sometimes|max:150|min:3',
+            //DONE: make sure staff ID can be updated only by a user with
+            // Edit ALL PARENTS Permission [DONE]
+            'staff_id' => 'sometimes|exists:users,id|unique:student_parents',
+            'father_qualification' => 'sometimes|max:50|min:3',
+            'mother_qualification' => 'sometimes|max:50|min:3',
+            'father_contact_number' => 'sometimes|max:13|min:10',
+            'mother_contact_number' => 'sometimes|max:13|min:10',
+            'father_profession' => 'sometimes|max:50|min:1',
+            'mother_profession' => 'sometimes|max:50|min:1',
+            'father_designation' => 'sometimes|max:50|min:1',
+            'mother_designation' => 'sometimes|max:50|min:1',
+            'father_net_annual_income' => 'sometimes|max:50|min:1',
+            'mother_net_annual_income' => 'sometimes|max:50|min:1',
+            'father_pan' => 'sometimes|max:10|min:1',
+            'mother_pan' => 'sometimes|max:10|min:1',
+            'is_father_alumni' => 'sometimes|boolean',
+            'is_mother_alumni' => 'sometimes|boolean',
+            'father_joining_year' => 'sometimes|digits:4',
+            'mother_joining_year' => 'sometimes|digits:4',
+            'father_leaving_year' => 'sometimes|digits:4',
+            'mother_leaving_year' => 'sometimes|digits:4',
         ]);
     }
 }

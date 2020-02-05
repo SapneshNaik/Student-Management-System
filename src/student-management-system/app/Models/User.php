@@ -37,6 +37,9 @@ class User extends Authenticatable
         'password', 'remember_token', 'deleted_at', 'created_at', 'updated_at'
     ];
 
+    protected $casts = ['is_super_admin' => 'boolean'];
+
+
     function setStatus($status){
         $this->status = $status;
         $this->save();

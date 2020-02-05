@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Constants;
+use App\Http\Helpers\ControllerHelper;
 use App\Http\Validators\RoleValidator;
 use App\Models\Student;
 use App\Models\User;
@@ -10,6 +11,7 @@ use App\Staff;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -24,13 +26,7 @@ class StaffController extends Controller
      */
     public function profile(Request $request)
     {
-        if (!$request->user()->isOfType('Staff')) {
-            return response()->json([
-                'message' => $request->user()->base_role . ' does not have a Staff profile'],
-                400);
-        }
-
-        return response()->json($request->user()->staff);
+        return ControllerHelper::getProfile($request->user(), 'Staff');
     }
 
     /**
@@ -49,9 +45,10 @@ class StaffController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param User $user
      * @return JsonResponse
+     * @throws ValidationException
      */
     public function store(Request $request, User $user)
     {
@@ -68,7 +65,7 @@ class StaffController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        Staff::create(array_merge($request->all(), ['user_id' => $user->id]));
+        Staff::create(array_merge($validator->validated(), ['user_id' => $user->id]));
 
         return response()->json([
             'message' => "Staff profile created successfully!"
@@ -78,62 +75,45 @@ class StaffController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Staff $staff
      * @param User $user
      * @return JsonResponse
      */
-    public function show(Staff $staff, User $user)
+    public function show(User $user)
     {
-        //
-        if (!$user->isOfType('Staff')) {
-            return response()->json([
-                'message' => $user->base_role . ' does not have a Staff profile'],
-                400);
-        }
-
-        //TODO:: replcae with relationship [DONE]
-        return $user->staff;
+        return ControllerHelper::getProfile($user, 'Staff');
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param User $user
      * @return JsonResponse
+     * @throws ValidationException
      */
     public function update(Request $request, User $user)
     {
-        if (!$user->isOfType('Student')) {
-            return response()->json([
-                'message' => $user->base_role . ' does not have a Staff profile'],
-                400);
+        $show_response = $this->show($user);
+        if($show_response->status() != 200){
+            return $show_response;
         }
 
         //check if user can edit
-        if ($request->user() == $user || $request->user()->can(Constants::PERMISSIONS['EDIT_ALL_STAFF'])) {
-            $update_data = $request->only('prefix',
-                'first_name',
-                'middle_name',
-                'last_name',
-                'gender',
-                'aadhaar_no',
-                'passport_no');
-
-            $validator = RoleValidator::updateStudentValidator($update_data, $user);
+        if (ControllerHelper::userEditsOwnProfileOrHasPermission($request, $user, Constants::PERMISSIONS['EDIT_ALL_STAFF'])) {
+            $validator = RoleValidator::updateStaffValidator($request->except('user_id'), $user);
 
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 400);
             }
 
-            $user->staff->update($update_data);
+            $user->staff->update($validator->validated());
 
             return response()->json([], 204);
 
         } else {
             return response()->json([
-                'message' => 'Invalid User Id'
-            ], 400);
+                'message' => $request->user()->base_role.' does not have the permission to update other '.$user->base_role.' profile'
+            ], 403);
         }
     }
 

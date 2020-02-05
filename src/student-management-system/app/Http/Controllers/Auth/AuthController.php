@@ -40,6 +40,10 @@ class AuthController extends Controller
 //        if ($request->remember_me)
         //TODO: expire token immediately and see what happens on access requests and how to get new token
 //            $token->expires_at = Carbon::now()->addWeeks(1);
+
+        //TODO: Observed that eveytime I login a new token is generated, older one still being valid!,
+        // should you expire older tokens? If yes, that means a user will be able to login from only one location
+        // Consider short lived access tokens, pass a refresh token in login.
         $token->save();
 
         return response()->json([
@@ -54,7 +58,6 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-
         $validator = RoleValidator::userValidator($request->all(), false);
 
         if (!$request->user()->canRegisterRole($request->base_role)) {
@@ -79,8 +82,12 @@ class AuthController extends Controller
         ], 201);
     }
 
+    //TODO: add logout from app api, with password/OTP confirmation
+
+
     public function logout(Request $request)
     {
+        //On logout only current token will be revoked
         $request->user()->token()->revoke();
         return response()->json([
             'message' => 'Successfully logged out'

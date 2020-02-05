@@ -19,6 +19,7 @@ class CreateStudentsTable extends Migration
             $table->unsignedBigInteger('user_id')
                 ->nullable(false)
                 ->unique();
+            $table->unsignedBigInteger('parent_id')->nullable(true);
             $table->enum('prefix', ConstantsAlias::PREFIXES);
             $table->string('first_name', 50);
             $table->string('middle_name', 50);
@@ -34,6 +35,11 @@ class CreateStudentsTable extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')
+                ->references('id')
+                ->on('users');
+
+            //DONE: add parent ID to student during Parent Create [DONE]
+            $table->foreign('parent_id')
                 ->references('id')
                 ->on('users');
         });

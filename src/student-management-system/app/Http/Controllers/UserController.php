@@ -32,7 +32,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //TODO:: Implement query filters
+        //DONE:: Implement query filters [DONE]
 
         // return DB::table('users')->simplePaginate(15); --> this ignores eloquent $hideen so use eloquent
 //        return User::simplePaginate(15);
@@ -56,7 +56,6 @@ class UserController extends Controller
     public function show(User $user)
     {
         return $user;
-
     }
 
     /**
@@ -68,14 +67,24 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        //DONE:Add a check where only a super admin could update a super admins details (all details)
+
+        if($user->isSuperAdmin() && !$request->user()->isSuperAdmin() ){
+            return response()->json([
+                'message' => $request->user()->base_role.' cannot update '.Constants::ROLES['SUPER_ADMIN'].' profile'
+            ], 403);
+        }
+
         // A user can update his own profile or all profiles if he has permission
-        if ($request->user() == $user || $request->user()->can(Constants::PERMISSIONS['EDIT_ALL_USERS'])) {
+//        return $request->user();
+        if ($request->user()->is($user) || $request->user()->can(Constants::PERMISSIONS['EDIT_ALL_USERS'])) {
             $update_data = $request->only('email',
                 'phone_number',
                 'alternate_phone_number',
                 'password');
+            //cannot update is_super_admin because we're not taking it
 
-            $update_data['last_updated_by'] = auth()->id();
+            $update_data['last_updated_by'] = $request->user()->id;
 
             $validator = RoleValidator::userUpdateValidator($update_data, $user);
 
@@ -83,15 +92,14 @@ class UserController extends Controller
                 return response()->json($validator->errors(), 400);
             }
 
-//            return $update_data;
             $user->update($update_data);
 
             return response()->json([], 204);
 
         } else {
             return response()->json([
-                'message' => 'Invalid User Id'
-            ], 400);
+                'message' => $request->user()->base_role.' does not have the permission to update other '.$user->base_role.' profile'
+            ], 403);
         }
         //
     }

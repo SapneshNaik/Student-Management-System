@@ -26,6 +26,13 @@ class Student extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
+    //TODO: student parent relationship
+
+    public function parent()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 }
 
 

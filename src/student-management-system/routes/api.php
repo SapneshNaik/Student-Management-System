@@ -51,7 +51,7 @@ Route::group([
             ->name('users.show')
             ->middleware('permission:' . Constants::PERMISSIONS['VIEW_ALL_USERS'] . '');
 
-        //TODO: Add check for own profile or edit all user perm in controller [DONE]
+        //DONE: Add check for own profile or edit all user perm in controller [DONE]
         Route::put('/users/{user}', '\App\Http\Controllers\UserController@update')
             ->name('users.update');
 
@@ -73,15 +73,42 @@ Route::group([
             ->name('students.store')
             ->middleware('permission:' . Constants::PERMISSIONS['REGISTER_STUDENT'] . '');
 
-        //TODO: Check if /user can also fetch student(role) details from query filter. \n
-        // below API can only be used by VIEW_ALL_STUDENTS permission
+        //DONE: Check if /user can also fetch student(role) details from query filter. \n
+        // below API can only be used by VIEW_ALL_STUDENTS permission [DONE]
         Route::get('/students/{user}', '\App\Http\Controllers\StudentController@show')
             ->name('students.show')
             ->middleware('permission:'.Constants::PERMISSIONS['VIEW_ALL_STUDENTS'].'');
 
-        //TODO: Add check for own profile or edit all user perm in controller [DONE]
+        //DONE: Add check for own profile or edit all user perm in controller [DONE]
         Route::put('/students/{user}', '\App\Http\Controllers\StudentController@update')
             ->name('students.update');
+//
+//        Route::delete('/users/{user}', '\App\Http\Controllers\UserController@delete')
+//            ->name('users.delete')
+//            ->middleware('permission:' . Constants::PERMISSIONS['DELETE_ALL_USERS'] . '');
+
+        //StudentParent Routes
+
+        Route::get('/parent', '\App\Http\Controllers\StudentParentController@profile')
+            ->name('parent.profile');
+
+        Route::get('/parents', '\App\Http\Controllers\StudentParentController@index')
+            ->name('parents.index')
+            ->middleware('permission:'.Constants::PERMISSIONS['VIEW_ALL_PARENTS'].'');
+
+        Route::post('/parents/{user}', '\App\Http\Controllers\StudentParentController@store')
+            ->name('parents.store')
+            ->middleware('permission:' . Constants::PERMISSIONS['REGISTER_PARENT'] . '');
+
+        //DONE: Check if /user can also fetch parent(role) details from query filter. \n
+        // below API can only be used by VIEW_ALL_STUDENTS permission [DONE]
+        Route::get('/parents/{user}', '\App\Http\Controllers\StudentParentController@show')
+            ->name('parents.show')
+            ->middleware('permission:'.Constants::PERMISSIONS['VIEW_ALL_PARENTS'].'');
+
+        //DONE: Add check for own profile or edit all parent perm in controller [DONE]
+        Route::put('/parents/{user}', '\App\Http\Controllers\StudentParentController@update')
+            ->name('parents.update');
 //
 //        Route::delete('/users/{user}', '\App\Http\Controllers\UserController@delete')
 //            ->name('users.delete')
@@ -101,13 +128,13 @@ Route::group([
             ->name('admins.store')
             ->middleware('permission:' . Constants::PERMISSIONS['REGISTER_ADMIN'] . '');
 
-        //TODO: Check if /user can also fetch admin(role) details from query filter. \n
-        // below API can only be used by VIEW_ALL_STUDENTS permission
+        //DONE: Check if /user can also fetch admin(role) details from query filter. \n
+        // below API can only be used by VIEW_ALL_STUDENTS permission [DONE]
         Route::get('/admins/{user}', '\App\Http\Controllers\AdminController@show')
             ->name('admins.show')
             ->middleware('permission:'.Constants::PERMISSIONS['VIEW_ALL_ADMINS'].'');
 
-        //TODO: Add check for own profile or edit all user perm in controller [DONE]
+        //DONE: Add check for own profile or edit all user perm in controller [DONE]
         Route::put('/admins/{user}', '\App\Http\Controllers\AdminController@update')
             ->name('admins.update');
 
@@ -124,15 +151,17 @@ Route::group([
             ->name('staffs.store')
             ->middleware('permission:' . Constants::PERMISSIONS['REGISTER_STAFF'] . '');
 
-        //TODO: Check if /user can also fetch staff(role) details from query filter. \n
+        //DONE: Check if /user can also fetch staff(role) details from query filter. \n
         // below API can only be used by VIEW_ALL_STUDENTS permission
         Route::get('/staffs/{user}', '\App\Http\Controllers\StaffController@show')
             ->name('staffs.show')
             ->middleware('permission:'.Constants::PERMISSIONS['VIEW_ALL_STAFF'].'');
 
-        //TODO: Add check for own profile or edit all user perm in controller [DONE]
+        //DONE: Add check for own profile or edit all user perm in controller [DONE]
         Route::put('/staffs/{user}', '\App\Http\Controllers\StaffController@update')
             ->name('staffs.update');
+
+        //TODO: on password update by admin of a user: flush user token
 
     });
 

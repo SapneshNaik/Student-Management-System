@@ -22,26 +22,24 @@ class CreateStudentParentsTable extends Migration
             $table->string('father_full_name', 150);
             $table->string('mother_full_name', 150);
             $table->unsignedBigInteger('staff_id')->nullable();
-            $table->enum('relationship', \App\Constants::RELATIONSHIP)
-                ->nullable(false);
             $table->string('father_qualification', 50);
             $table->string('mother_qualification', 50);
             $table->string('father_contact_number', 13);
-            $table->string('mother_contact_number', 13);
+            $table->string('mother_contact_number', 13)->nullable(true);
             $table->string('father_profession', 50);
-            $table->string('mother_profession', 50);
+            $table->string('mother_profession', 50)->nullable(true);
             $table->string('father_designation', 50);
-            $table->string('mother_designation', 50);
+            $table->string('mother_designation', 50)->nullable(true);
             $table->string('father_net_annual_income', 50);
-            $table->string('mother_net_annual_income', 50);
+            $table->string('mother_net_annual_income', 50)->nullable(true);
             $table->string('father_pan', 10);
-            $table->string('mother_pan', 10);
-            $table->boolean('is_father_alumni');
-            $table->boolean('is_mother_alumni');
-            $table->string('father_joining_year', 10);
-            $table->string('father_leaving_year', 10);
-            $table->string('mother_joining_year', 10);
-            $table->string('mother_leaving_year', 10);
+            $table->string('mother_pan', 10)->nullable(true);
+            $table->boolean('is_father_alumni')->default(false);
+            $table->boolean('is_mother_alumni')->default(false);
+            $table->year('father_joining_year')->nullable(true);
+            $table->year('father_leaving_year')->nullable(true);
+            $table->year('mother_joining_year')->nullable(true);
+            $table->year('mother_leaving_year')->nullable(true);
 //            $table->string('mother_pan', 10);
 
 
@@ -53,6 +51,7 @@ class CreateStudentParentsTable extends Migration
                 ->references('id')
                 ->on('users');
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

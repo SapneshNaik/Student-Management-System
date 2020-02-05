@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Constants;
+use App\Http\Helpers\ControllerHelper;
 use App\Http\Validators\RoleValidator;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -23,13 +25,7 @@ class StudentController extends Controller
      */
     public function profile(Request $request)
     {
-        if (!$request->user()->isOfType('Student')) {
-            return response()->json([
-                'message' => $request->user()->base_role . ' does not have a Student profile'],
-                400);
-        }
-
-        return response()->json($request->user()->student);
+        return ControllerHelper::getProfile($request->user(), 'Student');
     }
 
     /**
@@ -45,7 +41,7 @@ class StudentController extends Controller
                 AllowedFilter::exact('caste'),
                 AllowedFilter::exact('caste_category'),
                 AllowedFilter::exact('religion'),])
-            ->allowedIncludes(['user'])
+            ->allowedIncludes(['user', 'parent'])
             ->simplePaginate(15);
     }
 
@@ -55,6 +51,7 @@ class StudentController extends Controller
      * @param Request $request
      * @param User $user
      * @return JsonResponse
+     * @throws ValidationException
      */
     public function store(Request $request, User $user)
     {
@@ -71,7 +68,14 @@ class StudentController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $student = Student::create(array_merge($request->all(), ['user_id' => $user->id]));
+        //TODO: try to move to parent_id validation field
+        if($request->has('parent_id') && !$this->isValidParent($request)) {
+            return response()->json([
+                'message' => 'Invalid Parent Id'
+            ], 400);
+        }
+
+        Student::create(array_merge($validator->validated(), ['user_id' => $user->id]));
 
         return response()->json([
             'message' => "Student profile created successfully!"
@@ -87,14 +91,7 @@ class StudentController extends Controller
      */
     public function show(User $user)
     {
-        if (!$user->isOfType('Student')) {
-            return response()->json([
-                'message' => $user->base_role . ' does not have a student profile'],
-                400);
-        }
-
-        //TODO:: replcae with relationship [DONE]
-        return $user->student;
+        return ControllerHelper::getProfile($user, 'Student');
     }
 
     /**
@@ -103,47 +100,46 @@ class StudentController extends Controller
      * @param Request $request
      * @param User $user
      * @return JsonResponse
+     * @throws ValidationException
      */
     public function update(Request $request, User $user)
     {
-        if (!$user->isOfType('Student')) {
-            return response()->json([
-                'message' => $user->base_role . ' does not have a student profile'],
-                400);
+        //make sure a profile exists before update
+        //TODO: add this everywhere
+        $show_response = $this->show($user);
+        if($show_response->status() != 200){
+            return $show_response;
         }
 
         //check if user can edit
-        if ($request->user() == $user || $request->user()->can(Constants::PERMISSIONS['EDIT_ALL_STUDENTS'])) {
-            $update_data = $request->only('prefix',
-                'first_name',
-                'middle_name',
-                'last_name',
-                'gender',
-                'caste',
-                'caste_category',
-                'religion',
-                'blood_group',
-                'aadhaar_no',
-                'passport_no');
-
-            $validator = RoleValidator::updateStudentValidator($update_data, $user);
+        if (ControllerHelper::userEditsOwnProfileOrHasPermission($request, $user, Constants::PERMISSIONS['EDIT_ALL_STUDENTS'])) {
+            $validator = RoleValidator::updateStudentValidator($request->except('user_id'), $user);
 
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 400);
             }
 
-            $user->student->update($update_data);
+            if($request->has('parent_id') && !$this->isValidParent($request)) {
+                return response()->json([
+                    'message' => 'Invalid Parent Id'
+                ], 400);
+            }
+
+            if($user->student->parent_id != null){
+                return response()->json([
+                    'message' => 'Parent cannot be changed for a Student'
+                ], 400);
+            }
+
+            $user->student->update($validator->validated());
 
             return response()->json([], 204);
 
         } else {
             return response()->json([
-                'message' => 'Invalid User Id'
-            ], 400);
+                'message' => $request->user()->base_role.' does not have the permission to update other '.$user->base_role.' profile'
+            ], 403);
         }
-
-
-        //
     }
 
     /**
@@ -156,5 +152,22 @@ class StudentController extends Controller
     function destroy(Student $student)
     {
         //
+    }
+
+    /**
+     * @param Request $request
+     * @return bool
+     */
+    private function isValidParent(Request $request): bool
+    {
+        $parent_id = $request->input('parent_id', null);
+
+        //TODO: TEST
+        if($parent_id != null) {
+            if(User::find($parent_id)->isOfType('Parent')){
+                return true;
+            }
+        }
+        return false;
     }
 }

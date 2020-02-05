@@ -125,7 +125,7 @@ class StudentController extends Controller
                 ], 400);
             }
 
-            if($user->student->parent_id != null){
+            if($user->parent()->exists()){
                 return response()->json([
                     'message' => 'Parent cannot be changed for a Student'
                 ], 400);
@@ -161,13 +161,7 @@ class StudentController extends Controller
     private function isValidParent(Request $request): bool
     {
         $parent_id = $request->input('parent_id', null);
-
         //TODO: TEST
-        if($parent_id != null) {
-            if(User::find($parent_id)->isOfType('Parent')){
-                return true;
-            }
-        }
-        return false;
+        return $parent_id == null ? false : User::find($parent_id)->isOfType('Parent');
     }
 }

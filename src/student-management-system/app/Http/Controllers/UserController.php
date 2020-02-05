@@ -8,6 +8,7 @@ use App\Models\User;
 use DB;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -18,7 +19,8 @@ class UserController extends Controller
     /**
      * Get the authenticated User
      *
-     * @return [json] user object
+     * @param Request $request
+     * @return JsonResponse [json] user object
      */
     public function profile(Request $request)
     {
@@ -61,9 +63,9 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param User $user
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function update(Request $request, User $user)
     {

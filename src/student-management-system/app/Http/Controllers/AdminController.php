@@ -6,7 +6,6 @@ use App\Constants;
 use App\Http\Helpers\ControllerHelper;
 use App\Http\Validators\RoleValidator;
 use App\Models\Admin;
-use App\Models\Student;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\JsonResponse;
@@ -37,7 +36,8 @@ class AdminController extends Controller
     public function index()
     {
         return  QueryBuilder::for(Admin::class)
-            ->allowedFilters([AllowedFilter::exact('prefix'),
+            ->allowedFilters([
+                AllowedFilter::exact('prefix'),
                 AllowedFilter::exact('is_super_admin')])
             ->allowedIncludes(['user'])
             ->simplePaginate(15);
@@ -66,7 +66,7 @@ class AdminController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $student = Admin::create(array_merge($validator->validated(), ['user_id' => $user->id,
+        Admin::create(array_merge($validator->validated(), ['user_id' => $user->id,
             'is_super_admin' => false]));
 
         return response()->json([

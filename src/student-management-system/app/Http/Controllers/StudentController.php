@@ -41,7 +41,7 @@ class StudentController extends Controller
                 AllowedFilter::exact('caste'),
                 AllowedFilter::exact('caste_category'),
                 AllowedFilter::exact('religion'),])
-            ->allowedIncludes(['user', 'parent'])
+            ->allowedIncludes(['user', 'parent', 'parent.user'])
             ->simplePaginate(15);
     }
 
@@ -105,7 +105,7 @@ class StudentController extends Controller
     public function update(Request $request, User $user)
     {
         //make sure a profile exists before update
-        //TODO: add this everywhere
+        //DONE: add this everywhere
         $show_response = $this->show($user);
         if($show_response->status() != 200){
             return $show_response;

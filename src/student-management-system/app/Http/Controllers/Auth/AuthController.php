@@ -97,7 +97,7 @@ class AuthController extends Controller
         ], 201);
     }
 
-    //TODO: add logout from app api, with password/OTP confirmation
+    //TODO: add logout from all devices api, with password/OTP confirmation
 
     public function logout(Request $request)
     {

@@ -25,12 +25,13 @@ class ControllerHelper
                 400);
         }
 
-        //TODO: Allow fetching only required fields and relation ships (parent,user)
+        //TODO: Allow fetching only required fields and relationships (parent,user)
         //TODO: Test when $role can finally login
         if ($user->$role()->exists()) {
             return response()->json($user->$role);
         } else {
             return response()->json([
+                //TODO: replace admin with Roles that have this permission
                 'message' => $user->base_role . ' Profile not yet created. Please contact Admin'],
                 404);
         }

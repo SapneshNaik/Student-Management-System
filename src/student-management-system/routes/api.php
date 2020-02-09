@@ -161,8 +161,8 @@ Route::group([
         Route::put('/staffs/{user}', '\App\Http\Controllers\StaffController@update')
             ->name('staffs.update');
 
-        //TODO: on password update by admin of a user: flush user token
-
+        //TODO: Permission based un-authorized request can be logged in a logging module with VARIOUS LEVEL
+        //TODO: on password update (by himself or others): flush user token
     });
 
 

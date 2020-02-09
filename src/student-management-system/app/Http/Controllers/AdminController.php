@@ -102,7 +102,8 @@ class AdminController extends Controller
 
         //If user being edited is a super user and its being done by someone other than the same user or another
         // super admin.
-        //TODO: refactor
+
+        //TODO: refactor, move this into a middleware which takes inout and can be applied to all update routes
         if($user->isSuperAdmin() && !$request->user()->isSuperAdmin()){ //if logged in user is not a super
             // admin role
             return response()->json([

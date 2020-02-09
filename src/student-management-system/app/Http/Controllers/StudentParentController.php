@@ -39,7 +39,7 @@ class StudentParentController extends Controller
         return  QueryBuilder::for(StudentParent::class)
             ->allowedFilters([AllowedFilter::exact('is_father_alumni'),
                 AllowedFilter::exact('is_mother_alumni')])
-            ->allowedIncludes(['user', 'wards'])
+            ->allowedIncludes(['user', 'wards',  'wards.user'])
             ->simplePaginate(15);
     }
 
@@ -96,12 +96,14 @@ class StudentParentController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        //TODO: move this to a middleware
         $show_response = $this->show($user);
         if($show_response->status() != 200){
             return $show_response;
         }
 
         //check if user can edit
+        // TODO: move this check also to a parameterized middleware
         if (ControllerHelper::userEditsOwnProfileOrHasPermission($request, $user, Constants::PERMISSIONS['EDIT_ALL_PARENTS'])) {
 
             $validator = RoleValidator::updateParentValidator($request->except('user_id'));
@@ -110,14 +112,14 @@ class StudentParentController extends Controller
                 return response()->json($validator->errors(), 400);
             }
 
-            //TODO: Try to move it o validation
+            //TODO: Try to move it to validation
             if($request->has('staff_id') && !$request->user()->can(Constants::PERMISSIONS['EDIT_ALL_PARENTS'])){
                 return response()->json([
                     'message' => $user->base_role . ' can not update Staff field. Please contact Admin'],
                     400);
             }
 
-            $user->student->update($validator->validated());
+            $user->parent->update($validator->validated());
 
             return response()->json([], 204);
 

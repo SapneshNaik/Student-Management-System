@@ -40,7 +40,6 @@ class RoleValidator
 
 
     public static function studentValidator(array $data){
-
         return Validator::make($data, [
             'prefix' => ['required', Rule::in(Constants::PREFIXES)],
             'user_id' => 'required|exists:users,id|unique:students',
@@ -59,7 +58,6 @@ class RoleValidator
     }
 
     public static function updateStudentValidator(array $data, User $user){
-
         //DONE: Make sure parent ID can be set/updated only once [DONE]
         return Validator::make($data, [
             'prefix' => ['sometimes', Rule::in(Constants::PREFIXES)],
@@ -101,7 +99,6 @@ class RoleValidator
     }
 
     public static function staffValidator(array $data){
-
         return Validator::make($data, [
             'prefix' => ['required', Rule::in(Constants::PREFIXES)],
             'user_id' => 'required|exists:users,id|unique:staff',
@@ -109,7 +106,8 @@ class RoleValidator
             'middle_name' => 'nullable|max:50|min:3|alpha',
             'last_name' => 'required|max:50|min:3|alpha',
             'gender' => ['required', Rule::in(Constants::GENDER)],
-            'aadhaar_no' => ['required', 'digits:12', 'unique:staff','numeric', new Aadhaar()],
+            'aadhaar_no' => ['bail','required', 'digits:12', 'unique:staff','numeric', new Aadhaar()],
+            //TODO: add bail to all properties
             'passport_no' => 'sometimes|max:50|min:3|string',
         ]);
     }

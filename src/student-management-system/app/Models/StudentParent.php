@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class StudentParent extends Model
 {
     //TODO: UNDO THIS!!
-//    use SoftDeletes;
+    use SoftDeletes;
 
     protected $guarded = [''];
 
@@ -34,6 +34,6 @@ class StudentParent extends Model
     //TODO: TEST
     public function wards()
     {
-        return $this->hasMany('App\Models\Student');
+        return $this->hasMany('App\Models\Student', 'parent_id', 'user_id');
     }
 }

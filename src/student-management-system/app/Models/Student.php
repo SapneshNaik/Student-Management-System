@@ -31,7 +31,7 @@ class Student extends Model
 
     public function parent()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\StudentParent', 'parent_id', 'user_id');
     }
 }
 

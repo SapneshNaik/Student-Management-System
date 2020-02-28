@@ -6,7 +6,7 @@ class Constants
 {
     public const PREFIXES = ["Mr.", "Mrs.", "Miss", "Dr.", "Ms.", "Prof.", "Rev.", "Lady.", "Sir."];
 
-    public const GENDER = ['Male', 'Female', 'Other'];
+    public const GENDER = ['Male', 'Female'];
 
     public const RELATIONSHIP = ['Father', 'Mother', 'Other'];
 
@@ -32,8 +32,9 @@ class Constants
     public const ROLES = [
         'SUPER_ADMIN' => "Super Admin",
         'ADMIN' => "Admin",
+        'STUDENT' => "Student",
         'NON_TEACHING_STAFF' => "Non Teaching Staff",
-        'TEACHING_STAFF' => "Teaching Staff"
+        'TEACHING_STAFF' => "Teaching Staff",
     ];
 
     public const PERMISSIONS = [
@@ -63,6 +64,12 @@ class Constants
         'VIEW_ALL_ADMINS' => 'View All Admins',
         'EDIT_ALL_ADMINS' => 'Edit All Admins',
         'DELETE_ALL_ADMINS' => 'Delete All Admins',
+
+        'VIEW_ALL_PERMISSIONS' => 'View All Permissions',
+        'VIEW_ALL_ROLES' => 'View All Roles',
+        'EDIT_ALL_ROLES' => 'Edit All Roles',
+        'DELETE_ALL_ROLES' => 'Edit All Roles',
+
     ];
 
     public const USER_STATUS = ["Active", "Inactive", "Final Account"];

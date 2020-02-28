@@ -1,0 +1,92 @@
+{
+    "current_page": 1,
+    "data": [
+        {
+            "id": 1,
+            "login_id": "super_admin",
+            "email": "sapnesh@gmail.com",
+            "phone_number": "7760041698",
+            "alternate_phone_number": null,
+            "base_role": "Admin",
+            "last_updated_by": null,
+            "status": "Active"
+        },
+        {
+            "id": 2,
+            "login_id": "normal_admin",
+            "email": "parent_!@gmail.com",
+            "phone_number": "7845487541",
+            "alternate_phone_number": "8892497966",
+            "base_role": "Admin",
+            "last_updated_by": 1,
+            "status": "Active"
+        },
+        {
+            "id": 3,
+            "login_id": "student_1",
+            "email": "student_1@gmail.com",
+            "phone_number": "7845487541",
+            "alternate_phone_number": "8892497966",
+            "base_role": "Student",
+            "last_updated_by": 1,
+            "status": "Inactive"
+        },
+        {
+            "id": 4,
+            "login_id": "staff_1",
+            "email": "staff_1@gmail.com",
+            "phone_number": "7845487541",
+            "alternate_phone_number": "8892497966",
+            "base_role": "Staff",
+            "last_updated_by": 1,
+            "status": "Active"
+        },
+        {
+            "id": 5,
+            "login_id": "parent_1",
+            "email": "parent_1@gmail.com",
+            "phone_number": "7845487541",
+            "alternate_phone_number": "8892497966",
+            "base_role": "Parent",
+            "last_updated_by": 1,
+            "status": "Active"
+        },
+        {
+            "id": 6,
+            "login_id": "student2",
+            "email": "student_2@gmail.com",
+            "phone_number": "7845487541",
+            "alternate_phone_number": "8892497966",
+            "base_role": "Student",
+            "last_updated_by": 1,
+            "status": "Inactive"
+        },
+        {
+            "id": 7,
+            "login_id": "student3",
+            "email": "student_3@gmail.com",
+            "phone_number": "7845487541",
+            "alternate_phone_number": "8892497966",
+            "base_role": "Student",
+            "last_updated_by": 2,
+            "status": "Inactive"
+        },
+        {
+            "id": 8,
+            "login_id": "student4",
+            "email": "student_4@gmail.com",
+            "phone_number": "7845487541",
+            "alternate_phone_number": "8892497966",
+            "base_role": "Student",
+            "last_updated_by": 2,
+            "status": "Inactive"
+        }
+    ],
+    "first_page_url": "http://127.0.0.1:8000/api/v1/users?page=1",
+    "from": 1,
+    "next_page_url": null,
+    "path": "http://127.0.0.1:8000/api/v1/users",
+    "per_page": 15,
+    "prev_page_url": null,
+    "to": 8
+}

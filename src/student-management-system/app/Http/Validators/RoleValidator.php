@@ -8,6 +8,7 @@ use App\Constants;
 use App\Models\User;
 use App\Rules\Aadhaar;
 use Illuminate\Validation\Rule;
+use Spatie\Permission\Contracts\Role;
 use Validator;
 
 class RoleValidator
@@ -18,7 +19,7 @@ class RoleValidator
         $req = 'nullable';
         return Validator::make($data, [
             'email' => 'required|email|unique:users|max:50',
-            'login_id' => 'required|max:50|unique:users|alpha_dash',
+            'login_id' => 'required|max:50|min:3|unique:users|alpha_dash',
             'phone_number' => 'required|max:13|min:10',
             'alternate_phone_number' => 'nullable|max:13|min:10',
             'base_role' => ['required', Rule::in(Constants::BASE_ROLE)],
@@ -83,8 +84,8 @@ class RoleValidator
         return Validator::make($data, [
             'prefix' => ['required', Rule::in(Constants::PREFIXES)],
             'user_id' => 'required|exists:users,id',
-            'first_name' => 'required|max:50',
-            'last_name' => 'required|max:50',
+            'first_name' => 'required|max:50|min:3|alpha',
+            'last_name' => 'required|max:50|min:3|alpha',
             'is_super_admin' => 'sometimes|required|boolean',
         ]);
     }
@@ -92,8 +93,8 @@ class RoleValidator
     public static function updateAdminValidator(array $data){
         return Validator::make($data, [
             'prefix' => ['required', Rule::in(Constants::PREFIXES)],
-            'first_name' => 'required|max:50',
-            'last_name' => 'required|max:50',
+            'first_name' => 'required|max:50|min:3|alpha',
+            'last_name' => 'required|max:50|min:3|alpha',
             'is_super_admin' => 'sometimes|required|boolean',
         ]);
     }
@@ -135,7 +136,7 @@ class RoleValidator
             'user_id' => 'required|exists:users,id|unique:student_parents',
             'father_full_name' => 'required|max:150|min:3',
             'mother_full_name' => 'required|max:150|min:3',
-            'staff_id' => 'sometimes|exists:users,id|unique:student_parents',
+//            'staff_id' => 'sometimes|exists:users,id|unique:student_parents',
             'father_qualification' => 'required|max:50|min:3',
             'mother_qualification' => 'required|max:50|min:3',
             'father_contact_number' => 'required|max:13|min:10',
@@ -149,7 +150,7 @@ class RoleValidator
             'father_pan' => 'required|max:10|min:1',
             'mother_pan' => 'sometimes|max:10|min:1',
             'is_father_alumni' => 'required|boolean',
-            'is_mother_alumni' => 'sometimes|boolean',
+            'is_mother_alumni' => 'required|boolean',
             //TODO: fields below required if father or mother alumni, add in update also
             //TODO: not working debug
             'father_joining_year' => 'sometimes|required_if:is_father_alumni,true|digits:4',
@@ -166,7 +167,7 @@ class RoleValidator
             'mother_full_name' => 'sometimes|max:150|min:3',
             //DONE: make sure staff ID can be updated only by a user with
             // Edit ALL PARENTS Permission [DONE]
-            'staff_id' => 'sometimes|exists:users,id|unique:student_parents',
+//            'staff_id' => 'sometimes|exists:users,id|unique:student_parents',
             'father_qualification' => 'sometimes|max:50|min:3',
             'mother_qualification' => 'sometimes|max:50|min:3',
             'father_contact_number' => 'sometimes|max:13|min:10',
@@ -185,6 +186,35 @@ class RoleValidator
             'mother_joining_year' => 'sometimes|digits:4',
             'father_leaving_year' => 'sometimes|digits:4',
             'mother_leaving_year' => 'sometimes|digits:4',
+        ]);
+    }
+
+
+    public static function roleValidator(array $data){
+        return Validator::make($data, [
+            'name' => 'required|unique:roles,name|max:50',
+            'permissions' => 'required|array|min:1|exists:permissions,id',
+            'password' => 'required|string',
+        ]);
+    }
+
+    public static function roleUpdateValidator(array $data, Role $role){ //TODO:use role sync on role update
+        return Validator::make($data, [
+            'name' => 'sometimes|unique:roles,name,'.$role->id.'|max:50', //TODO: add any-one must be present validtion
+            'permissions' => 'sometimes|array|min:1|exists:permissions,id', // TODO handle case where nor name nor perms were supplied
+            'password' => 'required|string',
+        ]);
+    }
+
+    public static function roleAddOrRemoveUserValidator(array $data){
+        return Validator::make($data, [
+            'password' => 'required|string',
+        ]);
+    }
+
+    public static function roleDeleteValidator(array $data){ //TODO:use role sync on role update
+        return Validator::make($data, [
+            'password' => 'required|string',
         ]);
     }
 }

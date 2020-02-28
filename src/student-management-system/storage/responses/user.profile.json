@@ -1,0 +1,59 @@
+{
+    "id": 2,
+    "login_id": "normal_admin",
+    "email": "parent_!@gmail.com",
+    "phone_number": "7845487541",
+    "alternate_phone_number": "8892497966",
+    "base_role": "Admin",
+    "last_updated_by": 1,
+    "status": "Active",
+    "all_permissions": [
+        {
+            "id": 1,
+            "name": "Register Student"
+        },
+        {
+            "id": 4,
+            "name": "Register Parent"
+        }
+    ],
+    "roles": [
+        {
+            "id": 2,
+            "name": "Admin",
+            "guard_name": "api",
+            "created_at": "2020-02-09 19:08:42",
+            "updated_at": "2020-02-09 19:08:42",
+            "pivot": {
+                "model_id": 2,
+                "role_id": 2,
+                "model_type": "App\\Models\\User"
+            },
+            "permissions": [
+                {
+                    "id": 1,
+                    "name": "Register Student",
+                    "guard_name": "api",
+                    "created_at": "2020-02-09 19:08:42",
+                    "updated_at": "2020-02-09 19:08:42",
+                    "pivot": {
+                        "role_id": 2,
+                        "permission_id": 1
+                    }
+                },
+                {
+                    "id": 4,
+                    "name": "Register Parent",
+                    "guard_name": "api",
+                    "created_at": "2020-02-09 19:08:42",
+                    "updated_at": "2020-02-09 19:08:42",
+                    "pivot": {
+                        "role_id": 2,
+                        "permission_id": 4
+                    }
+                }
+            ]
+        }
+    ],
+    "permissions": []
+}

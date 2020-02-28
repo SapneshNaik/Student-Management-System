@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 6.13.1 on 2020-02-04 10:08:17.
+ * Generated for Laravel 6.13.1 on 2020-02-27 11:56:13.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -15087,6 +15087,56 @@ namespace Facade\Ignition\Facades {
  
 }
 
+namespace TomLingham\Searchy\Facades { 
+
+    /**
+     * Searchy facade for the Laravel framework.
+     *
+     */ 
+    class Searchy {
+        
+        /**
+         * 
+         *
+         * @param $searchable
+         * @return \TomLingham\Searchy\SearchBuilder 
+         * @static 
+         */ 
+        public static function search($searchable)
+        {
+                        /** @var \TomLingham\Searchy\SearchBuilder $instance */
+                        return $instance->search($searchable);
+        }
+        
+        /**
+         * 
+         *
+         * @return \TomLingham\Searchy\FuzzySearchDriver 
+         * @static 
+         */ 
+        public static function fields()
+        {
+                        /** @var \TomLingham\Searchy\SearchBuilder $instance */
+                        return $instance->fields();
+        }
+        
+        /**
+         * 
+         *
+         * @param $driverName
+         * @return \TomLingham\Searchy\SearchBuilder 
+         * @static 
+         */ 
+        public static function driver($driverName)
+        {
+                        /** @var \TomLingham\Searchy\SearchBuilder $instance */
+                        return $instance->driver($driverName);
+        }
+         
+    }
+ 
+}
+
 
 namespace  { 
 
@@ -17968,6 +18018,8 @@ namespace  {
     class View extends \Illuminate\Support\Facades\View {}
 
     class Flare extends \Facade\Ignition\Facades\Flare {}
+
+    class Searchy extends \TomLingham\Searchy\Facades\Searchy {}
  
 }
 

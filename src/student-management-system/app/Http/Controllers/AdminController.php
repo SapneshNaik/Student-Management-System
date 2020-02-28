@@ -40,7 +40,8 @@ class AdminController extends Controller
                 AllowedFilter::exact('prefix'),
                 AllowedFilter::exact('is_super_admin')])
             ->allowedIncludes(['user'])
-            ->simplePaginate(15);
+            ->simplePaginate(15)
+            ->appends(request()->query());
     }
 
     /**

@@ -18,7 +18,7 @@ use App\Constants;
 //});
 
 Route::group([
-    'prefix' => 'v1'
+    'prefix' => 'v1',
 ], function () {
     //Non Auth routes
     Route::post('login', 'Auth\AuthController@login')
@@ -37,6 +37,36 @@ Route::group([
                 . Constants::PERMISSIONS['REGISTER_ADMIN'] . '');
 
         Route::get('logout', 'Auth\AuthController@logout')->name('logout');
+
+        //TODO: BugFix: wired behaviour in PostMan when you try access this endpoint with wrong Token (405 Not Allowed)
+        Route::get('/permissions', '\App\Http\Controllers\Auth\AuthController@permissionsIndex')
+            ->name('permissions.index')
+            ->middleware('permission:'.Constants::PERMISSIONS['VIEW_ALL_PERMISSIONS'].'');
+
+        //TODO: BugFix: wired behaviour in PostMan when you try access this endpoint with wrong Token (405 Not Allowed)
+        Route::get('/roles', '\App\Http\Controllers\Auth\AuthController@rolesIndex')
+            ->name('roles.index')
+            ->middleware('permission:'.Constants::PERMISSIONS['VIEW_ALL_ROLES'].'');
+
+        Route::post('/roles', '\App\Http\Controllers\Auth\AuthController@rolesStore')
+            ->name('roles.store')
+            ->middleware('permission:'.Constants::PERMISSIONS['EDIT_ALL_ROLES'].'');
+
+        Route::put('/roles/{role}', '\App\Http\Controllers\Auth\AuthController@rolesUpdate')
+            ->name('roles.update')
+            ->middleware('permission:'.Constants::PERMISSIONS['EDIT_ALL_ROLES'].'');
+
+        Route::delete('/roles/{role}', '\App\Http\Controllers\Auth\AuthController@rolesDelete')
+            ->name('roles.delete')
+            ->middleware('permission:'.Constants::PERMISSIONS['DELETE_ALL_ROLES'].'');
+
+        Route::post('/roles/{role}/addUser/{user}', '\App\Http\Controllers\Auth\AuthController@rolesAddUser')
+            ->name('roles.addUser')
+            ->middleware('permission:'.Constants::PERMISSIONS['EDIT_ALL_ROLES'].'');
+
+        Route::post('/roles/{role}/removeUser/{user}', '\App\Http\Controllers\Auth\AuthController@rolesRemoveUser')
+            ->name('roles.removeUser')
+            ->middleware('permission:'.Constants::PERMISSIONS['EDIT_ALL_ROLES'].'');
 
         //User Routes
 
@@ -95,6 +125,11 @@ Route::group([
         Route::get('/parents', '\App\Http\Controllers\StudentParentController@index')
             ->name('parents.index')
             ->middleware('permission:'.Constants::PERMISSIONS['VIEW_ALL_PARENTS'].'');
+
+
+        Route::get('/parent-search', '\App\Http\Controllers\StudentParentController@search')
+            ->name('parents.search')
+            ->middleware('permission:' . Constants::PERMISSIONS['VIEW_ALL_PARENTS'] . '');
 
         Route::post('/parents/{user}', '\App\Http\Controllers\StudentParentController@store')
             ->name('parents.store')
@@ -163,6 +198,10 @@ Route::group([
 
         //TODO: Permission based un-authorized request can be logged in a logging module with VARIOUS LEVEL
         //TODO: on password update (by himself or others): flush user token
+
+        //permission related routes
+
+        //Staff Routes
     });
 
 

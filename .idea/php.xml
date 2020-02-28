@@ -117,6 +117,20 @@
       <path value="$PROJECT_DIR$/src/student-management-system/vendor/jakub-onderka/php-console-color" />
       <path value="$PROJECT_DIR$/src/student-management-system/vendor/spatie/laravel-query-builder" />
       <path value="$PROJECT_DIR$/src/student-management-system/vendor/pearl/aadhaar-validator" />
+      <path value="$PROJECT_DIR$/src/student-management-system/vendor/windwalker/renderer" />
+      <path value="$PROJECT_DIR$/src/student-management-system/vendor/windwalker/structure" />
+      <path value="$PROJECT_DIR$/src/student-management-system/vendor/erusev/parsedown" />
+      <path value="$PROJECT_DIR$/src/student-management-system/vendor/php-di/invoker" />
+      <path value="$PROJECT_DIR$/src/student-management-system/vendor/mpociot/documentarian" />
+      <path value="$PROJECT_DIR$/src/student-management-system/vendor/mpociot/laravel-apidoc-generator" />
+      <path value="$PROJECT_DIR$/src/student-management-system/vendor/mpociot/reflection-docblock" />
+      <path value="$PROJECT_DIR$/src/student-management-system/vendor/symfony/var-exporter" />
+      <path value="$PROJECT_DIR$/src/student-management-system/vendor/symfony/yaml" />
+      <path value="$PROJECT_DIR$/src/student-management-system/vendor/mnapoli/front-yaml" />
+      <path value="$PROJECT_DIR$/src/student-management-system/vendor/mnapoli/silly" />
+      <path value="$PROJECT_DIR$/src/student-management-system/vendor/fruitcake/laravel-cors" />
+      <path value="$PROJECT_DIR$/src/student-management-system/vendor/asm89/stack-cors" />
+      <path value="$PROJECT_DIR$/src/student-management-system/vendor/tom-lingham/searchy" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />

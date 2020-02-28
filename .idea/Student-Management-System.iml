@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/student-management-system/tests" isTestSource="true" packagePrefix="Tests\" />
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/asm89/stack-cors" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/barryvdh/laravel-ide-helper" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/barryvdh/reflection-docblock" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/composer" />
@@ -19,12 +20,14 @@
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/doctrine/lexer" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/dragonmantank/cron-expression" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/egulias/email-validator" />
+      <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/erusev/parsedown" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/facade/flare-client-php" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/facade/ignition" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/facade/ignition-contracts" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/fideloper/proxy" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/filp/whoops" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/firebase/php-jwt" />
+      <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/fruitcake/laravel-cors" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/fzaninotto/faker" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/guzzlehttp/guzzle" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/guzzlehttp/promises" />
@@ -44,8 +47,13 @@
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/league/event" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/league/flysystem" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/league/oauth2-server" />
+      <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/mnapoli/front-yaml" />
+      <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/mnapoli/silly" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/mockery/mockery" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/monolog/monolog" />
+      <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/mpociot/documentarian" />
+      <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/mpociot/laravel-apidoc-generator" />
+      <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/mpociot/reflection-docblock" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/myclabs/deep-copy" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/nesbot/carbon" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/nikic/php-parser" />
@@ -55,6 +63,7 @@
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/pearl/aadhaar-validator" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/phar-io/manifest" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/phar-io/version" />
+      <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/php-di/invoker" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/phpdocumentor/reflection-common" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/phpdocumentor/reflection-docblock" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/phpdocumentor/type-resolver" />
@@ -117,10 +126,15 @@
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/symfony/translation" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/symfony/translation-contracts" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/symfony/var-dumper" />
+      <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/symfony/var-exporter" />
+      <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/symfony/yaml" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/theseer/tokenizer" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/tijsverkoyen/css-to-inline-styles" />
+      <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/tom-lingham/searchy" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/vlucas/phpdotenv" />
       <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/webmozart/assert" />
+      <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/windwalker/renderer" />
+      <excludeFolder url="file://$MODULE_DIR$/src/student-management-system/vendor/windwalker/structure" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

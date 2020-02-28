@@ -89,4 +89,14 @@ class User extends Authenticatable
     public function parent(){
         return $this->hasOne('App\Models\StudentParent');
     }
+
+    public function getAllPermissionsAttribute(){
+        return $this->getAllPermissions()->map->only(['id', 'name']);
+//        return $this->getAllPermissions()->filter(function ($value, $key){
+////            print($key);
+//            error_log($value);
+//
+//            return $key == 'id' || $key == 'name';
+//        });
+    }
 }

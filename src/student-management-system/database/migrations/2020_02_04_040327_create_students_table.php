@@ -26,7 +26,7 @@ class CreateStudentsTable extends Migration
             $table->string('last_name', 50);
             $table->enum('gender', ConstantsAlias::GENDER);
             $table->string('caste', 30);
-            $table->string('caste_category', 10);
+            $table->string('caste_category', 30);
             $table->enum('religion', ConstantsAlias::RELIGIONS);
             $table->enum('blood_group', ConstantsAlias::BLOOD_GROUP);
             $table->string('aadhaar_no')->nullable(false)->unique();

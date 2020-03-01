@@ -2,6 +2,16 @@
 export default {
 	en: {
 		UserManagement: 'User Management',
+    Registration: "Registration",
+    RegisterAdmin: "Register Admin",
+    RegisterStaff: "Register Staff",
+    RegisterStudent: "Register Students",
+
+    ViewAdmins: "View Admins",
+    ViewStaff: "View Staff",
+    ViewStudents: "View Students",
+    ViewParents: "View Parents",
+
 		eCommerce: 'eCommerce',
 		Apps: 'Apps',
 		Todo: 'Todo',

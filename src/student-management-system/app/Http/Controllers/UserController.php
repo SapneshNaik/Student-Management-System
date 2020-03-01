@@ -66,9 +66,9 @@ class UserController extends Controller
     {
         //DONE:: Implement query filters [DONE]
 
-        // return DB::table('users')->simplePaginate(15)
-            ->appends(request()->query()); --> this ignores eloquent $hideen so use eloquent
-//        return User::simplePaginate(15);
+        // return DB::table('users')->paginate(15)
+//            ->appends(request()->query()); --> this ignores eloquent $hideen so use eloquent
+//        return User::paginate(15);
         return QueryBuilder::for(User::class)
             ->allowedFilters([AllowedFilter::exact('email'),
                 AllowedFilter::exact('base_role'),
@@ -77,8 +77,8 @@ class UserController extends Controller
                 AllowedFilter::exact('status'),
                 AllowedFilter::exact('last_updated_by'),
                 AllowedFilter::exact('email'),])
-            ->allowedIncludes(['student', 'admin', 'staff', 'parent', 'roles', 'permissions'])
-            ->simplePaginate(15)
+            ->allowedIncludes(['student', 'admin', 'staff', 'parent', 'roles', 'permissions', 'updater'])
+            ->paginate(15)
             ->appends(request()->query());
     }
 

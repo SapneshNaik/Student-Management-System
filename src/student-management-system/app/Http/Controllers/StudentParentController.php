@@ -40,8 +40,8 @@ class StudentParentController extends Controller
         return QueryBuilder::for(StudentParent::class)
             ->allowedFilters([AllowedFilter::exact('is_father_alumni'),
                 AllowedFilter::exact('is_mother_alumni')])
-            ->allowedIncludes(['user', 'wards', 'wards.user'])
-            ->simplePaginate(15)
+            ->allowedIncludes(['user', 'wards', 'wards.user', 'user.roles',  'user.updater'])
+            ->paginate(15)
             ->appends(request()->query());
     }
 
@@ -95,10 +95,11 @@ class StudentParentController extends Controller
         }
 
 
-        StudentParent::create(array_merge($validator->validated(), ['user_id' => $user->id]));
+        $parent = StudentParent::create(array_merge($validator->validated(), ['user_id' => $user->id]));
 
         return response()->json([
-            'message' => "Parent profile created successfully!"
+            'message' => "Parent profile created successfully!",
+            'parent' => $parent
         ], 201);
 
     }

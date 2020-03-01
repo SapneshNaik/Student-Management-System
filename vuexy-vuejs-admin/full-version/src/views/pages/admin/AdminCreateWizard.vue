@@ -16,7 +16,7 @@
                    :title="null"
                    :subtitle="null" finishButtonText="Submit" @on-complete="createAdmin">
         <tab-content title="Account Details" class="mb-5" icon="feather icon-log-in" :before-change="validateStep1">
-          <create-user-profile role="Admin" :user="userData" ref="cup"></create-user-profile>
+          <base-user-create role="Admin" :user="userData" ref="cup"></base-user-create>
         </tab-content>
 
         <!-- tab 2 content -->
@@ -66,7 +66,7 @@
 <script>
   import {FormWizard, TabContent} from 'vue-form-wizard'
   import 'vue-form-wizard/dist/vue-form-wizard.min.css'
-  import CreateUserProfile from "../user/CreateUserProfile";
+  import BaseUserCreate from "../user/BaseUserCreate";
   import RoleAssign from "../role_permission/RoleAssign";
   import constants from "../../../constants";
   import {Validator} from 'vee-validate';
@@ -94,7 +94,7 @@
     components: {
       FormWizard,
       TabContent,
-      CreateUserProfile,
+      BaseUserCreate,
       RoleAssign
     },
     data() {
@@ -119,13 +119,16 @@
         if (val >= 100) {
 
           this.$vs.notify({
-            text: 'Admin Created',
+            title: 'Admin Created',
+            text: this.adminData.first_name + " is added to the system",
             iconPack: 'feather',
             icon: 'icon-alert-circle',
-            color: 'success'
+            color: 'success',
+            position: 'top-right'
           });
 
           this.creating = false;
+
           this.adminData = this.getBaseAdminData();
           this.userData = commons.getBaseUserModel("Admin");
 
@@ -228,8 +231,14 @@
             this.progressUpdate("Creating Admin Profile...", progressIncrementStep);
 
             jwt.createAdminProfile(userResponse.data.user.id, this.adminData)
-              .then(() => {
-                // this.progressUpdate("Creating Admin Profile...", progressIncrementStep);
+              .then((adminResponse) => {
+
+                adminResponse.data['admin']['user'] = userResponse.data.user;
+
+                this.$store.dispatch("userManagement/upsertToState",
+                  {type: "Admin", data :adminResponse.data.admin});
+
+                this.progressUpdate("Assigning roles to Admin...", progressIncrementStep);
 
                 //assigning roles
                 roleData.forEach(async (role) => {

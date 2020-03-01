@@ -144,7 +144,6 @@ import '@/assets/scss/vuexy/extraComponents/agGridStyleOverride.scss'
 import vSelect from 'vue-select'
 
 // Store Module
-import moduleUserManagement from '@/store/user-management/moduleUserManagement.js'
 
 // Cell Renderer
 import CellRendererLink from "./cell-renderer/CellRendererLink.vue"
@@ -365,10 +364,6 @@ export default {
     }
   },
   created() {
-    if(!moduleUserManagement.isRegistered) {
-      this.$store.registerModule('userManagement', moduleUserManagement)
-      moduleUserManagement.isRegistered = true
-    }
     this.$store.dispatch("userManagement/fetchUsers").catch(err => { console.error(err) })
   }
 }

@@ -41,8 +41,8 @@ class StudentController extends Controller
                 AllowedFilter::exact('caste'),
                 AllowedFilter::exact('caste_category'),
                 AllowedFilter::exact('religion'),])
-            ->allowedIncludes(['user', 'parent', 'parent.user'])
-            ->simplePaginate(15)
+            ->allowedIncludes(['user', 'parent', 'parent.user', 'user.roles',  'user.updater'])
+            ->paginate(15)
             ->appends(request()->query());
     }
 
@@ -76,10 +76,11 @@ class StudentController extends Controller
             ], 400);
         }
 
-        Student::create(array_merge($validator->validated(), ['user_id' => $user->id]));
+        $student = Student::create(array_merge($validator->validated(), ['user_id' => $user->id]));
 
         return response()->json([
-            'message' => "Student profile created successfully!"
+            'message' => "Student profile created successfully!",
+            'student' => $student
         ], 201);
         //
     }

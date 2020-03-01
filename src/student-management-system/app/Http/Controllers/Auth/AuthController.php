@@ -60,12 +60,13 @@ class AuthController extends Controller
         // Also enable remember me option to remember tokens for a longer duration
         $token->save();
 
+        $user->profile(); //Needed dont remove
+
         return response()->json([
             'access_token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
             'user' => $user,
             'permissions' => $user->getAllPermissions(),
-            'roles' => $user->roles()->pluck('name'),
 //            'expires_at' => Carbon::parse(
 //                $tokenResult->token->expires_at
 //            )->toDateTimeString()
@@ -137,7 +138,7 @@ class AuthController extends Controller
     {
         return QueryBuilder::for(Permission::select('id', 'name'))
             ->allowedIncludes(['users', 'roles'])
-            ->simplePaginate(15)
+            ->paginate(15)
             ->appends(request()->query());
     }
 
@@ -153,7 +154,7 @@ class AuthController extends Controller
             }]))
             ->allowedFields('permissions.id', 'permissions.name')
             ->allowedIncludes(['users', 'permissions'])
-            ->simplePaginate(15)
+            ->paginate(15)
             ->appends(request()->query());
     }
 
@@ -184,7 +185,7 @@ class AuthController extends Controller
 
         return response()->json([], 201);
 
-//        return Role::select('id', 'name')->simplePaginate(15)
+//        return Role::select('id', 'name')->paginate(15)
 //            ->appends(request()->query());
     }
 

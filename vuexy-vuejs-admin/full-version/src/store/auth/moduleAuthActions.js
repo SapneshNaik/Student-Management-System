@@ -15,36 +15,6 @@ import router from '@/router'
 
 export default {
 
-
-  updateUsername({commit}, payload) {
-    payload.user.updateProfile({
-      displayName: payload.displayName
-    }).then(() => {
-
-      // If username update is success
-      // update in localstorage
-      let newUserData = Object.assign({}, payload.user.providerData[0])
-      newUserData.displayName = payload.displayName
-      commit('UPDATE_USER_INFO', newUserData, {root: true})
-
-      // If reload is required to get fresh data after update
-      // Reload current page
-      if (payload.isReloadRequired) {
-        router.push(router.currentRoute.query.to || '/')
-      }
-    }).catch((err) => {
-      payload.notify({
-        time: 8800,
-        title: 'Error',
-        text: err.message,
-        iconPack: 'feather',
-        icon: 'icon-alert-circle',
-        color: 'danger'
-      })
-    })
-  },
-
-
   // JWT
   loginJWT({commit}, payload) {
 
@@ -65,9 +35,8 @@ export default {
 
             // Update user details
             //DONE: Modify backend to return user data on login and enable below code
-            commit('UPDATE_USER_INFO', response.data.user, {root: true})
-            commit('UPDATE_USER_ROLES', response.data.roles, {root: true})
-            commit('UPDATE_USER_PERMS', response.data.permissions, {root: true})
+            commit('UPDATE_USER_INFO', response.data, {root: true})
+
 
             // Set bearer token in axios
             commit("SET_BEARER", response.data.access_token)
@@ -85,10 +54,11 @@ export default {
   },
 
   logoutJWT({commit}) {
+    commit("RESET_USER_DETAILS", null, {root: true});
+
     return new Promise((resolve, reject) => {
       jwt.logout()
         .then(response => {
-          commit("RESET_USER_DETAILS", null, {root: true});
           resolve(response)
         })
         .catch(error => {

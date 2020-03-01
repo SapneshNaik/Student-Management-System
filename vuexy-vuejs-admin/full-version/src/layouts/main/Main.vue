@@ -29,7 +29,7 @@
 
     <v-nav-menu
       :navMenuItems="navMenuItems"
-      title="Vuexy"
+      title="SMS"
       parent=".layout--main"/>
 
     <div id="content-area" :class="[contentAreaClass, {'show-overlay': bodyOverlay}]">
@@ -83,32 +83,6 @@
                 <vx-breadcrumb class="ml-4 md:block hidden" v-if="$route.meta.breadcrumb" :route="$route"
                                :isRTL="$vs.rtl"/>
 
-                <!-- DROPDOWN -->
-                <vs-dropdown vs-trigger-click class="ml-auto md:block hidden cursor-pointer">
-                  <vs-button radius icon="icon-settings" icon-pack="feather"/>
-
-                  <vs-dropdown-menu class="w-32">
-                    <vs-dropdown-item>
-                      <div @click="$router.push('/pages/profile').catch(() => {})" class="flex items-center">
-                        <feather-icon icon="UserIcon" class="inline-block mr-2" svgClasses="w-4 h-4"/>
-                        <span>Profile</span>
-                      </div>
-                    </vs-dropdown-item>
-                    <vs-dropdown-item>
-                      <div @click="$router.push('/apps/todo').catch(() => {})" class="flex items-center">
-                        <feather-icon icon="CheckSquareIcon" class="inline-block mr-2" svgClasses="w-4 h-4"/>
-                        <span>Tasks</span>
-                      </div>
-                    </vs-dropdown-item>
-                    <vs-dropdown-item>
-                      <div @click="$router.push('/apps/email').catch(() => {})" class="flex items-center">
-                        <feather-icon icon="MailIcon" class="inline-block mr-2" svgClasses="w-4 h-4"/>
-                        <span>Inbox</span>
-                      </div>
-                    </vs-dropdown-item>
-                  </vs-dropdown-menu>
-
-                </vs-dropdown>
 
               </div>
             </transition>
@@ -251,28 +225,41 @@
     },
     computed: {
       navMenuItems() {
-        let userRoles = localStorage.getItem("user_roles");
-        if (userRoles.includes("Super Admin")) {
-          console.log("User is super admin");
-          return navMenuItems;
-        } else {
 
-          let clone = navMenuItems;
+        // return navMenuItems;
 
-          let userPerms = localStorage.getItem("user_perms");
+        let userRoles = this.$store.state.AppActiveUser.roles;
+
+        let menuItems = null
+
+        userRoles.forEach(function(role) {
+          console.log(role.name === "Super Admin")
+          console.log(role.name === "Super")
+          if(role.name === "Super Admin") {
+              console.log("User is super admin");
+              menuItems = navMenuItems;
+          }
+        })
+        // if (userRoles.includes("Super Admin")) {
+        //   console.log("User is super admin");
+        //   return navMenuItems;
+        // }
+
+        // alert("user is not super admin");
 
 
-          navMenuItems[0].submenu.forEach((val) => {
-            if (val.name === "Registration") {
-              val.submenu.forEach((route) => {
-                if (userPerms.includes(route.name))
-                  console.log("user has permission to " + route.name);
-              });
-            }
-          });
 
-          return clone
-        }
+
+          // navMenuItems[0].submenu.forEach((val) => {
+          //   if (val.name === "Registration") {
+          //     val.submenu.forEach((route) => {
+          //       if (userPerms.includes(route.name))
+          //         console.log("user has permission to " + route.name);
+          //     });
+          //   }
+          // });
+
+          return menuItems
 
       },
 

@@ -34,7 +34,7 @@
           <!-- Information - Col 1 -->
           <div class="vx-col flex-1" id="account-info-col-1">
             <table>
-              <tr>
+              <tr>`
                 <td class="font-semibold">Username</td>
                 <td>{{ user_data.username }}</td>
               </tr>
@@ -67,7 +67,6 @@
               </tr>
             </table>
           </div>
-          <!-- /Information - Col 2 -->
           <div class="vx-col w-full flex" id="account-manage-buttons">
             <vs-button icon-pack="feather" icon="icon-edit" class="mr-4" :to="{name: 'app-user-edit', params: { userId: $route.params.userId }}">Edit</vs-button>
             <vs-button type="border" color="danger" icon-pack="feather" icon="icon-trash" @click="confirmDeleteRecord">Delete</vs-button>
@@ -180,7 +179,6 @@
 </template>
 
 <script>
-import moduleUserManagement from '@/store/user-management/moduleUserManagement.js'
 
 export default {
   data() {
@@ -228,11 +226,6 @@ export default {
     }
   },
   created() {
-    // Register Module UserManagement Module
-    if(!moduleUserManagement.isRegistered) {
-      this.$store.registerModule('userManagement', moduleUserManagement)
-      moduleUserManagement.isRegistered = true
-    }
 
     const userId = this.$route.params.userId
     this.$store.dispatch("userManagement/fetchUser", userId)

@@ -16,8 +16,8 @@
                    :title="null"
                    :subtitle="null" finishButtonText="Submit" @on-complete="createStudent">
         <tab-content title="Account Details" class="mb-5" icon="feather icon-log-in" :before-change="validateStep1">
-          <create-user-profile role="Student"
-                               ref="cup" :user="studentUserModel"></create-user-profile>
+          <base-user-create role="Student"
+                            ref="cup" :user="studentUserModel"></base-user-create>
         </tab-content>
 
         <!-- tab 2 content -->
@@ -34,7 +34,7 @@
               </div>
 
               <div class="vx-col sm:w-1/2 w-full mb-2">
-                <vs-select class="w-full" v-model="studentProfileData.gender" label="Prefix">
+                <vs-select class="w-full" v-model="studentProfileData.gender" label="Gender">
                   <vs-select-item :key="index" :value="item" :text="item" v-for="(item,index) in genders"
                                   class="w-full"/>
                 </vs-select>
@@ -195,9 +195,9 @@
           </vx-card>
 
           <vx-card v-if='parentExists === "false" || parentUserModel.id' title="Parent Account Details" class="mb-base">
-            <create-user-profile role="Parent" :user="parentUserModel"
+            <base-user-create role="Parent" :user="parentUserModel"
                                  :read_only="!!(parentUserModel.id)"
-                                 ref="parent_cup"></create-user-profile>
+                                 ref="parent_cup"></base-user-create>
           </vx-card>
 
           <vx-card v-if='parentExists === "false" || parentProfile.user_id' title="Parent Profile Details"
@@ -213,7 +213,7 @@
 
     <div class="vx-col w-full" id="create_progress" v-if="creating">
 
-      <vx-card title="Creating Admin" class="mb-base">
+      <vx-card title="Creating Student" class="mb-base">
         <span :class="progressTextClass">{{ progressMessage }}</span>
         <vs-progress :height="10" :percent="progress" :color="progressColor"></vs-progress>
       </vx-card>
@@ -225,7 +225,7 @@
 <script>
   import {FormWizard, TabContent} from 'vue-form-wizard'
   import 'vue-form-wizard/dist/vue-form-wizard.min.css'
-  import CreateUserProfile from "../user/CreateUserProfile";
+  import BaseUserCreate from "../user/BaseUserCreate";
   import constants from "../../../constants";
   import {Validator} from 'vee-validate';
   import jwt from '@/http/requests/auth/jwt/index.js';
@@ -255,7 +255,7 @@
       ParentCreateForm,
       FormWizard,
       TabContent,
-      CreateUserProfile,
+      BaseUserCreate,
       VueSimpleSuggest
     },
     data() {
@@ -276,7 +276,7 @@
 
         studentUserModel: commons.getBaseUserModel("Student"),
 
-        parentProfile: this.getBaseParentProfile(),
+        parentProfile: commons.getBaseParentProfile(),
 
         creating: false,
         progress: 0,
@@ -306,6 +306,7 @@
             text: this.studentProfileData.first_name + " is added to the system",
             iconPack: 'feather',
             icon: 'icon-alert-circle',
+            position: 'top-right',
             color: 'success'
           });
 
@@ -336,37 +337,12 @@
         }
       },
 
-      getBaseParentProfile() {
-        return {
-          staff_id: "",
-          father_full_name: "",
-          mother_full_name: "",
-          father_qualification: "",
-          mother_qualification: "",
-          father_contact_number: "",
-          mother_contact_number: "",
-          father_profession: "",
-          mother_profession: "",
-          father_designation: "",
-          mother_designation: "",
-          father_net_annual_income: "",
-          mother_net_annual_income: "",
-          father_pan: "",
-          mother_pan: "",
-          is_father_alumni: false,
-          is_mother_alumni: false,
-          father_joining_year: "",
-          mother_joining_year: "",
-          father_leaving_year: "",
-          mother_leaving_year: "",
-        }
-      },
 
       resetData() {
         this.studentProfileData = this.getBaseStudentProfile()
         this.parentUserModel = commons.getBaseUserModel("Parent");
         this.studentUserModel = commons.getBaseUserModel("Student");
-        this.parentProfile = this.getBaseParentProfile()
+        this.parentProfile = commons.getBaseParentProfile()
       },
 
       resetProgress() {
@@ -478,14 +454,20 @@
 
                   jwt.createParentProfile(userParentResponse.data.user.id, this.parentProfile)
                     .then((userParentProfileResponse) => {
+
+                      userParentProfileResponse.data['parent']['user'] = userParentResponse.data.user;
+
+                      this.$store.dispatch("userManagement/upsertToState",
+                        {type: "Parent", data: userParentProfileResponse.data.parent});
+
+
                       this.progressUpdate("Creating Student Profile...", progressIncrementStep);
 
                       console.log(userParentProfileResponse);
 
                       this.studentProfileData.parent_id = userParentResponse.data.user.id;
 
-                      this.createStudentProfile(userResponse.data.user.id,
-                        this.studentProfileData, progressIncrementStep)
+                      this.createStudentProfile(userResponse, this.studentProfileData, progressIncrementStep)
 
                     })
                     .catch((error) => {
@@ -504,7 +486,7 @@
 
               this.studentProfileData.parent_id = this.parentProfile.user_id;
 
-              this.createStudentProfile(userResponse.data.user.id, this.studentProfileData, progressIncrementStep)
+              this.createStudentProfile(userResponse, this.studentProfileData, progressIncrementStep)
             }
 
           })
@@ -516,13 +498,23 @@
 
       },
 
-      createStudentProfile(user_id, data, progressIncrementStep) {
-        jwt.createStudentProfile(user_id, data).then(() => {
-          this.progressUpdate("Student Created!", progressIncrementStep);
-        }).catch((error) => {
-          this.progressError("Failed to create Student profile", error);
-          console.log(error)
-        })
+      createStudentProfile(userResponse, data, progressIncrementStep) {
+        return new Promise((resolve, reject) => {
+
+          jwt.createStudentProfile(userResponse.data.user.id, data).then((studResponse) => {
+            this.progressUpdate("Student Created!", progressIncrementStep);
+            studResponse.data['student']['user'] = userResponse.data.user;
+
+            this.$store.dispatch("userManagement/upsertToState",
+              {type: "Student", data: studResponse.data.student});
+
+            resolve(studResponse)
+          }).catch((error) => {
+            this.progressError("Failed to create Student profile", error);
+            console.log(error)
+            reject(error)
+          })
+        });
       },
 
       searchParents(inputValue) {

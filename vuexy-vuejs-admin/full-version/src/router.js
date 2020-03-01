@@ -61,51 +61,61 @@ const router = new Router({
         {
           path: '/user/:id/profile',
           name: 'sms-user-profile',
-          component: () => import('@/views/pages/user/UserProfile.vue'),
+          props: true,
+          component: () => import('@/views/pages/user/Profile.vue'),
           meta: {
             //TODO: change this
             breadcrumb: [
               {title: 'Home', url: '/dashboard/sms'},
               {title: 'Profile', active: true},
             ],
-
+            authRequired: 'true',
             pageTitle: 'Profile',
-            rule: 'editor'
+            rule: 'editor',
+            no_scroll: true,
           },
         },
 
         {
-          path: '/user/:userId/edit',
+          path: '/user/:id/edit',
           name: 'sms-user-profile-edit',
           props: true,
-          component: () => import('@/views/pages/user/UserProfileEdit.vue'),
+          component: () => import('@/views/pages/user/ProfileEdit.vue'),
           meta: {
             breadcrumb: [
               {title: 'Home', url: '/dashboard/sms'},
+              {title: 'Profile', url: '/dashboard/sms'},
               {title: 'Edit Profile', active: true},
             ],
+
+            authRequired: 'true',
             pageTitle: 'Edit Profile',
-            rule: 'editor'
+            rule: 'editor',
+            no_scroll: true,
           },
         },
 
         {
-          path: '/dashboard/sms/register/admins',
-          name: 'sms-register-admins',
+          path: '/dashboard/sms/register/admin',
+          name: 'sms-register-admin',
           props: true,
           component: () => import('@/views/pages/admin/AdminCreateWizard.vue'),
           meta: {
-            rule: 'editor'
+            rule: 'editor',
+            authRequired: 'true',
+            no_scroll: true,
           },
         },
 
         {
-          path: '/dashboard/sms/register/students',
-          name: 'sms-register-students',
+          path: '/dashboard/sms/register/student',
+          name: 'sms-register-student',
           props: true,
           component: () => import('@/views/pages/student/StudentCreateWizard.vue'),
           meta: {
-            rule: 'editor'
+            rule: 'editor',
+            authRequired: 'true',
+            no_scroll: true,
           },
         },
         {
@@ -114,9 +124,60 @@ const router = new Router({
           props: true,
           component: () => import('@/views/pages/staff/StaffCreateWizard.vue'),
           meta: {
-            rule: 'editor'
+            rule: 'editor',
+            authRequired: 'true',
+            no_scroll: true,
           },
         },
+
+        {
+          path: '/dashboard/sms/view/admins',
+          name: 'sms-view-admins',
+          props: true,
+          component: () => import('@/views/pages/admin/AdminTable.vue'),
+          meta: {
+            rule: 'editor',
+            authRequired: 'true',
+            no_scroll: true,
+          },
+        },
+
+        {
+          path: '/dashboard/sms/view/parents',
+          name: 'sms-view-parents',
+          props: true,
+          component: () => import('@/views/pages/parent/ParentTable.vue'),
+          meta: {
+            rule: 'editor',
+            authRequired: 'true',
+            no_scroll: true,
+          },
+        },
+
+        {
+          path: '/dashboard/sms/view/staff',
+          name: 'sms-view-staff',
+          props: true,
+          component: () => import('@/views/pages/staff/StaffTable.vue'),
+          meta: {
+            rule: 'editor',
+            authRequired: 'true',
+            no_scroll: true,
+          },
+        },
+        {
+          path: '/dashboard/sms/view/students',
+          name: 'sms-view-students',
+          props: true,
+          component: () => import('@/views/pages/student/StudentTable.vue'),
+          meta: {
+            rule: 'editor',
+            authRequired: 'true',
+            no_scroll: true,
+          },
+        },
+
+
         {
           path: '/dashboard/ecommerce',
           name: 'dashboard-ecommerce',

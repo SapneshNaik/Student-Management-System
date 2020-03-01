@@ -1,12 +1,12 @@
 <template>
-  <vx-card title="Register New Parent">
+  <vx-card title="Register New Staff">
 
     <div class="mt-5">
       <form-wizard ref="fw" v-if="!creating" color="rgba(var(--vs-primary), 1)" errorColor="rgba(var(--vs-danger), 1)"
                    :title="null"
                    :subtitle="null" finishButtonText="Submit" @on-complete="createStaff">
         <tab-content title="Account Details" class="mb-5" icon="feather icon-log-in" :before-change="validateStep1">
-          <create-user-profile role="Student" ref="cup" :user="staffUserModel"></create-user-profile>
+          <base-user-create role="Student" ref="cup" :user="staffUserModel"></base-user-create>
         </tab-content>
 
         <!-- tab 2 content -->
@@ -23,7 +23,7 @@
               </div>
 
               <div class="vx-col sm:w-1/2 w-full mb-2">
-                <vs-select class="w-full" v-model="staffProfileData.gender" label="Prefix">
+                <vs-select class="w-full" v-model="staffProfileData.gender" label="Gender">
                   <vs-select-item :key="index" :value="item" :text="item" v-for="(item,index) in genders"
                                   class="w-full"/>
                 </vs-select>
@@ -97,7 +97,7 @@
 <script>
   import {FormWizard, TabContent} from 'vue-form-wizard'
   import 'vue-form-wizard/dist/vue-form-wizard.min.css'
-  import CreateUserProfile from "../user/CreateUserProfile";
+  import BaseUserCreate from "../user/BaseUserCreate";
   import constants from "../../../constants";
   import {Validator} from 'vee-validate';
   import jwt from '@/http/requests/auth/jwt/index.js';
@@ -125,7 +125,7 @@
     components: {
       FormWizard,
       TabContent,
-      CreateUserProfile,
+      BaseUserCreate,
       RoleAssign
     },
     data() {
@@ -136,7 +136,7 @@
 
         staffProfileData: this.getBaseStaffProfile(),
 
-        staffUserModel: commons.getBaseUserModel("Model"),
+        staffUserModel: commons.getBaseUserModel("Staff"),
 
         creating: false,
         progress: 0,
@@ -156,6 +156,7 @@
             text: this.staffProfileData.first_name + " is added to the system",
             iconPack: 'feather',
             icon: 'icon-alert-circle',
+            position:'top-right',
             color: 'success'
           });
 
@@ -263,14 +264,20 @@
 
         this.progressUpdate("Creating Staff Base Profile...", 0);
 
-        jwt.createUser(this.userData)
+        jwt.createUser(this.staffUserModel)
           .then((userResponse) => {
 
             this.progressUpdate("Creating Staff Profile...", progressIncrementStep);
 
             jwt.createStaffProfile(userResponse.data.user.id, this.staffProfileData)
-              .then(() => {
-                // this.progressUpdate("Creating Admin Profile...", progressIncrementStep);
+              .then((staffResponse) => {
+
+                staffResponse.data['staff']['user'] = userResponse.data.user;
+
+                this.$store.dispatch("userManagement/upsertToState",
+                  {type: "Staff", data :staffResponse.data.staff});
+
+                this.progressUpdate("Assigning roles to Staff...", progressIncrementStep);
 
                 //assigning roles
                 roleData.forEach(async (role) => {

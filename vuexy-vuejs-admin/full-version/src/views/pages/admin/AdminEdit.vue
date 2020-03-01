@@ -11,10 +11,7 @@
   <div id="user-edit-admin-profile">
 
 
-
     <!-- Content Row -->
-
-
 
 
     <div class="vx-row mb-6">
@@ -39,7 +36,7 @@
         <vs-input class="w-full mt-4" label="Last Name" v-model="data_local.last_name" v-validate="'max:50|min:3|alpha'"
                   name="last_name"/>
         <span class="text-danger text-sm"
-              v-show="errors.has('last_name')">{{ errors.first('last_name') }}</span>      </div>
+              v-show="errors.has('last_name')">{{ errors.first('last_name') }}</span></div>
     </div>
 
     <div class="vx-row">
@@ -59,7 +56,6 @@
 
 <script>
   import vSelect from 'vue-select'
-  import moduleUserManagement from '@/store/user-management/moduleUserManagement.js'
   import constants from "../../../constants";
 
   export default {
@@ -101,12 +97,15 @@
             this.$vs.loading.close("#save > .con-vs-loading");
 
             this.$vs.notify({
-              title: 'Profile Update',
-              text: 'Admin details updated!',
+              title: 'User Update',
+              text: 'Admin Profile details updated!',
               iconPack: 'feather',
               icon: 'icon-alert-circle',
               color: 'success'
-            })
+            });
+
+            this.$store.dispatch("userManagement/upsertToState",
+              {type: "Admin", data: this.data_local});
 
           })
           .catch(error => {
@@ -146,11 +145,5 @@
       },
 
     },
-    created() {
-      if (!moduleUserManagement.isRegistered) {
-        this.$store.registerModule('userManagement', moduleUserManagement);
-        moduleUserManagement.isRegistered = true
-      }
-    }
   }
 </script>

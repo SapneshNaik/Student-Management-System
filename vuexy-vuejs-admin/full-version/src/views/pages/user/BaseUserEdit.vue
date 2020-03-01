@@ -41,7 +41,8 @@
                   name="email"/>
         <span class="text-danger text-sm" v-show="errors.has('email')">{{ errors.first('email') }}</span>
 
-        <vs-input class="w-full mt-4" label="Password" v-model="password"  ref="password" v-validate="'min:6|alpha'" type="password"
+        <vs-input class="w-full mt-4" label="Password" v-model="password" ref="password" v-validate="'min:6|alpha'"
+                  type="password"
                   name="password"/>
         <span class="text-danger text-sm" v-show="errors.has('password')">{{ errors.first('password') }}</span>
 
@@ -59,7 +60,8 @@
                     v-validate="'max:13|min:10'" name="alternate_phone_number"/>
           <span class="text-danger text-sm" v-show="errors.has('alternate_phone_number')">{{ errors.first('alternate_phone_number') }}</span>
 
-          <vs-input class="w-full mt-4" label="Confirm Password" v-model="confirm_password" v-validate="'min:6|confirmed:password'"
+          <vs-input class="w-full mt-4" label="Confirm Password" v-model="confirm_password"
+                    v-validate="'min:6|confirmed:password'"
                     type="password" name="password_confirmation"/>
           <span class="text-danger text-sm" v-show="errors.has('password_confirmation')">{{ errors.first('password_confirmation') }}</span>
 
@@ -122,7 +124,8 @@
     <div class="vx-row">
       <div class="vx-col w-full">
         <div class="mt-8 flex flex-wrap items-center justify-end">
-          <vs-button class="ml-auto mt-2" @click="save_changes" id="save" :disabled="!validateForm">Save Changes</vs-button>
+          <vs-button class="ml-auto mt-2" @click="save_changes" id="save" :disabled="!validateForm">Save Changes
+          </vs-button>
           <vs-button class="ml-4 mt-2" type="border" color="warning" @click="reset_data">Reset</vs-button>
         </div>
       </div>
@@ -132,7 +135,6 @@
 
 <script>
   import vSelect from 'vue-select'
-  import moduleUserManagement from '@/store/user-management/moduleUserManagement.js'
 
   export default {
     components: {
@@ -150,17 +152,6 @@
         confirm_password: null,
 
         data_local: JSON.parse(JSON.stringify(this.data)),
-
-        statusOptions: [
-          {label: "Active", value: "active"},
-          {label: "Blocked", value: "blocked"},
-          {label: "Deactivated", value: "deactivated"},
-        ],
-        roleOptions: [
-          {label: "Admin", value: "admin"},
-          {label: "User", value: "user"},
-          {label: "Staff", value: "staff"},
-        ],
       }
     },
     computed: {
@@ -192,18 +183,27 @@
       save_changes() {
         if (!this.validateForm) return;
 
-        console.log(this.data_local);
-        console.log(this.password);
-
-        if(this.password) this.data_local.password = this.password;
+        if (this.password) this.data_local.password = this.password;
 
         this.$vs.loading({
-          'container' : "#save",
+          'container': "#save",
           'scale': 0.45
         })
 
         this.$store.dispatch("userManagement/updateUser", this.data_local)
           .then(() => {
+
+            let profileData = {
+              user_id: this.data_local.id,
+              user: this.data_local
+            }
+
+            this.$store.dispatch('userManagement/upsertToState', {
+              data: profileData,
+              type: this.data_local.base_role
+            })
+
+
             this.$vs.loading.close("#save > .con-vs-loading");
 
             this.$vs.notify({
@@ -259,11 +259,5 @@
         // We haven't integrated it here, because data isn't saved in DB
       }
     },
-    created() {
-      if (!moduleUserManagement.isRegistered) {
-        this.$store.registerModule('userManagement', moduleUserManagement);
-        moduleUserManagement.isRegistered = true
-      }
-    }
   }
 </script>

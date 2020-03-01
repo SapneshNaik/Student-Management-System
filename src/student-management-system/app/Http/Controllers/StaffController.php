@@ -37,8 +37,8 @@ class StaffController extends Controller
     {
         return  QueryBuilder::for(Staff::class)
             ->allowedFilters([AllowedFilter::exact('gender')])
-            ->allowedIncludes(['user'])
-            ->simplePaginate(15)
+            ->allowedIncludes(['user', 'user.roles',  'user.updater'])
+            ->paginate(15)
             ->appends(request()->query());
     }
 
@@ -65,10 +65,11 @@ class StaffController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        Staff::create(array_merge($validator->validated(), ['user_id' => $user->id]));
+        $staff = Staff::create(array_merge($validator->validated(), ['user_id' => $user->id]));
 
         return response()->json([
-            'message' => "Staff profile created successfully!"
+            'message' => "Staff profile created successfully!",
+            'staff' => $staff
         ], 201);
     }
 

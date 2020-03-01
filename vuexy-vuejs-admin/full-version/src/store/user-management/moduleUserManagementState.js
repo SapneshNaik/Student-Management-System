@@ -9,4 +9,10 @@
 
 export default {
   users: [],
+  admins:[],
+  parents:[],
+  staffs:[],
+  students:[],
+  roles: [],
+  permissions: [],
 }

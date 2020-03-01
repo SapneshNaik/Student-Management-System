@@ -39,8 +39,8 @@ class AdminController extends Controller
             ->allowedFilters([
                 AllowedFilter::exact('prefix'),
                 AllowedFilter::exact('is_super_admin')])
-            ->allowedIncludes(['user'])
-            ->simplePaginate(15)
+            ->allowedIncludes(['user', 'user.roles', 'user.updater'])
+            ->paginate(15)
             ->appends(request()->query());
     }
 
@@ -67,11 +67,12 @@ class AdminController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        Admin::create(array_merge($validator->validated(), ['user_id' => $user->id,
+        $admin = Admin::create(array_merge($validator->validated(), ['user_id' => $user->id,
             'is_super_admin' => false]));
 
         return response()->json([
-            'message' => "Admin profile created successfully!"
+            'message' => "Admin profile created successfully!",
+            'admin' => $admin
         ], 201);
     }
 

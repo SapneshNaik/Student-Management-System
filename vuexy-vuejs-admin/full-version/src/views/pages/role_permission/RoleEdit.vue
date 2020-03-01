@@ -113,12 +113,16 @@
 
   import draggable from "vuedraggable";
 
+  import jwt from '@/http/requests/auth/jwt/index.js'
+
   export default {
     components: {
       draggable
     },
     data() {
       return {
+        allRoles: [],
+        allPerms: [],
         password: '',
         assignedRoles: [],
 
@@ -127,15 +131,6 @@
     },
 
     computed: {
-
-      allRoles() {
-        return this.$store.state.userManagement.roles;
-      },
-
-      allPerms() {
-        return this.$store.state.userManagement.permissions;
-      },
-
       assignedPerms: function () {
         let result = [];
         this.assignedRoles.forEach(function (item) {
@@ -159,32 +154,42 @@
         this.assignedRoles.splice(index, 1);
       },
 
-      fetchAllRoles() {
-        this.$store.dispatch("userManagement/getAllRoles").then(() => {
+      fetchAllRoles: function () {
 
-          this.$vs.notify({
-            title:'Sync Update',
-            text:'Role records synced with server',
-            color:'success',
-            position:'top-right'})
+        jwt.getAllRolesWithPerms()
+          .then((response) => {
+            this.allRoles = response
+          })
+          .catch((error) => {
 
-        }).catch((error) => {
-          console.log(error);
-        });
-      },
+            this.$vs.notify({
+              title: 'Error fetching roles',
+              text: error.response.status,
+              iconPack: 'feather',
+              icon: 'icon-alert-circle',
+              color: 'danger'
+            })
 
-      fetchAllPermissions() {
-        this.$store.dispatch("userManagement/getAllPermissions").then(() => {
+            console.log(error)
+          })
 
-          this.$vs.notify({
-            title:'Sync Update',
-            text:'Permission records synced with server',
-            color:'success',
-            position:'top-right'})
+        jwt.getAllPerms()
+          .then((response) => {
+            this.allPerms = response
+          })
+          .catch((error) => {
+            console.log(error);
 
-        }).catch((error) => {
-          console.log(error);
-        });
+            this.$vs.notify({
+              title: 'Error fetching permissions',
+              text: error.response.status,
+              iconPack: 'feather',
+              icon: 'icon-alert-circle',
+              color: 'danger'
+            })
+
+          })
+
       },
 
       validatePassword: function () {
@@ -202,7 +207,6 @@
 
     created() {
       this.fetchAllRoles()
-      this.fetchAllPermissions()
     }
   }
 </script>

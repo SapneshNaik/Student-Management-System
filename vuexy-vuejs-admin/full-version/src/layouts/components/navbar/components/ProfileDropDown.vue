@@ -18,7 +18,7 @@
 
           <li
             class="flex py-2 px-4 cursor-pointer hover:bg-primary hover:text-white"
-            @click="$router.push({name: 'sms-user-profile', params: { id: activeUserInfo.id }}).catch(() => {})">
+            @click="$router.push({name: 'sms-user-profile', params: { id: activeUserInfo.id, role: activeUserInfo.base_role }}).catch(() => {})">
             <feather-icon icon="UserIcon" svgClasses="w-4 h-4"/>
             <span class="ml-2">Profile</span>
           </li>
@@ -67,6 +67,8 @@
 
 <script>
 
+  import commons from "../../../../commons";
+
   export default {
     data() {
       return {}
@@ -80,6 +82,10 @@
     methods: {
       logoutJWT() {
 
+        commons.clearLocalStorage();
+
+        this.$router.push('/login');
+
         this.$store.dispatch("auth/logoutJWT")
           // eslint-disable-next-line
           .then(res => {
@@ -92,13 +98,10 @@
             });
 
             this.$acl.change('admin');
-
-            this.$router.push('/login');
-
           })
           .catch(err => {
             this.$vs.notify({
-              text: 'Error logging out',
+              text: err.message,
               iconPack: 'feather',
               icon: 'icon-log-out',
               color: 'error'
@@ -107,7 +110,6 @@
             // this.$router.push('/login');
 
             console.log("logout")
-            console.error(err)
           });
 
       },

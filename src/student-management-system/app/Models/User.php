@@ -15,7 +15,7 @@ class User extends Authenticatable
     use Notifiable, HasApiTokens, SoftDeletes, HasRoles;
 
     protected $guard_name = 'api';
-
+    protected $appends = ['all_permissions'];
 
     protected $fillable = [
         'login_id',
@@ -90,13 +90,25 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\StudentParent');
     }
 
+    public function updater(){
+        return $this->belongsTo('App\Models\User', 'last_updated_by', 'id');
+    }
+
+    public function profile(){
+        switch ($this->base_role){
+            case "Admin":
+                return $this->admin;
+            case "Staff":
+                return $this->staff;
+            case "Student":
+                return $this->student;
+            case "Parent":
+                return $this->parent;
+            default:
+                return null;
+        }
+    }
     public function getAllPermissionsAttribute(){
         return $this->getAllPermissions()->map->only(['id', 'name']);
-//        return $this->getAllPermissions()->filter(function ($value, $key){
-////            print($key);
-//            error_log($value);
-//
-//            return $key == 'id' || $key == 'name';
-//        });
     }
 }

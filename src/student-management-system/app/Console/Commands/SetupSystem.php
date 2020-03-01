@@ -49,9 +49,16 @@ class SetupSystem extends Command
 
         $this->line('------------- Setting Up Permissions:');
 
+        $role = Role::where('name', Constants::ROLES['SUPER_ADMIN'])->first();
+
+
+
         foreach (Constants::PERMISSIONS as $perm => $value) {
             $perm = Permission::updateOrCreate(['name' => $value,
                 'guard_name' => 'api']);
+
+            $role->givePermissionTo($perm);
+
             $this->info("Created " . $perm->name . " Permission");
         }
 

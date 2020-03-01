@@ -42,22 +42,22 @@ export default [
         icon: "UserPlusIcon",
         submenu: [
           {
-            url: '/dashboard/sms/register/admins',
-            name: "Register Admin",
-            slug: "dashboard-sms-register-admins",
-            i18n: "Register Admin",
-          },
-          {
-            url: '/dashboard/sms/register/students',
-            name: "Register Student",
-            slug: "dashboard-sms-register-students",
-            i18n: "Register Student",
+            url: '/dashboard/sms/register/admin',
+            name: "RegisterAdmin",
+            slug: "dashboard-sms-register-admin",
+            i18n: "RegisterAdmin",
           },
           {
             url: '/dashboard/sms/register/staff',
             name: "Register Staff",
             slug: "dashboard-sms-register-staff",
-            i18n: "Register Staff",
+            i18n: "RegisterStaff",
+          },
+          {
+            url: '/dashboard/sms/register/student',
+            name: "Register Student",
+            slug: "dashboard-sms-register-student",
+            i18n: "RegisterStudent",
           },
         ]
       },
@@ -69,28 +69,28 @@ export default [
         icon: "EyeIcon",
         submenu: [
           {
-            url: '/dashboard/sms/view_admins',
+            url: '/dashboard/sms/view/admins',
             name: "View Admins",
             slug: "dashboard-sms-register-admins",
-            i18n: "View Admins",
+            i18n: "ViewAdmins",
           },
           {
-            url: '/dashboard/sms/view_parents',
+            url: '/dashboard/sms/view/parents',
             name: "View Parents",
             slug: "dashboard-sms-register-parents",
-            i18n: "View Parents",
+            i18n: "ViewParents",
           },
           {
-            url: '/dashboard/sms/view_students',
-            name: "View Students",
-            slug: "dashboard-sms-view-students",
-            i18n: "View Students",
-          },
-          {
-            url: '/dashboard/sms/view_staff',
+            url: '/dashboard/sms/view/staff',
             name: "View Staff",
             slug: "dashboard-sms-view-staff",
-            i18n: "View Staff",
+            i18n: "ViewStaff",
+          },
+          {
+            url: '/dashboard/sms/view/students',
+            name: "View Students",
+            slug: "dashboard-sms-view-students",
+            i18n: "ViewStudents",
           },
         ]
       },

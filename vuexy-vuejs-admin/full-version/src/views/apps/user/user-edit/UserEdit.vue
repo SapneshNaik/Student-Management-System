@@ -51,7 +51,6 @@ import UserEditTabInformation from "./UserEditTabInformation.vue"
 import UserEditTabSocial      from "./UserEditTabSocial.vue"
 
 // Store Module
-import moduleUserManagement from '@/store/user-management/moduleUserManagement.js'
 
 export default {
   components: {
@@ -88,15 +87,8 @@ export default {
           }
           console.error(err) })
     }
-  },
-  created() {
-    // Register Module UserManagement Module
-    if(!moduleUserManagement.isRegistered) {
-      this.$store.registerModule('userManagement', moduleUserManagement)
-      moduleUserManagement.isRegistered = true
-    }
-    this.fetch_user_data(this.$route.params.userId)
   }
+
 }
 
 </script>

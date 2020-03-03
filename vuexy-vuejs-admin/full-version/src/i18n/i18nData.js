@@ -11,6 +11,12 @@ export default {
     ViewStaff: "View Staff",
     ViewStudents: "View Students",
     ViewParents: "View Parents",
+    ViewPerms: "View Permissions",
+
+    CreateRole: "Create Role",
+    ViewRole: "View Roles",
+    AccessControl: "Access Control",
+    Settings: "Settings",
 
 		eCommerce: 'eCommerce',
 		Apps: 'Apps',
@@ -114,7 +120,6 @@ export default {
 		DragAndDrop: 'Drag & Drop',
 		Datepicker: 'Datepicker',
     DatetimePicker: 'Datetime Picker',
-		AccessControl: 'Access Control',
 		I18n: 'I18n',
 		Carousel: 'Carousel',
 		Clipboard: 'Clipboard',

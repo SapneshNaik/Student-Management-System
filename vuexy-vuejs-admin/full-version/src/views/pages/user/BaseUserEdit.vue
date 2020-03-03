@@ -216,33 +216,18 @@
 
           })
           .catch(error => {
+
+            console.log(error);
+
             this.$vs.loading.close("#save > .con-vs-loading");
 
-            if (error.response) {
-              let errors = Object.values(error.response.data);
-              errors = errors.flat();
-
-              console.log(errors)
-
-
-              errors.forEach((error) => {
-                this.$vs.notify({
-                  title: 'Error',
-                  text: error,
-                  iconPack: 'feather',
-                  icon: 'icon-alert-circle',
-                  color: 'danger'
-                })
-              });
-            } else {
               this.$vs.notify({
                 title: 'Error',
-                text: error.message,
+                text: "Error updting",
                 iconPack: 'feather',
                 icon: 'icon-alert-circle',
                 color: 'danger'
               })
-            }
           })
 
       },
@@ -253,11 +238,10 @@
         this.confirm_password = null
       },
 
-      update_avatar() {
-        // You can update avatar Here
-        // For reference you can check dataList example
-        // We haven't integrated it here, because data isn't saved in DB
-      }
+      update_avatar(){
+
+      },
+
     },
   }
 </script>

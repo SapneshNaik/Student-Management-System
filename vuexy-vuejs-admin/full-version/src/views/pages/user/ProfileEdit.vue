@@ -45,9 +45,10 @@
             </div>
           </vs-tab>
 
-          <vs-tab label="Roles" icon-pack="feather" icon="icon-shield" v-if="addressTab">
-            <div class="tab-text" v-if="address_data">
-              <user-edit-tab-social class="mt-4" :data="address_data"/>
+          <vs-tab label="Roles" icon-pack="feather" icon="icon-shield" v-if="roleTab">
+            <div class="tab-text">
+              <user-role-edit class="mt-4" :data="role_data" ref="ure"/>
+
             </div>
           </vs-tab>
 
@@ -67,6 +68,7 @@
   import BaseUserEdit from "./BaseUserEdit";
   import StudentEdit from "../student/StudentEdit";
   import StaffEdit from "../staff/StaffEdit";
+  import UserRoleEdit from "../role_permission/UserRoleEdit";
 
   // Store Module
 
@@ -77,7 +79,8 @@
       ParentEdit,
       BaseUserEdit,
       StudentEdit,
-      StaffEdit
+      StaffEdit,
+      UserRoleEdit
     },
     props: {
       role: {
@@ -136,7 +139,7 @@
       role_data() {
 
         if (this.all_user_data) {
-          return this.all_user_data.user;
+          return this.all_user_data.user.roles;
         } else {
           return {};
         }
@@ -144,16 +147,22 @@
       },
 
       accountTab: function () {
-        return (this.user_data !== undefined);
+        return true;
       },
 
       profileTab: function () {
-        return (this.profile_data !== undefined);
+        return true;
       },
 
       addressTab: function () {
-        return (this.address_data !== undefined);
+        // return (this.address_data !== undefined);
+        return true;
       },
+
+      roleTab: function () {
+        return ["Admin", "Staff"].includes(this.user_data.base_role);
+      },
+
     },
     methods: {
 

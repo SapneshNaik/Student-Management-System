@@ -56,6 +56,20 @@ export default {
     })
   },
 
+
+  fetchRole(context, id) {
+    return new Promise((resolve, reject) => {
+      jwt.getRole(id)
+        .then((response) => {
+          resolve(response)
+        })
+        .catch((error) => {
+          reject(error)
+        })
+    })
+  },
+
+
   updateUser({commit}, payload) {
     return new Promise((resolve, reject) => {
       jwt.putUser(payload)
@@ -376,7 +390,7 @@ export default {
     });
   },
 
-  upsertToState({commit, rootState }, payload) {
+  upsertToState({commit, rootState}, payload) {
     switch (payload.type) {
       case "Admin":
         commit('ADD_OR_UPDATE_ADMIN', payload.data);
@@ -390,12 +404,27 @@ export default {
       case "Student":
         commit('ADD_OR_UPDATE_STUDENT', payload.data);
         break;
+      case "Role":
+        commit('ADD_OR_UPDATE_ROLE', payload.data);
+        break;
+
       default:
         throw "invalid role in upsertToState"
     }
 
     if (payload.data.user_id === rootState.AppActiveUser.id) {
       commit('UPDATE_USER_PROFILE', payload.data, {root: true})
+    }
+  },
+
+
+  deleteRecord({commit}, payload) {
+    switch (payload.type) {
+      case "Role":
+        commit('REMOVE_ROLE', payload.data);
+        break;
+      default:
+        throw "invalid role " + payload.type + " in upsertToState"
     }
   }
 }

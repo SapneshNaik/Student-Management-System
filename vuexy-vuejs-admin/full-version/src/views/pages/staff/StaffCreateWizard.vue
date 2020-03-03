@@ -211,7 +211,7 @@
 
       validateStep3() {
         this.$refs.rsa.validatePassword();
-        return (!(this.$refs.rsa.assignedRolesUnique.length > 0 && !this.$refs.rsa.password));
+        return (!(this.$refs.rsa.assignedRoles.length > 0 && !this.$refs.rsa.password));
       },
 
       progressError(message, error) {
@@ -256,7 +256,7 @@
 
         this.creating = true;
 
-        let roleData = this.$refs.rsa.assignedRolesUnique;
+        let roleData = this.$refs.rsa.assignedRoles;
         let authPassword = this.$refs.rsa.password;
 
         let numOfRequests = 2 + roleData.length;
@@ -280,7 +280,7 @@
                 this.progressUpdate("Assigning roles to Staff...", progressIncrementStep);
 
                 //assigning roles
-                roleData.forEach(async (role) => {
+                roleData.forEach(async (role) => {``
                   try {
                     let roleAssignmentResponse = await jwt.assignRoleToUser(userResponse.data.user.id, role.id, authPassword);
                     // const data = await roleAssignmentResponse;

@@ -18,34 +18,40 @@ export default {
 
       case "Admin":
         all_user_data = state.userManagement.admins.find(obj => {
-          return obj.user.id === id;
+          return obj.user.id == id;
         });
-
-        console.log("found admin" + all_user_data)
         break;
 
       case "Staff":
         all_user_data = state.userManagement.staffs.find(obj => {
-          return obj.user.id === id;
+          return obj.user.id == id;
         });
         break;
 
       case "Student":
         all_user_data = state.userManagement.students.find(obj => {
-          return obj.user.id === id;
+          return obj.user.id == id;
         });
 
         break;
 
       case "Parent":
         all_user_data = state.userManagement.parents.find(obj => {
-          return obj.user.id === id;
+          return obj.user.id == id;
+        });
+        break;
+
+      case "Role":
+        all_user_data = state.userManagement.roles.find(obj => {
+          return obj.id == id;
         });
         break;
 
       default:
         break;
     }
+
+    console.log("found " + role + "  " + all_user_data)
 
     return all_user_data;
 
@@ -58,6 +64,16 @@ export default {
       });
       targetElement ? Object.assign(targetElement, sourceElement) : target.push(sourceElement);
     })
+  },
+
+  removeObjectByProperty: function (target, id, prop) {
+    const i = target.findIndex(_item => _item[prop] === id);
+
+    if (i > -1) {
+      target.splice(i, 1)
+    } else {
+      throw "Object with " + prop + " not found in array"
+    }
   },
 
   getBaseParentProfile() {
@@ -102,30 +118,32 @@ export default {
     localStorage.removeItem('user_roles');
   },
 
-  upsertSort(source, newItem) {
-    const i = source.findIndex(_item => _item.user_id === newItem.user_id);
+  upsertSort(source, newItem, prop = "user_id") {
+    const i = source.findIndex(_item => _item[prop] === newItem[prop]);
     if (i > -1) {
-      // source[i] = newItem;
       for (const property of Object.keys(newItem)) {
         source[i][property] = newItem[property]
       }
     } else {
       source.push(newItem);
     }
-
-    source.sort(this.compare);
-
   },
 
-  compare(a, b) {
-    if (a.user_id < b.user_id) {
-      return -1;
+  compare(prop = "user_id") {
+    return function (a, b) {
+      if (a[prop] < b[prop]) {
+        return -1;
+      }
+      if (a[prop] > b[prop]) {
+        return 1;
+      }
+      return 0;
     }
-    if (a.user_id > b.user_id) {
-      return 1;
-    }
-    return 0;
-  }
+  },
+
+  removeRoleFromUser() {
+
+  },
 
 
 }

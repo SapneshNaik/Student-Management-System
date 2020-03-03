@@ -176,7 +176,71 @@ const router = new Router({
             no_scroll: true,
           },
         },
+        {
+          path: '/dashboard/sms/roles/create',
+          name: 'sms-role-create',
+          props: true,
+          component: () => import('@/views/pages/role_permission/RoleCreate.vue'),
+          meta: {
+            rule: 'editor',
+            authRequired: 'true',
+            no_scroll: true,
+          },
+        },
 
+        {
+          path: '/dashboard/sms/roles/view',
+          name: 'sms-role-list',
+          props: true,
+          component: () => import('@/views/pages/role_permission/RoleTable.vue'),
+          meta: {
+            rule: 'editor',
+            authRequired: 'true',
+            no_scroll: true,
+          },
+        },
+
+        {
+          path: '/dashboard/sms/permissions/view',
+          name: 'sms-perm-list',
+          props: true,
+          component: () => import('@/views/pages/role_permission/PermTable.vue'),
+          meta: {
+            rule: 'editor',
+            authRequired: 'true',
+            no_scroll: true,
+          },
+        },
+
+        {
+          path: '/dashboard/sms/roles/view/:id',
+          name: 'sms-role-specific-view',
+          props: true,
+          component: () => import('@/views/pages/role_permission/RoleView.vue'),
+          meta: {
+            pageTitle: 'Role Details',
+            breadcrumb: [
+              {title: 'Home', url: '/dashboard/sms'},
+              {title: 'View Roles', url: '/dashboard/sms/roles/view'},
+              {title: 'Role Details', active: true},
+            ],
+            rule: 'editor',
+            authRequired: 'true',
+            no_scroll: true,
+          },
+        },
+
+        {
+          path: '/dashboard/sms/roles/edit/:id',
+          name: 'sms-edit-role',
+          props: true,
+          component: () => import('@/views/pages/role_permission/RoleEdit.vue'),
+          meta: {
+            rule: 'editor',
+            authRequired: 'true',
+            no_scroll: true,
+          },
+        },
 
         {
           path: '/dashboard/ecommerce',
@@ -187,10 +251,6 @@ const router = new Router({
           }
         },
 
-
-        // =============================================================================
-        // Application Routes
-        // =============================================================================
         {
           path: '/apps/todo',
           redirect: '/apps/todo/all',

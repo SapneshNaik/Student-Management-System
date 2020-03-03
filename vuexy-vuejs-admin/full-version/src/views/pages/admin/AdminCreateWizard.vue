@@ -29,18 +29,30 @@
                                   class="w-full"/>
                 </vs-select>
                 <span class="text-danger">{{ errors.first('step-2.prefixes') }}</span>
+              </div>
 
-                <vs-input class="w-full mt-4" label="First Name" v-model="adminData.first_name" type="first_name"
+            </div>
+
+
+            <div class="vx-row">
+              <div class="vx-col md:w-1/2 w-full mt-5">
+
+                <vs-input class="w-full mt-4" label="First Name" v-model="adminData.first_name"
                           v-validate="'required|max:50|min:3|alpha'"
                           name="first_name"/>
                 <span class="text-danger">{{ errors.first('step-2.first_name') }}</span>
+
+
+              </div>
+
+              <div class="vx-col md:w-1/2 w-full mt-5">
                 <vs-input class="w-full mt-4" label="Last Name" v-model="adminData.last_name"
                           v-validate="'required|max:50|min:3|alpha'"
                           name="last_name"/>
                 <span class="text-danger">{{ errors.first('step-2.last_name') }}</span>
               </div>
-
             </div>
+
           </form>
         </tab-content>
 
@@ -171,7 +183,7 @@
 
       validateStep3() {
         this.$refs.rsa.validatePassword();
-        return (!(this.$refs.rsa.assignedRolesUnique.length > 0 && !this.$refs.rsa.password));
+        return (!(this.$refs.rsa.assignedRoles.length > 0 && !this.$refs.rsa.password));
       },
 
       progressError(message, error) {
@@ -189,7 +201,9 @@
               text: error,
               iconPack: 'feather',
               icon: 'icon-alert-circle',
-              color: 'danger'
+              color: 'danger',
+              position: 'top-right',
+
             })
           });
         } else {
@@ -198,7 +212,9 @@
             text: error.message,
             iconPack: 'feather',
             icon: 'icon-alert-circle',
-            color: 'danger'
+            color: 'danger',
+            position: 'top-right',
+
           })
         }
 
@@ -216,7 +232,7 @@
 
         this.creating = true;
 
-        let roleData = this.$refs.rsa.assignedRolesUnique;
+        let roleData = this.$refs.rsa.assignedRoles;
 
         let authPassword = this.$refs.rsa.password;
 
@@ -236,7 +252,7 @@
                 adminResponse.data['admin']['user'] = userResponse.data.user;
 
                 this.$store.dispatch("userManagement/upsertToState",
-                  {type: "Admin", data :adminResponse.data.admin});
+                  {type: "Admin", data: adminResponse.data.admin});
 
                 this.progressUpdate("Assigning roles to Admin...", progressIncrementStep);
 

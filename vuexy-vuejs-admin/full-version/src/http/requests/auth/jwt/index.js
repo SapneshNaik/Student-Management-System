@@ -52,7 +52,7 @@ export default {
     })
   },
 
-  sanitizePayload(a){
+  sanitizePayload(a) {
     return _(a).omitBy(_.isNil).omitBy(i => i === "").value()
   },
 
@@ -64,8 +64,14 @@ export default {
     return axios.get("/api/v1/logout")
   },
 
+  //====> POST
+
   createUser(payload) {
     return axios.post("/api/v1/register", this.sanitizePayload(payload))
+  },
+
+  createRole(payload) {
+    return axios.post("/api/v1/roles", this.sanitizePayload(payload))
   },
 
   createAdminProfile(user_id, payload) {
@@ -88,9 +94,11 @@ export default {
     return axios.post(`/api/v1/roles/${role_id}/addUser/${user_id}`, {password})
   },
 
-  // refreshToken() {
-  //   return axios.post("/api/auth/refresh-token", {accessToken: localStorage.getItem("accessToKen")})
-  // },
+  unAssignRoleToUser(user_id, role_id, password) {
+    return axios.post(`/api/v1/roles/${role_id}/removeUser/${user_id}`, {password})
+  },
+
+  //====> GET
 
   getLoggedInUserDetailsWithRoleAndPerm(role) {
     return axios.get(`api/v1/user?include=roles,${role}&append=all_permissions`)
@@ -104,27 +112,8 @@ export default {
     return axios.get(`api/v1/parents/${userId}`)
   },
 
-  putUser(payload) {
-    return axios.put(`api/v1/users/${payload.id}`, this.sanitizePayload(payload));
-  },
-
-  putAdmin(payload) {
-    return axios.put(`api/v1/admins/${payload.user_id}`, this.sanitizePayload(payload));
-  },
-
-  putParent(payload) {
-    return axios.put(`api/v1/parents/${payload.user_id}`, this.sanitizePayload(payload));
-  },
-
-  putStaff(payload){
-    return axios.put(`api/v1/staffs/${payload.user_id}`, this.sanitizePayload(payload));
-  },
-
-  putStudent(payload){
-    console.log("putting")
-    console.log(payload)
-
-    return axios.put(`api/v1/students/${payload.user_id}`, this.sanitizePayload(payload));
+  getRole(id) {
+    return axios.get(`/api/v1/roles/${id}?include=users,permissions`)
   },
 
   getAllRolesWithPerms(URL = "api/v1/roles?include=permissions&fields[permissions]=id,name", allRoles = []) {
@@ -162,7 +151,7 @@ export default {
   },
 
   getParents(page) {
-    return axios.get(`/api/v1/parents?include=user.roles,user.updater&page=${page}`);
+    return axios.get(`/api/v1/parents?include=wards,user.roles,user.updater&page=${page}`);
   },
 
   getStaffs(page) {
@@ -178,6 +167,43 @@ export default {
   },
 
   getPermissions(page) {
-    return axios.get(`/api/v1/permissions?include=roles&page=${page}`);
+    return axios.get(`/api/v1/permissions?include=roles,users&page=${page}`);
+  },
+
+
+  //====> PUT
+
+  putUser(payload) {
+    return axios.put(`api/v1/users/${payload.id}`, this.sanitizePayload(payload));
+  },
+
+  putAdmin(payload) {
+    return axios.put(`api/v1/admins/${payload.user_id}`, this.sanitizePayload(payload));
+  },
+
+  putParent(payload) {
+    return axios.put(`api/v1/parents/${payload.user_id}`, this.sanitizePayload(payload));
+  },
+
+  putStaff(payload) {
+    return axios.put(`api/v1/staffs/${payload.user_id}`, this.sanitizePayload(payload));
+  },
+
+  putStudent(payload) {
+    console.log("putting")
+    console.log(payload)
+
+    return axios.put(`api/v1/students/${payload.user_id}`, this.sanitizePayload(payload));
+  },
+
+  putRole(payload) {
+    return axios.put(`/api/v1/roles/${payload.id}`, this.sanitizePayload(payload))
+  },
+
+
+  //====> Delete
+
+  deleteRole(payload) {
+    return axios.delete(`/api/v1/roles/${payload.id}`, {data: this.sanitizePayload(payload)})
   },
 }

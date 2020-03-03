@@ -25,7 +25,8 @@ export default {
   },
 
   ADD_OR_UPDATE_ADMIN(state, item) {
-    commons.upsertSort(state.admins, item)
+    commons.upsertSort(state.admins, item);
+    state.admins.sort(commons.compare);
   },
 
   UPDATE_ADMINS(state, admins) {
@@ -39,12 +40,12 @@ export default {
 
   ADD_OR_UPDATE_PARENT(state, item) {
     commons.upsertSort(state.parents, item)
+    state.parents.sort(commons.compare);
   },
 
   UPDATE_PARENTS(state, parents) {
     commons.mergeByProperty(state.parents, parents, 'user_id');
     state.parents.sort(commons.compare);
-
   },
 
   RESET_STAFF(state) {
@@ -53,6 +54,7 @@ export default {
 
   ADD_OR_UPDATE_STAFF(state, item) {
     commons.upsertSort(state.staffs, item)
+    state.staffs.sort(commons.compare);
   },
 
   UPDATE_STAFF(state, staffs) {
@@ -66,13 +68,13 @@ export default {
   },
 
   ADD_OR_UPDATE_STUDENT(state, item) {
-    commons.upsertSort(state.students, item)
+    commons.upsertSort(state.students, item);
+    state.students.sort(commons.compare);
   },
 
   UPDATE_STUDENTS(state, students) {
     commons.mergeByProperty(state.students, students, 'user_id');
     state.students.sort(commons.compare);
-
   },
 
   RESET_ROLES(state) {
@@ -80,12 +82,17 @@ export default {
   },
 
   ADD_OR_UPDATE_ROLE(state, item) {
-    commons.upsertSort(state.roles, item)
+    commons.upsertSort(state.roles, item, "id");
+    state.roles.sort(commons.compare('id'));
+  },
+
+  REMOVE_ROLE(state, item) {
+    commons.removeObjectByProperty(state.roles, item.id, 'id')
   },
 
   UPDATE_ROLES(state, roles) {
     commons.mergeByProperty(state.roles, roles, 'id');
-    state.roles.sort(commons.compare);
+    state.roles.sort(commons.compare('id'));
   },
 
   RESET_PERMISSIONS(state) {

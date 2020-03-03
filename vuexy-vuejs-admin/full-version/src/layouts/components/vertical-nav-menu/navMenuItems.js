@@ -97,6 +97,47 @@ export default [
     ],
   },
   {
+    url: null,
+    name: "Settings",
+
+    icon: "SettingsIcon",
+    i18n: "Settings",
+    submenu: [
+      {
+        url: null,
+        name: "Access Control",
+        slug: "dashboard-sms-roles",
+        i18n: "AccessControl",
+        icon: "ShieldIcon",
+        submenu: [
+          {
+            url: '/dashboard/sms/roles/create',
+            name: "Create Role",
+            slug: "dashboard-sms-create-role",
+            icon: "PlusIcon",
+            i18n: "CreateRole",
+          },
+          {
+            url: '/dashboard/sms/roles/view',
+            name: "View Roles",
+            slug: "dashboard-sms-view-role",
+            icon: "EyeIcon",
+            i18n: "ViewRole",
+          },
+          {
+            url: '/dashboard/sms/permissions/view',
+            name: "View Permissions",
+            slug: "dashboard-sms-view-permissions",
+            icon: "EyeIcon",
+            i18n: "ViewPerms",
+          }
+        ]
+      },
+    ],
+  },
+
+
+  {
     header: "Apps",
     icon: "PackageIcon",
     i18n: "Apps",
@@ -560,12 +601,6 @@ export default [
         icon: "CopyIcon",
         i18n: "FormElements",
         submenu: [
-          // {
-          //  url: '/forms/form-elements/select',
-          //  name: "Select",
-          //  slug: "form-element-select",
-          //  i18n: "Select",
-          // },
           {
             url: '/forms/form-elements/switch',
             name: "Switch",

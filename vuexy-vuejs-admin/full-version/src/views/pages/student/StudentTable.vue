@@ -4,7 +4,6 @@
 
       <!-- TABLE ACTION ROW -->
       <div class="flex flex-wrap justify-between items-center">
-        <vs-button color="warning" type="filled" icon-pack="feather" icon="icon-star">Star</vs-button>
         <!-- ITEMS PER PAGE -->
         <div class="mb-4 md:mb-0 mr-4 ag-grid-table-actions-left">
           <vs-dropdown vs-trigger-click class="cursor-pointer">

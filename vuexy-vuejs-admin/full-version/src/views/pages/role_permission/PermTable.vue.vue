@@ -1,16 +1,6 @@
-<!-- =========================================================================================
-    File Name: AgGridTable.vue
-    Description: Ag Grid table
-    ----------------------------------------------------------------------------------------
-    Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-    Author: Pixinvent
-    Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
-
-
 <template>
   <div id="ag-grid-demo">
-    <vx-card title="All Admins">
+    <vx-card title="All Permissions">
 
       <!-- TABLE ACTION ROW -->
       <div class="flex flex-wrap justify-between items-center">
@@ -20,7 +10,7 @@
           <vs-dropdown vs-trigger-click class="cursor-pointer">
             <div
               class="p-4 border border-solid d-theme-border-grey-light rounded-full d-theme-dark-bg cursor-pointer flex items-center justify-between font-medium">
-              <span class="mr-2">{{ currentPage * paginationPageSize - (paginationPageSize - 1) }} - {{ admins.length - currentPage * paginationPageSize > 0 ? currentPage * paginationPageSize : admins.length }} of {{ admins.length }}</span>
+              <span class="mr-2">{{ currentPage * paginationPageSize - (paginationPageSize - 1) }} - {{ permissions.length - currentPage * paginationPageSize > 0 ? currentPage * paginationPageSize : permissions.length }} of {{ permissions.length }}</span>
               <feather-icon icon="ChevronDownIcon" svgClasses="h-4 w-4"/>
             </div>
             <!-- <vs-button class="btn-drop" type="line" color="primary" icon-pack="feather" icon="icon-chevron-down"></vs-button> -->
@@ -54,8 +44,8 @@
         class="ag-theme-material w-100 my-4 ag-grid-table"
         :columnDefs="columnDefs"
         :defaultColDef="defaultColDef"
-        :rowData="admins"
-        rowSelection="multiple"
+        :rowData="permissions"
+        rowSelection="single"
         colResizeDefault="shift"
         :animateRows="true"
         :floatingFilter="true"
@@ -63,8 +53,8 @@
         :paginationPageSize="paginationPageSize"
         :suppressPaginationPanel="true"
         :enableCellChangeFlash="true"
+        @first-data-rendered="onFirstDataRendered"
         :enableRtl="$vs.rtl"
-        @row-double-clicked="rowClicked"
       >
       </ag-grid-vue>
       <vs-pagination
@@ -80,6 +70,9 @@
   import {AgGridVue} from "ag-grid-vue"
 
   import '@/assets/scss/vuexy/extraComponents/agGridStyleOverride.scss'
+
+  import RoleCellRenderer from "./RoleCellRenderer";
+
 
   export default {
     components: {
@@ -102,73 +95,28 @@
 
         columnDefs: [
           {
+            headerName: 'ID',
+            filter: true,
+            field: 'id',
+            suppressSizeToFit: true
+          },
+          {
             headerName: 'Name',
-            pinned: 'left',
+            colId: 'name',
             filter: true,
-            valueGetter:
-              function sumField(params) {
-                return params.data.prefix + " " + params.data.first_name + " " + params.data.last_name
-              },
-
+            field: 'name',
+            suppressSizeToFit: true
           },
           {
-            headerName: 'Email',
-            field: 'user.email',
+            headerName: 'Roles',
+            colId: 'roles',
             filter: true,
-
+            cellRendererFramework: RoleCellRenderer,
           },
-          {
-            headerName: 'Phone',
-            field: 'user.phone_number',
-            filter: true,
-
-          },
-          {
-            headerName: 'Alternate Phone',
-            field: 'user.alternate_phone_number',
-            filter: true,
-
-          },
-          {
-            headerName: 'Super Admin?',
-            valueGetter:
-              function sumField(params) {
-                return (params.data.is_super_admin === 1 ? "Yes" : "No")
-              },
-            filter: true,
-
-          },
-
-          {
-            headerName: 'Status',
-            field: 'user.status',
-            filter: true,
-
-          },
-          {
-            headerName: 'Last Updated By',
-            field: 'user.updater.login_id',
-            filter: true,
-          },
-
         ],
-
       }
     },
     watch: {
-
-      admins: function (data) {
-        if (data.length === 0) {
-          this.$vs.notify({
-            title: 'No Admin Records',
-            iconPack: 'feather',
-            icon: 'icon-alert-circle',
-            position: 'top-right',
-            color: 'danger'
-          })
-        }
-      },
-
       '$store.state.windowWidth'(val) {
         if (val <= 576) {
           this.maxPageNumbers = 4
@@ -176,10 +124,11 @@
         } else this.gridOptions.columnApi.setColumnPinned('login_id', 'left')
       }
     },
+
     computed: {
 
-      admins() {
-        return this.$store.state.userManagement.admins
+      permissions() {
+        return this.$store.state.userManagement.permissions
       },
 
       paginationPageSize() {
@@ -200,22 +149,29 @@
         }
       }
     },
+
     methods: {
+      onFirstDataRendered(params) {
+        params.api.sizeColumnsToFit();
+        this.gridColumnApi.autoSizeColumns(['name'], false);
+        // this.gridColumnApi.autoSizeColumns(['roles'], false);
+      },
+
       updateSearchQuery(val) {
         this.gridApi.setQuickFilter(val)
       },
 
       fetchData() {
-        this.$store.dispatch("userManagement/getAllAdmins").then(() => {
-          this.autoSizeColumns();
+        this.$store.dispatch("userManagement/getAllPermissions").then(() => {
 
           this.gridApi.refreshCells();
 
           this.$vs.notify({
-            title:'Sync Update',
-            text:'Admin records synced with server',
-            color:'success',
-            position:'top-right'})
+            title: 'Sync Update',
+            text: 'Permissions synced with server',
+            color: 'success',
+            position: 'top-right'
+          });
 
         }).catch((error) => {
           console.log(error);
@@ -229,21 +185,17 @@
         });
         this.gridColumnApi.autoSizeColumns(allColumnIds, false);
       },
-
-      rowClicked(params) {
-        this.$router.push({name: 'sms-user-profile',
-          params: { id: params.data.user_id, role: params.data.user.base_role }}).catch(() => {})
-      }
-
     },
+
     mounted() {
       this.gridApi = this.gridOptions.api;
       this.gridColumnApi = this.gridOptions.columnApi;
 
       this.autoSizeColumns();
 
+
       if (this.$vs.rtl) {
-        const header = this.$refs.agGridTable.$el.querySelector(".ag-header-container")
+        const header = this.$refs.agGridTable.$el.querySelector(".ag-header-container");
         header.style.left = "-" + String(Number(header.style.transform.slice(11, -3)) + 9) + "px"
       }
     },

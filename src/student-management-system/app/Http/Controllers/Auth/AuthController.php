@@ -8,6 +8,7 @@ use App\Models\User;
 use Auth;
 use Hash;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
@@ -143,6 +144,16 @@ class AuthController extends Controller
     }
 
     /**
+     * @param $role_id
+     * @return Model|object|QueryBuilder|null
+     */
+    public function roleShow($role_id){
+        //TODO: add relation to all other model show methods
+        return QueryBuilder::for(Role::where('id', $role_id)) // base query instead of model
+        ->allowedIncludes(['users', 'permissions'])->first();
+    }
+
+    /**
      * @group Access Control
      * @return mixed
      */
@@ -183,7 +194,10 @@ class AuthController extends Controller
 
         $role->syncPermissions($validated_data['permissions']);
 
-        return response()->json([], 201);
+        return response()->json([
+            "message" => "Role added successfully!",
+            "role" => $role
+        ], 201);
 
 //        return Role::select('id', 'name')->paginate(15)
 //            ->appends(request()->query());
@@ -219,7 +233,10 @@ class AuthController extends Controller
             $role->syncPermissions($validated_data['permissions']);
         }
 
-        return response()->json([], 204);
+        return response()->json([
+            "message" => "Role updated successfully",
+            "role" => $role
+        ], 204);
     }
 
 

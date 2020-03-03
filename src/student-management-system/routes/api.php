@@ -52,6 +52,10 @@ Route::group([
             ->name('roles.store')
             ->middleware('permission:'.Constants::PERMISSIONS['EDIT_ALL_ROLES'].'');
 
+        Route::get('/roles/{role}', '\App\Http\Controllers\Auth\AuthController@roleShow')
+            ->name('roles.show')
+            ->middleware('permission:' . Constants::PERMISSIONS['VIEW_ALL_ROLES'] . '');
+
         Route::put('/roles/{role}', '\App\Http\Controllers\Auth\AuthController@rolesUpdate')
             ->name('roles.update')
             ->middleware('permission:'.Constants::PERMISSIONS['EDIT_ALL_ROLES'].'');

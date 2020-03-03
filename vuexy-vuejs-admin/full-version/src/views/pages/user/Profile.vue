@@ -53,13 +53,15 @@
 
             </table>
           </div>
-          <div class="vx-col w-full flex" id="account-manage-buttons">
+          <br/>
+
+          <div class="vx-col w-full flex" vs-align="center">
             <vs-button icon-pack="feather" icon="icon-edit" class="mr-4"
                        :to="{name: 'sms-user-profile-edit', params: { id: user_data.id, role:user_data.base_role }}">
               Edit
             </vs-button>
-            <!--            <vs-button type="border" color="danger" icon-pack="feather" icon="icon-trash" @click="confirmDeleteRecord">Delete</vs-button>-->
           </div>
+
 
         </div>
 
@@ -74,6 +76,15 @@
                 <td>{{ getItemText(index, item) }}</td>
               </tr>
             </table>
+            <br/>
+
+            <div class="vx-col w-full flex">
+              <vs-button icon-pack="feather" icon="icon-edit" class="mr-4"
+                         :to="{name: 'sms-user-profile-edit', params: { id: user_data.id, role:user_data.base_role }}">
+                Edit
+              </vs-button>
+            </div>
+
           </vx-card>
         </div>
 
@@ -85,6 +96,16 @@
                 <td>{{ item }}</td>
               </tr>
             </table>
+
+            <br/>
+
+            <div class="vx-col w-full flex">
+              <vs-button icon-pack="feather" icon="icon-edit" class="mr-4"
+                         :to="{name: 'sms-user-profile-edit', params: { id: user_data.id, role:user_data.base_role }}">
+                Edit
+              </vs-button>
+            </div>
+
           </vx-card>
         </div>
       </div>
@@ -97,9 +118,24 @@
               <div class="vx-col w-full">
                 <vs-chip color="warning"
                          icon-pack="feather"
-                         v-for="(listItem) in role_data" :key="listItem.id">{{ listItem.name }}
+                         v-for="(listItem) in role_data" :key="listItem.id">
+                  <vs-avatar icon-pack="feather" icon="icon-lock"/>
+
+                  {{ listItem.name }}
                 </vs-chip>
               </div>
+
+              <br/>
+
+
+              <div class="vx-col w-full flex">
+                <vs-button icon-pack="feather" icon="icon-edit" class="mr-4"
+                           :to="{name: 'sms-user-profile-edit', params: { id: user_data.id, role:user_data.base_role }}">
+                  Edit
+                </vs-button>
+              </div>
+
+
             </div>
           </vx-card>
         </div>
@@ -110,7 +146,10 @@
               <div class="vx-col w-full">
                 <vs-chip color="success"
                          icon-pack="feather"
-                         v-for="(listItem) in all_permissions_data" :key="listItem.id">{{ listItem.name
+                         v-for="(listItem) in all_permissions_data" :key="listItem.id">
+                  <vs-avatar icon-pack="feather" icon="icon-shield"/>
+
+                  {{ listItem.name
                   }}
                 </vs-chip>
               </div>
@@ -193,37 +232,6 @@
 
       titleCase(value) {
         return this.$_.startCase(value)
-      }
-      ,
-
-      confirmDeleteRecord() {
-        this.$vs.dialog({
-          type: 'confirm',
-          color: 'danger',
-          title: `Confirm Delete`,
-          text: `You are about to delete "${this.profile_data.username}"`,
-          accept: this.deleteRecord,
-          acceptText: "Delete"
-        })
-      }
-      ,
-      deleteRecord() {
-        /* Below two lines are just for demo purpose */
-        this.$router.push({name: 'app-user-list'});
-        this.showDeleteSuccess()
-
-        /* UnComment below lines for enabling true flow if deleting user */
-        // this.$store.dispatch("userManagement/removeRecord", this.profile_data.id)
-        //   .then(()   => { this.$router.push({name:'app-user-list'}); this.showDeleteSuccess() })
-        //   .catch(err => { console.error(err)       })
-      }
-      ,
-      showDeleteSuccess() {
-        this.$vs.notify({
-          color: 'success',
-          title: 'User Deleted',
-          text: 'The selected user was successfully deleted'
-        })
       },
 
       fetchData() {
@@ -241,7 +249,6 @@
           this.all_user_data = commons.getUserDataFromRole(this.role, this.$route.params.id, this.$store.state);
 
           if (this.all_user_data) {
-            console.log(this.all_user_data)
             this.all_user_data.user.photoURL = require("@/assets/images/portrait/small/avatar-s-11.jpg");
             return this.all_user_data;
           } else {
@@ -256,6 +263,9 @@
                 this.all_user_data = result.data[role];
                 this.all_user_data['user'] = this.$_.omit(result.data, [role]);
                 this.all_user_data.user.photoURL = require("@/assets/images/portrait/small/avatar-s-11.jpg");
+
+                this.$store.dispatch("userManagement/upsertToState",
+                  {type: result.data.base_role, data: this.all_user_data});
 
                 return this.all_user_data;
 
@@ -301,6 +311,17 @@
             case "is_father_alumni":
             case "is_mother_alumni":
               return (item) ? "Yes" : "No";
+
+            case "parent":
+              return item.father_full_name;
+
+            case "wards":
+              if(item.length === 0) {
+                return "---"
+              } else  {
+                return  item.map(a => a.first_name + " " + a.last_name).join(', ')
+              }
+
             default:
               return item
           }

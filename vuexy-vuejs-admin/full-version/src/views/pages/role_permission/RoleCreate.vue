@@ -3,9 +3,9 @@
 
     <div class="vx-col w-full" id="all_role_div">
 
-      <vx-card title="Edit Role" class="mb-base">
+      <vx-card title="Create Role" class="mb-base">
 
-        <form v-if="data_local" id="create-role" data-vv-scope="step-3" @submit.prevent>
+        <form id="create-role" data-vv-scope="step-3" @submit.prevent>
           <div class="vx-row">
 
             <!--            to prevent strange page refresh behaviour on button click-->
@@ -16,14 +16,14 @@
 
             <div class="vx-col sm:w-1/2 w-full mb-2">
 
-              <vs-input class="w-full  mt-4" v-model="data_local.name" v-validate="'required|max:50'"
+              <vs-input class="w-full  mt-4" v-model="name" v-validate="'required|max:50'"
                         label="Role Name" name="name"/>
               <span class="text-danger">{{ errors.first('step-3.name') }}</span>
             </div>
 
             <div class="vx-col sm:w-1/2 w-full mb-2">
 
-              <vs-input class="w-full mt-4" v-model="data_local.password" label="Password" type="password"
+              <vs-input class="w-full mt-4" v-model="password" label="Password" type="password"
                         v-validate="'required|min:6'" name="password"/>
               <span class="text-danger">{{ errors.first('step-3.password') }}</span>
 
@@ -40,10 +40,9 @@
 
               <vx-card title="Assigned Permissions" class="mb-base">
 
-                <draggable :list="data_local.permissions" :group="{name: 'tags'}" class="p-2 cursor-move">
+                <draggable :list="assignedPerms" :group="{name: 'tags'}" class="p-2 cursor-move">
 
-                  <vs-alert :active="data_local.permissions.length > 0" class="mt-5" icon-pack="feather"
-                            icon="icon-info">
+                  <vs-alert :active="assignedPerms.length > 0" class="mt-5" icon-pack="feather" icon="icon-info">
                     Click on trash icon to remove permissions.
                   </vs-alert>
 
@@ -57,18 +56,17 @@
                                  closable
                                  icon-pack="feather"
                                  close-icon="icon-trash-2"
-                                 v-for="(listItem, index) in data_local.permissions" :key="listItem.id">
+                                 v-for="(listItem, index) in assignedPerms" :key="listItem.id">
                           <vs-avatar icon-pack="feather" icon="icon-shield"/>
                           {{ listItem.name }}
                         </vs-chip>
                       </transition-group>
 
-                      <vs-alert :active="data_local.permissions.length === 0" class="mt-5" icon-pack="feather"
-                                icon="icon-info">
+                      <vs-alert :active="assignedPerms.length === 0" class="mt-5" icon-pack="feather" icon="icon-info">
                         Drag permissions here...
                       </vs-alert>
 
-                      <span v-if="data_local.permissions.length === 0"
+                      <span v-if="assignedPerms.length === 0"
                             class="text-danger"> Please add at least one permission </span>
 
 
@@ -99,7 +97,7 @@
                     <draggable :list="allPerms" :group="{name:'tags',  pull:'clone', put:false }"
                                class="p-2 cursor-move">
 
-                      <vs-chip v-if="notInAssignedPerms(listItem.name)" color="success"
+                      <vs-chip class="m-1" v-if="notInAssignedPerms(listItem.name)" color="success"
                                v-for="(listItem) in allPerms" :key="listItem.id">
                         <vs-avatar icon-pack="feather" icon="icon-shield"/>
                         {{ listItem.name }}
@@ -118,8 +116,9 @@
           <div class="vx-row">
             <div class="vx-col w-full">
               <div class="mt-8 flex flex-wrap items-center justify-end">
-                <vs-button class="ml-auto mt-2" @click="validateNSubmit" id="save">Save Changes</vs-button>
-                <vs-button class="ml-4 mt-2" @click="resetData" type="border" color="warning">Reset</vs-button>
+                <vs-button class="ml-auto mt-2" @click="validateNSubmit" id="save">Submit
+                </vs-button>
+                <vs-button class="ml-4 mt-2" @click="resetData" type="border" color="warning" >Reset</vs-button>
               </div>
             </div>
           </div>
@@ -141,35 +140,23 @@
 
   import draggable from "vuedraggable";
   import jwt from '@/http/requests/auth/jwt/index.js';
-  import commons from "../../../commons";
 
 
   export default {
     components: {
       draggable
     },
-
     data() {
       return {
-        data_local: null,
-      }
-    },
+        password: '',
+        name: '',
+        assignedPerms: [],
 
-    mounted() {
-      this.data_local = (this.roleData) ? JSON.parse(JSON.stringify(this.roleData)) : null;
 
-      if (this.data_local === null) {
-        console.log("role not found in Vuex store")
-        this.$vs.loading();
-        this.fetchRoleNUpdateIfDataNull();
       }
     },
 
     computed: {
-
-      roleData() {
-        return commons.getUserDataFromRole("Role", this.$route.params.id, this.$store.state);
-      },
 
       allPerms() {
         return this.$store.state.userManagement.permissions;
@@ -179,7 +166,7 @@
     methods: {
 
       removeItem: function (index) {
-        this.data_local.permissions.splice(index, 1);
+        this.assignedPerms.splice(index, 1);
       },
 
       fetchAllPermissions() {
@@ -187,7 +174,7 @@
 
           this.$vs.notify({
             title: 'Sync Update',
-            text: 'Permission records synced with the server',
+            text: 'Permission records synced with server',
             color: 'success',
             position: 'top-right'
           })
@@ -203,97 +190,49 @@
 
       validateNSubmit() {
         this.$validator.validateAll("step-3").then(result => {
-          if (result && this.data_local.permissions.length > 0) {
-            this.saveRoleChanges()
+          if (result && this.assignedPerms.length > 0) {
+            this.submit()
           }
         })
       },
 
       notInAssignedPerms(name) {
-        const i = this.data_local.permissions.findIndex(_item => _item.name === name);
+        const i = this.assignedPerms.findIndex(_item => _item.name === name);
         return !(i > -1);
       },
 
-      fetchRoleNUpdateIfDataNull() {
+      submit() {
 
-        this.$store.dispatch("userManagement/fetchRole", this.$route.params.id)
-          .then(response => {
-            this.$vs.loading.close();
-
-            this.$store.dispatch("userManagement/upsertToState",
-              {type: "Role", data: response.data});
-
-            if (this.data_local == null) {
-
-              this.data_local = JSON.parse(JSON.stringify(this.roleData));
-
-              this.$vs.loading.close();
-
-              this.$vs.notify({
-                title: 'Role details fetched from the backend',
-                iconPack: 'feather',
-                icon: 'icon-alert-circle',
-                position: 'top-right',
-                color: 'success'
-              });
-            }
-
-
-          }).catch(err => {
-          console.log(err);
-
-          this.$vs.notify({
-            title: 'Failed to fetch Role from the server',
-            iconPack: 'feather',
-            icon: 'icon-alert-circle',
-            position: 'top-right',
-            color: 'danger'
-          });
-
-          this.$vs.loading.close();
-
-          if (err.response.status === 401) {
-            this.$router.push({name: 'login'});
-          } else if (err.response.status === 404) {
-            this.$router.push({name: 'page-error-404'});
-          } else if (err.response.status === 403) {
-            alert(err.response.message)
-            this.$router.push({name: 'dashboard-sms'});
-          }
-
-        })
-
-
-      },
-
-      saveRoleChanges() {
-
-        let reqParams = JSON.parse(JSON.stringify(this.data_local));
-
-        reqParams.permissions = this.data_local.permissions.map(a => a.id);
+        let data = {
+          'name': this.name,
+          'password': this.password,
+          'permissions': this.assignedPerms.map(a => a.id)
+        };
 
         this.$vs.loading({
           'container': "#save",
           'scale': 0.45
-        });
+        })
 
-
-        jwt.putRole(reqParams).then(() => {
+        jwt.createRole(data).then((response) => {
 
           this.$vs.loading.close("#save > .con-vs-loading");
 
           this.$vs.notify({
-            title: 'Role Updated',
-            text: this.data_local.name + " role updated successfully",
+            title: 'Role Created',
+            text: data.name + " role added to the system",
             iconPack: 'feather',
             icon: 'icon-alert-circle',
             position: 'top-right',
             color: 'success'
-          });
+          })
 
-
+          response.data.role['user'] = [];
           this.$store.dispatch("userManagement/upsertToState",
-            {type: "Role", data: this.data_local});
+            {type: "Role", data: response.data.role});
+
+          this.resetData()
+
 
         }).catch((error) => {
           this.$vs.loading.close("#save > .con-vs-loading");
@@ -327,7 +266,9 @@
       },
 
       resetData() {
-        this.data_local = JSON.parse(JSON.stringify(this.roleData))
+        this.password = '';
+        this.name = '';
+        this.assignedPerms = [];
       }
     }
     ,

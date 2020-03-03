@@ -5,7 +5,7 @@
 
       <vx-card title="Available Roles" class="mb-base">
 
-        <vs-alert :active="alertActive" class="mt-5" icon-pack="feather" icon="icon-info">
+        <vs-alert :active="allRoles.length > 0" class="mt-5" icon-pack="feather" icon="icon-info">
           Drag any role and drop it in the "Assigned Roles" section to assign a role to user.
         </vs-alert>
 
@@ -16,8 +16,11 @@
         <div class="vx-row" id="all_roles">
           <div class="vx-col w-full">
             <draggable :list="allRoles" :group="{name:'tags',  pull:'clone', put:false }" class="p-2 cursor-move">
-              <vs-chip size="large" color="success" v-for="(listItem) in allRoles" :key="listItem.id">{{ listItem.name
-                }}
+              <vs-chip class="m-1" v-if="notInAssignedRoles(listItem.name)" size="large" color="success"
+                       v-for="(listItem) in allRoles" :key="listItem.id">
+                <vs-avatar icon-pack="feather" icon="icon-lock"/>
+
+                {{ listItem.name }}
               </vs-chip>
             </draggable>
           </div>
@@ -42,7 +45,7 @@
           <div class="vx-row">
             <div class="vx-col w-full">
               <transition-group>
-                <vs-chip @click="removeItem(index)" color="warning"
+                <vs-chip class="m-1" @click="removeItem(index)" color="warning"
                          closable
                          icon-pack="feather"
                          close-icon="icon-trash-2"
@@ -75,8 +78,10 @@
         <!-- List 1 -->
         <div class="vx-row">
           <div class="vx-col w-full">
-            <vs-chip color="warning"
-                     v-for="(listItem) in assignedPerms" :key="listItem.id">{{ listItem }}
+            <vs-chip class="m-1" color="warning"
+                     v-for="(listItem) in assignedPerms" :key="listItem.id">
+              <vs-avatar icon-pack="feather" icon="icon-shield"/>
+              {{ listItem }}
             </vs-chip>
           </div>
         </div>
@@ -94,8 +99,8 @@
 
         <form id="create-user-profile" data-vv-scope="step-3">
 
-          <vs-input class="w-full mt-4" v-model="password" type="password"
-                    v-validate="'required|max:6'" name="password"/>
+          <vs-input class="w-full mt-4" v-model="password" label="Password" type="password"
+                    v-validate="'required|min:6'" name="password"/>
           <span class="text-danger">{{ errors.first('step-3.password') }}</span>
 
         </form>
@@ -132,10 +137,6 @@
         return this.$store.state.userManagement.roles;
       },
 
-      allPerms() {
-        return this.$store.state.userManagement.permissions;
-      },
-
       assignedPerms: function () {
         let result = [];
         this.assignedRoles.forEach(function (item) {
@@ -147,13 +148,14 @@
         });
 
         return result
-      },
-      assignedRolesUnique: function () {
-        return this.$_.uniq(this.assignedRoles, 'name');
       }
     },
 
     methods: {
+      notInAssignedRoles(name) {
+        const i = this.assignedRoles.findIndex(_item => _item.name === name);
+        return !(i > -1);
+      },
 
       removeItem: function (index) {
         this.assignedRoles.splice(index, 1);
@@ -163,24 +165,11 @@
         this.$store.dispatch("userManagement/getAllRoles").then(() => {
 
           this.$vs.notify({
-            title:'Sync Update',
-            text:'Role records synced with server',
-            color:'success',
-            position:'top-right'})
-
-        }).catch((error) => {
-          console.log(error);
-        });
-      },
-
-      fetchAllPermissions() {
-        this.$store.dispatch("userManagement/getAllPermissions").then(() => {
-
-          this.$vs.notify({
-            title:'Sync Update',
-            text:'Permission records synced with server',
-            color:'success',
-            position:'top-right'})
+            title: 'Sync Update',
+            text: 'Role records synced with server',
+            color: 'success',
+            position: 'top-right'
+          })
 
         }).catch((error) => {
           console.log(error);
@@ -201,8 +190,7 @@
     },
 
     created() {
-      this.fetchAllRoles()
-      this.fetchAllPermissions()
+      this.fetchAllRoles();
     }
   }
 </script>

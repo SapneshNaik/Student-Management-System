@@ -8,7 +8,8 @@
 ========================================================================================== -->
 
 <template>
-  <div id="user-edit-admin-profile">
+
+  <div class="vx-col w-full" id="user-edit-admin-profile">
 
 
     <!-- Content Row -->

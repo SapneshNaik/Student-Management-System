@@ -100,7 +100,7 @@ class StaffController extends Controller
         }
 
         //check if user can edit
-        if (ControllerHelper::userEditsOwnProfileOrHasPermission($request, $user, Constants::PERMISSIONS['EDIT_ALL_STAFF'])) {
+        if (ControllerHelper::userEditsOwnProfileOrHasPermission($request, $user, [Constants::PERMISSIONS['EDIT_ALL_STAFF']])) {
             $validator = RequestValidators::updateStaffValidator($request->except('user_id'), $user);
 
             if ($validator->fails()) {

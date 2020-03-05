@@ -2,21 +2,6 @@
 
 use App\Constants;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
-
 Route::group([
     'prefix' => 'v1',
 ], function () {
@@ -34,6 +19,7 @@ Route::group([
             ->middleware('permission:'
                 . Constants::PERMISSIONS['REGISTER_STAFF'] . '|'
                 . Constants::PERMISSIONS['REGISTER_STUDENT'] . '|'
+                . Constants::PERMISSIONS['REGISTER_PARENT'] . '|'
                 . Constants::PERMISSIONS['REGISTER_ADMIN'] . '');
 
         Route::get('logout', 'Auth\AuthController@logout')->name('logout');
@@ -66,13 +52,18 @@ Route::group([
 
         Route::post('/roles/{role}/addUser/{user}', '\App\Http\Controllers\Auth\AuthController@rolesAddUser')
             ->name('roles.addUser')
-            ->middleware('permission:'.Constants::PERMISSIONS['EDIT_ALL_ROLES'].'');
+            ->middleware('permission:'
+                . Constants::PERMISSIONS['REGISTER_STAFF'] . '|'
+                . Constants::PERMISSIONS['REGISTER_ADMIN'] . '');
 
+        //TODO: Give priority to Base Role 1 Admin, 2 Staff, 3 Student, 4 Parent
+        // Make sure even though a user has permission to edit higher role type it is not allowed by the system
         Route::post('/roles/{role}/removeUser/{user}', '\App\Http\Controllers\Auth\AuthController@rolesRemoveUser')
             ->name('roles.removeUser')
-            ->middleware('permission:'.Constants::PERMISSIONS['EDIT_ALL_ROLES'].'');
+            ->middleware('permission:'
+                . Constants::PERMISSIONS['EDIT_ALL_STAFF'] . '|'
+                . Constants::PERMISSIONS['EDIT_ALL_ADMINS'] . '');
 
-        //User Routes
 
         Route::get('/user', '\App\Http\Controllers\UserController@profile')
             ->name('user.profile');
@@ -117,11 +108,6 @@ Route::group([
         Route::put('/students/{user}', '\App\Http\Controllers\StudentController@update')
             ->name('students.update');
 
-//
-//        Route::delete('/users/{user}', '\App\Http\Controllers\UserController@delete')
-//            ->name('users.delete')
-//            ->middleware('permission:' . Constants::PERMISSIONS['DELETE_ALL_USERS'] . '');
-
 
         // ==> Address routes
         Route::get('/address', '\App\Http\Controllers\AddressController@profile')
@@ -129,17 +115,31 @@ Route::group([
 
         Route::get('/addresses', '\App\Http\Controllers\AddressController@index')
             ->name('addresses.index')
-            ->middleware('permission:'.Constants::PERMISSIONS['VIEW_ALL_STUDENTS'].'');
+            ->middleware('permission:'
+                . Constants::PERMISSIONS['VIEW_ALL_STAFF'] . '|'
+                . Constants::PERMISSIONS['VIEW_ALL_ADMINS'] . '|'
+                . Constants::PERMISSIONS['VIEW_ALL_PARENTS'] . '|'
+                . Constants::PERMISSIONS['VIEW_ALL_STUDENTS'] . '');
 
         Route::post('/addresses/{user}', '\App\Http\Controllers\AddressController@store')
             ->name('addresses.store')
-            ->middleware('permission:' . Constants::PERMISSIONS['REGISTER_STUDENT'] . '');
+            ->middleware('permission:'
+                . Constants::PERMISSIONS['REGISTER_STAFF'] . '|'
+                . Constants::PERMISSIONS['REGISTER_STUDENT'] . '|'
+                . Constants::PERMISSIONS['REGISTER_PARENT'] . '|'
+                . Constants::PERMISSIONS['REGISTER_ADMIN'] . '');
+
 
         //DONE: Check if /user can also fetch student(role) details from query filter. \n
         // below API can only be used by VIEW_ALL_STUDENTS permission [DONE]
         Route::get('/addresses/{user}', '\App\Http\Controllers\AddressController@show')
             ->name('addresses.show')
-            ->middleware('permission:'.Constants::PERMISSIONS['VIEW_ALL_STUDENTS'].'');
+            ->middleware('permission:'
+                . Constants::PERMISSIONS['VIEW_ALL_STAFF'] . '|'
+                . Constants::PERMISSIONS['VIEW_ALL_ADMINS'] . '|'
+                . Constants::PERMISSIONS['VIEW_ALL_PARENTS'] . '|'
+                . Constants::PERMISSIONS['VIEW_ALL_STUDENTS'] . '');
+
 
         //DONE: Add check for own profile or edit all user perm in controller [DONE]
         Route::put('/addresses/{user}', '\App\Http\Controllers\AddressController@update')
@@ -157,7 +157,7 @@ Route::group([
 
         Route::get('/parent-search', '\App\Http\Controllers\StudentParentController@search')
             ->name('parents.search')
-            ->middleware('permission:' . Constants::PERMISSIONS['VIEW_ALL_PARENTS'] . '');
+            ->middleware('permission:' . Constants::PERMISSIONS['REGISTER_PARENT'] . '');
 
         Route::post('/parents/{user}', '\App\Http\Controllers\StudentParentController@store')
             ->name('parents.store')

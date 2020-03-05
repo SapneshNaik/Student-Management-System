@@ -40,11 +40,11 @@ class ControllerHelper
     /**
      * @param Request $request
      * @param User $user
-     * @param $permission
+     * @param array $permissions
      * @return bool
      */
-    static function userEditsOwnProfileOrHasPermission(Request $request, User $user, $permission): bool
+    static function userEditsOwnProfileOrHasPermission(Request $request, User $user, Array $permissions): bool
     {
-        return ($request->user()->is($user) || $request->user()->can($permission));
+        return ($request->user()->is($user) || $request->user()->$user->hasAnyPermission($permissions));
     }
 }

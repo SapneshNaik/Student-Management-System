@@ -133,7 +133,7 @@ class StudentParentController extends Controller
 
         //check if user can edit
         // TODO: move this check also to a parameterized middleware
-        if (ControllerHelper::userEditsOwnProfileOrHasPermission($request, $user, Constants::PERMISSIONS['EDIT_ALL_PARENTS'])) {
+        if (ControllerHelper::userEditsOwnProfileOrHasPermission($request, $user, [Constants::PERMISSIONS['EDIT_ALL_PARENTS']])) {
 
             $validator = RequestValidators::updateParentValidator($request->except('user_id'));
 

@@ -113,15 +113,15 @@ class AdminController extends Controller
                 400);
         }
 
-        if (ControllerHelper::userEditsOwnProfileOrHasPermission($request, $user, Constants::PERMISSIONS['EDIT_ALL_ADMINS'])) {
+        if (ControllerHelper::userEditsOwnProfileOrHasPermission($request, $user, [Constants::PERMISSIONS['EDIT_ALL_ADMINS']])) {
             //TODO: TEST BELOW SCENARIO
-            if(($request->has('is_super_admin') && !$request->user()->isSuperAdmin())){
-                return response()->json([
-                    'message' => $request->user()->base_role . ' cannot upgrade or downgrade role'],
-                    400);
-            }
+//            if(($request->has('is_super_admin') && !$request->user()->isSuperAdmin())){
+//                return response()->json([
+//                    'message' => $request->user()->base_role . ' cannot upgrade or downgrade role'],
+//                    400);
+//            }
 
-            $validator = RequestValidators::updateAdminValidator($request->except('user_id'));
+            $validator = RequestValidators::updateAdminValidator($request->except('user_id', 'is_super_admin'));
 
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 400);

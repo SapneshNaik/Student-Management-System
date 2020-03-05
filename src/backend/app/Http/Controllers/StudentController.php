@@ -114,7 +114,7 @@ class StudentController extends Controller
         }
 
         //check if user can edit
-        if (ControllerHelper::userEditsOwnProfileOrHasPermission($request, $user, Constants::PERMISSIONS['EDIT_ALL_STUDENTS'])) {
+        if (ControllerHelper::userEditsOwnProfileOrHasPermission($request, $user, [Constants::PERMISSIONS['EDIT_ALL_STUDENTS']])) {
             $validator = RequestValidators::updateStudentValidator($request->except('user_id'), $user);
 
             if ($validator->fails()) {

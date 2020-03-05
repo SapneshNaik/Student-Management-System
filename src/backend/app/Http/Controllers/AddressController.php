@@ -76,7 +76,7 @@ class AddressController extends Controller
 
         if ($user->addresses()->where('type', $address_type)->exists()) {
             return response()->json([
-                'message' => "User's ".$address_type." address already exists",
+                'message' => "User's " . $address_type . " address already exists",
             ], 400);
         }
 
@@ -84,7 +84,7 @@ class AddressController extends Controller
         $address = Address::create(array_merge($validator->validated(), ['user_id' => $user->id]));
 
         return response()->json([
-            'message' => "User's ".$address_type." address created successfully!",
+            'message' => "User's " . $address_type . " address created successfully!",
             'address' => $address,
             'user' => $user
         ], 201);
@@ -117,8 +117,14 @@ class AddressController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        $perms = [
+            Constants::PERMISSIONS['REGISTER_STAFF'],
+            Constants::PERMISSIONS['REGISTER_STUDENT'],
+            Constants::PERMISSIONS['REGISTER_PARENT'],
+            Constants::PERMISSIONS['REGISTER_ADMIN'],
+        ];
 
-        if (ControllerHelper::userEditsOwnProfileOrHasPermission($request, $user, Constants::PERMISSIONS['EDIT_ALL_STUDENTS'])) {
+        if (ControllerHelper::userEditsOwnProfileOrHasPermission($request, $user, $perms)) {
 
             $validator = RequestValidators::addressUpdateValidator($request->except('user_id'));
 
@@ -133,21 +139,21 @@ class AddressController extends Controller
             if (!$address) {
                 //can also call store method here
                 return response()->json([
-                    'message' => $user->base_role . ' '. $address_type.' Address not yet created. Please contact Admin'],
+                    'message' => $user->base_role . ' ' . $address_type . ' Address not yet created. Please contact Admin'],
                     400);
             }
 
             $address->update($validator->validated());
 
             return response()->json([
-                'message' => $user->login_id. " address updated successfully!",
+                'message' => $user->login_id . " address updated successfully!",
                 'address' => $address,
                 'user' => $user->refresh(),
             ], 200);
 
         } else {
             return response()->json([
-                'message' => $request->user()->login_id.' does not have the permission to update other '.$user->base_role.' profile'
+                'message' => $request->user()->login_id . ' does not have the permission to update other ' . $user->base_role . ' profile'
             ], 403);
         }
 

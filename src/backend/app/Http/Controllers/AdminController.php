@@ -6,7 +6,11 @@ use App\Constants;
 use App\Http\Helpers\ControllerHelper;
 use App\Http\Validators\RequestValidators;
 use App\Models\Admin;
+use App\Models\Staff;
+use App\Models\Student;
+use App\Models\StudentParent;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -35,12 +39,12 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return  QueryBuilder::for(Admin::class)
+        return QueryBuilder::for(Admin::class)
             ->allowedFilters([
                 AllowedFilter::exact('prefix'),
                 AllowedFilter::exact('is_super_admin')])
             ->allowedIncludes(['user', 'user.roles', 'user.updater', 'user.addresses'])
-            ->paginate(15)
+            ->paginate(100)
             ->appends(request()->query());
     }
 
@@ -98,18 +102,18 @@ class AdminController extends Controller
     public function update(Request $request, User $user)
     {
         $show_response = $this->show($user);
-        if($show_response->status() != 200){
-            return $show_response;
+        if ($show_response->status() != 200) {
+            return $this->store($request, $user);
         }
 
         //If user being edited is a super user and its being done by someone other than the same user or another
         // super admin.
 
         //TODO: refactor, move this into a middleware which takes inout and can be applied to all update routes
-        if($user->isSuperAdmin() && !$request->user()->isSuperAdmin()){ //if logged in user is not a super
+        if ($user->isSuperAdmin() && !$request->user()->isSuperAdmin()) { //if logged in user is not a super
             // admin role
             return response()->json([
-                'message' => $request->user()->base_role . ' cannot update a '.Constants::ROLES['SUPER_ADMIN'].' profile'],
+                'message' => $request->user()->base_role . ' cannot update a ' . Constants::ROLES['SUPER_ADMIN'] . ' profile'],
                 400);
         }
 
@@ -133,20 +137,52 @@ class AdminController extends Controller
 
         } else {
             return response()->json([
-                'message' => $request->user()->base_role.' does not have the permission to update other '.$user->base_role.' profile'
+                'message' => $request->user()->base_role . ' does not have the permission to update other ' . $user->base_role . ' profile'
             ], 403);
         }
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Admin $admin)
+    public function stats()
     {
-        //
+
+        $usersThisMonth = [];
+        $studentsThisMonth = [];
+        $parentsThisMonth = [];
+        $staffsThisMonth = [];
+        $adminsThisMonth = [];
+
+        foreach ( range(-30, 1) as $day) {
+            $userThisMonth[] = User::whereDate('created_at',Carbon::now()->subdays($day))->count();
+            $studentsThisMonth[] = Student::whereDate('created_at',Carbon::now()->subdays($day))->count();
+            $parentsThisMonth[] = StudentParent::whereDate('created_at',Carbon::now()->subdays($day))->count();
+            $staffsThisMonth[] = Staff::whereDate('created_at',Carbon::now()->subdays($day))->count();
+            $adminsThisMonth[] = Admin::whereDate('created_at',Carbon::now()->subdays($day))->count();
+        }
+
+        return response()->json([
+            'stats' => [
+                "Users" => [
+                    "this_month" => $userThisMonth,
+                    "count" => User::count()
+                ],
+                "Students" => [
+                    "this_month" => $studentsThisMonth,
+                    "count" => Student::count()
+                ],
+                "Parents" => [
+                    "this_month" => $parentsThisMonth,
+                    "count" => StudentParent::count()
+                ],
+                "Staff" => [
+                    "this_month" => $staffsThisMonth,
+                    "count" => Staff::count()
+                ],
+                "Admins" => [
+                    "this_month" => $adminsThisMonth,
+                    "count" => Admin::count()
+                ],
+            ]
+        ], 200);
     }
 }

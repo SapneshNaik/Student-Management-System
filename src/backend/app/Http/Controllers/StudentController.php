@@ -42,7 +42,7 @@ class StudentController extends Controller
                 AllowedFilter::exact('caste_category'),
                 AllowedFilter::exact('religion'),])
             ->allowedIncludes(['user', 'user.addresses', 'parent', 'parent.user', 'user.roles',  'user.updater'])
-            ->paginate(15)
+            ->paginate(100)
             ->appends(request()->query());
     }
 
@@ -110,7 +110,7 @@ class StudentController extends Controller
         //DONE: add this everywhere
         $show_response = $this->show($user);
         if($show_response->status() != 200){
-            return $show_response;
+            return $this->store($request, $user);;
         }
 
         //check if user can edit

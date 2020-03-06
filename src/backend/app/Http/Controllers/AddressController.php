@@ -49,7 +49,7 @@ class AddressController extends Controller
                 AllowedFilter::exact('state'),
                 AllowedFilter::exact('country'),])
             ->allowedIncludes(['user', 'user.roles', 'user.updater'])
-            ->paginate(15)
+            ->paginate(100)
             ->appends(request()->query());
     }
 
@@ -137,10 +137,12 @@ class AddressController extends Controller
             $address = $user->addresses()->where('type', $address_type)->first();
 
             if (!$address) {
+
+                return $this->store($request, $user);
                 //can also call store method here
-                return response()->json([
-                    'message' => $user->base_role . ' ' . $address_type . ' Address not yet created. Please contact Admin'],
-                    400);
+//                return response()->json([
+//                    'message' => $user->base_role . ' ' . $address_type . ' Address not yet created. Please contact Admin'],
+//                    400);
             }
 
             $address->update($validator->validated());

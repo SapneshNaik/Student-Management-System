@@ -2,11 +2,17 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Address;
+use App\Models\Address;
 use Faker\Generator as Faker;
 
 $factory->define(Address::class, function (Faker $faker) {
     return [
         //
+        'address' => $faker->address,
+        'pin_code' => $faker->postcode,
+        'city' => $faker->city,
+        'district' => $faker->citySuffix,
+        'state' => $faker->state,
+        'country' => $faker->country,
     ];
 });

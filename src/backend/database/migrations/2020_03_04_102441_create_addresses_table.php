@@ -18,10 +18,10 @@ class CreateAddressesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->text('address');
             $table->string('pin_code',10);
-            $table->string('city',50);
-            $table->string('district',50);
-            $table->string('state',50);
-            $table->string('country',50);
+            $table->string('city',100);
+            $table->string('district',100);
+            $table->string('state',100);
+            $table->string('country',100);
             $table->enum('type',\App\Constants::ADDRESS_TYPES);
             $table->softDeletes();
             $table->foreign('user_id')

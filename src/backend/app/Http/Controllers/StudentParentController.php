@@ -41,7 +41,7 @@ class StudentParentController extends Controller
             ->allowedFilters([AllowedFilter::exact('is_father_alumni'),
                 AllowedFilter::exact('is_mother_alumni')])
             ->allowedIncludes(['user', 'wards', 'wards.user', 'user.roles', 'user.updater', 'user.addresses'])
-            ->paginate(15)
+            ->paginate(100)
             ->appends(request()->query());
     }
 
@@ -128,7 +128,7 @@ class StudentParentController extends Controller
         //TODO: move this to a middleware
         $show_response = $this->show($user);
         if ($show_response->status() != 200) {
-            return $show_response;
+            return $this->store($request, $user);;
         }
 
         //check if user can edit

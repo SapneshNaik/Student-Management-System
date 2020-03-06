@@ -201,6 +201,14 @@ Route::group([
         Route::put('/admins/{user}', '\App\Http\Controllers\AdminController@update')
             ->name('admins.update');
 
+        Route::get('/sms-stats', '\App\Http\Controllers\AdminController@stats')
+            ->name('sms.stats')
+            ->middleware('permission:'
+                . Constants::PERMISSIONS['VIEW_ALL_STAFF'] . '|'
+                . Constants::PERMISSIONS['VIEW_ALL_ADMINS'] . '|'
+                . Constants::PERMISSIONS['VIEW_ALL_PARENTS'] . '|'
+                . Constants::PERMISSIONS['VIEW_ALL_USERS'] . '|'
+                . Constants::PERMISSIONS['VIEW_ALL_STUDENTS'] . '');
         //Staff Routes
 
         Route::get('/staff', '\App\Http\Controllers\StaffController@profile')

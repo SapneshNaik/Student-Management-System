@@ -121,17 +121,6 @@ export default {
     return JSON.parse(JSON.stringify(source));
   },
 
-  clearLocalStorage() {
-    // localStorage.removeItem("accessToken");
-    // localStorage.removeItem('userInfo');
-    // localStorage.removeItem('role_data');
-    // localStorage.removeItem('perm_data');
-    // localStorage.removeItem('user_perms');
-    // localStorage.removeItem('user_roles');
-
-    // window.sessionStorage.clear();
-    window.localStorage.clear();
-  },
 
   upsertSort(source, newItem, prop = "user_id") {
     const i = source.findIndex(_item => _item[prop] === newItem[prop]);
@@ -163,25 +152,39 @@ export default {
       if (menuItem.url) {
         switch (menuItem.name) {
           case "Register Admin":
-            return permissions.includes(constants.PERMISSIONS.REGISTER_ADMIN);
+            return permissions.includes(constants.PERMISSIONS.REGISTER_ADMIN)
+              && permissions.includes(constants.PERMISSIONS.VIEW_ALL_ROLES);
+
           case "Register Staff":
-            return permissions.includes(constants.PERMISSIONS.REGISTER_STAFF);
+            return permissions.includes(constants.PERMISSIONS.REGISTER_STAFF)
+              && permissions.includes(constants.PERMISSIONS.VIEW_ALL_ROLES);
+
           case "Register Student":
-            return permissions.includes(constants.PERMISSIONS.REGISTER_STUDENT);
+            return permissions.includes(constants.PERMISSIONS.REGISTER_STUDENT)
+              && permissions.includes(constants.PERMISSIONS.REGISTER_PARENT);
+
           case "View Admins":
             return permissions.includes(constants.PERMISSIONS.VIEW_ALL_ADMINS);
+
           case "View Staff":
             return permissions.includes(constants.PERMISSIONS.VIEW_ALL_STAFF);
+
           case "View Students":
             return permissions.includes(constants.PERMISSIONS.VIEW_ALL_STUDENTS);
+
           case "View Parents":
             return permissions.includes(constants.PERMISSIONS.VIEW_ALL_PARENTS);
+
           case "Create Role":
-            return permissions.includes(constants.PERMISSIONS.EDIT_ALL_ROLES);
+            return permissions.includes(constants.PERMISSIONS.EDIT_ALL_ROLES)
+              && permissions.includes(constants.PERMISSIONS.VIEW_ALL_PERMISSIONS);
+
           case "View Roles":
             return permissions.includes(constants.PERMISSIONS.VIEW_ALL_ROLES);
+
           case "View Permissions":
             return permissions.includes(constants.PERMISSIONS.VIEW_ALL_PERMISSIONS);
+
           default:
             return false;
         }
@@ -200,7 +203,8 @@ export default {
   },
 
   hasAccess(name, id) {
-    console.log("checking access to " + name + " with id " + id + " for " + state.AppActiveUser.name);
+    console.log(state.AppActiveUser)
+    // console.log("checking access to " + name + " with id " + id + " for " + state.AppActiveUser.name);
     switch (name) {
 
       case "dashboard-sms":
@@ -227,10 +231,8 @@ export default {
       case "sms-register-student":
         return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.REGISTER_STUDENT);
 
-
       case "sms-register-staff":
         return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.REGISTER_STAFF);
-
 
       case "sms-view-admins":
         return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_ADMINS);
@@ -238,10 +240,8 @@ export default {
       case "sms-view-parents":
         return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_PARENTS);
 
-
       case "sms-view-staff":
         return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_STAFF);
-
 
       case "sms-view-students":
         return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_STUDENTS);
@@ -249,22 +249,20 @@ export default {
       case 'sms-role-create':
         return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.EDIT_ALL_ROLES);
 
-
       case 'sms-role-list':
         return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_ROLES);
-
 
       case 'sms-perm-list':
         return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_PERMISSIONS);
 
-
       case 'sms-role-specific-view':
         return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_ROLES);
-
 
       case 'sms-edit-role':
         return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.EDIT_ALL_ROLES);
 
+      case 'sms-delete-role':
+        return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.DELETE_ALL_ROLES);
 
       default:
         return false;

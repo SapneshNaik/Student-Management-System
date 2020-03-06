@@ -1,13 +1,3 @@
-<!-- =========================================================================================
-    File Name: AgGridTable.vue
-    Description: Ag Grid table
-    ----------------------------------------------------------------------------------------
-    Item Name: Vuexy - Vuejs, HTML & Laravel Role Dashboard Template
-    Author: Pixinvent
-    Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
-
-
 <template>
   <div id="ag-grid-demo">
     <vx-card title="All Roles">
@@ -106,6 +96,7 @@
             headerName: 'ID',
             filter: true,
             field: 'id',
+            suppressSizeToFit: true
           },
           {
             headerName: 'Name',
@@ -171,18 +162,19 @@
     computed: {
 
       roles() {
-
         return this.$store.state.userManagement.roles
       },
 
       paginationPageSize() {
         if (this.gridApi) return this.gridApi.paginationGetPageSize();
-        else return 20
+        else return 100
       },
+
       totalPages() {
         if (this.gridApi) return this.gridApi.paginationGetTotalPages();
         else return 0
       },
+
       currentPage: {
         get() {
           if (this.gridApi) return this.gridApi.paginationGetCurrentPage() + 1;
@@ -192,6 +184,7 @@
           this.gridApi.paginationGoToPage(val - 1)
         }
       }
+
     },
     methods: {
       updateSearchQuery(val) {
@@ -200,11 +193,11 @@
 
       fetchData() {
         this.$store.dispatch("userManagement/getAllRoles").then(() => {
-          this.autoSizeColumns();
+          // this.autoSizeColumns();
           this.gridColumnApi.setColumnVisible('actions', true);
 
           this.gridApi.refreshCells();
-
+          this.gridApi.sizeColumnsToFit();
           this.$vs.notify({
             title: 'Sync Update',
             text: 'Role records synced with server',

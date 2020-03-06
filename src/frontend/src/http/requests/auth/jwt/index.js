@@ -1,24 +1,13 @@
 import axios from "../../../axios/index.js"
 import _ from 'lodash';
 
-// import store from "../../../../store/store.js"
-
-// Token Refresh
-// let isAlreadyFetchingAccessToken = false
-// let subscribers = []
-
-// function onAccessTokenFetched(access_token) {
-//   subscribers = subscribers.filter(callback => callback(access_token))
-// }
+import store from "../../../../store/store.js"
 //
-// function addSubscriber(callback) {
-//   subscribers.push(callback)
-// }
-
+//
 axios.defaults.headers.common = {
-  'Authorization': `Bearer ${localStorage.getItem("accessToken")}`,
+  'Authorization': `Bearer ${store.state.AccessToken}`,
   // 'Accept': 'application/json',
-  // 'Access-Control-Allow-Origin': '*'
+  'Access-Control-Allow-Origin': '*'
 };
 
 export default {
@@ -89,6 +78,10 @@ export default {
   },
 
   //====> GET
+
+  getSMSStats() {
+    return axios.get(`api/v1/sms-stats`)
+  },
 
   getLoggedInUserDetailsWithRoleAndPerm(role) {
     return axios.get(`api/v1/user?include=roles,${role}&append=all_permissions`)
@@ -180,9 +173,6 @@ export default {
   },
 
   putStudent(payload) {
-    console.log("putting")
-    console.log(payload)
-
     return axios.put(`api/v1/students/${payload.user_id}`, this.sanitizePayload(payload));
   },
 

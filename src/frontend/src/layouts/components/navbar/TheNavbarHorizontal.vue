@@ -14,20 +14,20 @@
   <div class="vx-navbar-wrapper navbar-full p-0">
     <vs-navbar class="navbar-custom navbar-skelton" :class="navbarClasses"  :style="navbarStyle" :color="navbarColor">
 
-      <bookmarks :navbarColor="navbarColor" v-if="windowWidth >= 992" />
+<!--      <bookmarks :navbarColor="navbarColor" v-if="windowWidth >= 992" />-->
 
-      <router-link tag="div" to="/" class="vx-logo cursor-pointer mx-auto flex items-center">
+      <router-link tag="div" to="/" class="vx-logo cursor-pointer mx-auto pl-20 flex items-center">
         <logo class="w-10 mr-4 fill-current text-primary" />
-        <span class="vx-logo-text text-primary">Vuexy</span>
+        <span class="vx-logo-text text-primary">Student Management System</span>
       </router-link>
 
-      <i18n />
+      <i18n class="mr-5"/>
 
-      <search-bar />
+<!--      <search-bar class="mr-5" />-->
 
-      <cart-drop-down />
+<!--      <cart-drop-down />-->
 
-      <notification-drop-down />
+<!--      <notification-drop-down />-->
 
       <profile-drop-down />
 
@@ -37,11 +37,11 @@
 </template>
 
 <script>
-import Bookmarks            from "./components/Bookmarks.vue"
+// import Bookmarks            from "./components/Bookmarks.vue"
 import I18n                 from "./components/I18n.vue"
 import SearchBar            from "./components/SearchBar.vue"
-import CartDropDown         from "./components/CartDropDown.vue"
-import NotificationDropDown from "./components/NotificationDropDown.vue"
+// import CartDropDown         from "./components/CartDropDown.vue"
+// import NotificationDropDown from "./components/NotificationDropDown.vue"
 import ProfileDropDown      from "./components/ProfileDropDown.vue"
 import Logo                 from "../Logo.vue"
 
@@ -56,11 +56,11 @@ export default {
   },
   components: {
     Logo,
-    Bookmarks,
+    // Bookmarks,
     I18n,
     SearchBar,
-    CartDropDown,
-    NotificationDropDown,
+    // CartDropDown,
+    // NotificationDropDown,
     ProfileDropDown,
   },
   computed: {

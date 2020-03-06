@@ -57,7 +57,7 @@
 
           <div class="vx-col w-full flex" vs-align="center">
             <vs-button icon-pack="feather" icon="icon-edit" class="mr-4"
-                       :to="{name: 'sms-user-profile-edit', params: { id: user_data.id, role:user_data.base_role }}">
+                       :to="{name: 'sms-user-profile-edit', params: { id: user_data.id, role:user_data.base_role, tab: 0 }}">
               Edit
             </vs-button>
           </div>
@@ -93,7 +93,7 @@
 
             <div class="vx-col w-full flex mt-5">
               <vs-button icon-pack="feather" icon="icon-edit" class="mr-4"
-                         :to="{name: 'sms-user-profile-edit', params: { id: user_data.id, role:user_data.base_role }}">
+                         :to="{name: 'sms-user-profile-edit', params: { id: user_data.id, role:user_data.base_role, tab: 1 }}">
                 Edit
               </vs-button>
             </div>
@@ -117,7 +117,7 @@
 
                 <div class="vx-col w-full flex mt-5">
                   <vs-button icon-pack="feather" icon="icon-edit" class="mr-4"
-                             :to="{name: 'sms-user-profile-edit', params: { id: user_data.id, role:user_data.base_role }}">
+                             :to="{name: 'sms-user-profile-edit', params: { id: user_data.id, role:user_data.base_role, tab: 2 }}">
                     Edit
                   </vs-button>
                 </div>
@@ -137,7 +137,7 @@
 
                 <div class="vx-col w-full flex mt-5">
                   <vs-button icon-pack="feather" icon="icon-edit" class="mr-4"
-                             :to="{name: 'sms-user-profile-edit', params: { id: user_data.id, role:user_data.base_role }}">
+                             :to="{name: 'sms-user-profile-edit', params: { id: user_data.id, role:user_data.base_role, tab:2 }}">
                     Edit
                   </vs-button>
                 </div>
@@ -157,7 +157,7 @@
                 <vs-chip class="mt-1" color="warning"
                          icon-pack="feather"
                          close-icon="icon-log-in"
-                         closable
+                         :closable="canViewRole"
                          @click="goToRolePage(listItem.id)"
                          v-for="(listItem) in role_data" :key="listItem.id">
                   <vs-avatar icon-pack="feather" icon="icon-lock"/>
@@ -169,7 +169,7 @@
 
               <div v-if="canEditRole" class="vx-col w-full flex mt-5">
                 <vs-button icon-pack="feather" icon="icon-edit" class="mr-4"
-                           :to="{name: 'sms-user-profile-edit', params: { id: user_data.id, role:user_data.base_role }}">
+                           :to="{name: 'sms-user-profile-edit', params: { id: user_data.id, role:user_data.base_role, tab:3 }}">
                   Edit
                 </vs-button>
               </div>
@@ -188,8 +188,7 @@
                          v-for="(listItem) in all_permissions_data" :key="listItem.id">
                   <vs-avatar icon-pack="feather" icon="icon-shield"/>
 
-                  {{ listItem.name
-                  }}
+                  {{ listItem.name }}
                 </vs-chip>
               </div>
             </div>
@@ -205,7 +204,6 @@
 <script>
 
   import commons from "../../../commons";
-  import constants from "../../../constants";
 
   export default {
     props: {
@@ -223,8 +221,12 @@
     },
     computed: {
 
+      canViewRole(){
+        return commons.hasAccess('sms-role-specific-view');
+      },
+
       canEditRole() {
-        return this.$store.state.AppActiveUser.all_permissions.includes(constants.PERMISSIONS.EDIT_ALL_ROLES);
+        return commons.hasAccess('sms-edit-role');
       },
 
       profile_data() {

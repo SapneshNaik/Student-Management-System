@@ -39,8 +39,6 @@
 
 <script>
 
-  import commons from "../../../../commons";
-
   export default {
     data() {
       return {}
@@ -55,35 +53,22 @@
       logoutJWT() {
 
         this.$store.commit('userManagement/RESET_ALL');
+        this.$store.commit("RESET_USER_DETAILS", null, {root: true});
 
-        commons.clearLocalStorage();
-
+        localStorage.clear();
         this.$router.push('/login');
 
 
+
+
         this.$store.dispatch("auth/logoutJWT")
-          // eslint-disable-next-line
-          .then(res => {
-
-            this.$vs.notify({
-              text: 'Logged out',
-              iconPack: 'feather',
-              icon: 'icon-log-out',
-              color: 'success'
-            });
-
-          })
           .catch(err => {
             this.$vs.notify({
               text: err.message,
               iconPack: 'feather',
               icon: 'icon-log-out',
               color: 'error'
-            })
-
-            // this.$router.push('/login');
-
-            console.log("logout")
+            });
           });
 
       },

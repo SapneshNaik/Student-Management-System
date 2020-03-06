@@ -1,14 +1,3 @@
-/*=========================================================================================
-  File Name: mutations.js
-  Description: Vuex Store - mutations
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
-
-
-
 import commons from "../commons";
 import navMenuItems from "../layouts/components/vertical-nav-menu/navMenuItems";
 
@@ -141,63 +130,11 @@ const mutations = {
   },
 
 
-  UPDATE_USER_ROLES(state, payload) {
-    localStorage.setItem("user_roles", JSON.stringify(payload))
-
-    state.UserRoles = payload
-  },
-
-  UPDATE_USER_PERMS(state, payload) {
-    localStorage.setItem("user_perms", JSON.stringify(payload))
-    state.UserPerms = payload
-  },
-
-  UPDATE_USER_ROLE_INFO(state, payload) {
-
-    // Get Data localStorage
-    let roleInfo = JSON.parse(localStorage.getItem("role_data")) || state.AppActiveUserRoleDetails
-
-    for (const property of Object.keys(payload)) {
-      if (payload[property] != null) {
-        // If some of user property is null - user default property defined in state.AppActiveUser
-        state.AppActiveUserRoleDetails[property] = payload[property]
-
-        // Update key in localStorage
-        roleInfo[property] = payload[property]
-      }
-    }
-    // Store data in localStorage
-    localStorage.setItem("role_data", JSON.stringify(roleInfo))
-  },
-
-
-  UPDATE_USER_PERM_INFO(state, payload) {
-
-    // Get Data localStorage
-    let perm_data = JSON.parse(localStorage.getItem("perm_data")) || state.AppActiveUserPermDetails
-
-    for (const property of Object.keys(payload)) {
-
-      if (payload[property] != null) {
-        // If some of user property is null - user default property defined in state.AppActiveUserPermDetails
-        state.AppActiveUserPermDetails [property] = payload[property]
-
-        // Update key in localStorage
-        perm_data[property] = payload[property]
-      }
-
-
-    }
-    // Store data in localStorage
-    localStorage.setItem("perm_data", JSON.stringify(perm_data))
-  },
-
   RESET_USER_DETAILS(state) {
     state.AppActiveUser = {};
-    state.AppActiveUserPermDetails = {};
-    state.AppActiveUserRoleDetails = {};
-    state.UserPerms = [];
-    state.UserRoles = [];
+    state.Stats= {};
+    state.NavMenuItems = [];
+    state.AccessToken = null;
   },
 
 
@@ -206,8 +143,16 @@ const mutations = {
 
     state.NavMenuItems =  commons.filterNavMenuItems(navMenuItems, userPermissions);
 
+  },
+
+  SET_DASHBOARD_STATS(state, payload) {
+    state.Stats = payload
+  },
+
+  SET_ACCESS_TOKEN(state, payload) {
+    state.AccessToken = payload;
   }
-}
+};
 
 export default mutations
 

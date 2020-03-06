@@ -3,6 +3,41 @@
 
     <div class="vx-col w-full" id="all_role_div">
 
+      <vx-card title="Common Operations and Their Required Permissions" class="mb-base">
+        <div>
+          <vs-table stripe  :data="help">
+
+            <template slot="thead">
+              <vs-th>
+                No.
+              </vs-th>
+              <vs-th>
+                Operation Type
+              </vs-th>
+              <vs-th>
+                Permission Required
+              </vs-th>
+            </template>
+
+            <template slot-scope="{data}">
+              <vs-tr :key="indextr" v-for="(tr, indextr) in data" >
+                <vs-td :data="data[indextr].id">
+                  {{data[indextr].id}}
+                </vs-td>
+                <vs-td :data="data[indextr].email">
+                  {{data[indextr].operation}}
+                </vs-td>
+
+                <vs-td :data="data[indextr].username">
+                  {{data[indextr].permissions}}
+                </vs-td>
+
+              </vs-tr>
+            </template>
+          </vs-table>
+        </div>
+
+      </vx-card>
       <vx-card title="Create Role" class="mb-base">
 
         <form id="create-role" data-vv-scope="step-3" @submit.prevent>
@@ -123,7 +158,6 @@
             </div>
           </div>
 
-
         </form>
 
 
@@ -140,6 +174,7 @@
 
   import draggable from "vuedraggable";
   import jwt from '@/http/requests/auth/jwt/index.js';
+  import constants from "../../../constants";
 
 
   export default {
@@ -151,7 +186,63 @@
         password: '',
         name: '',
         assignedPerms: [],
-
+        help: [
+          {
+            "id": 1,
+            "operation": "Register Admin",
+            "permissions": constants.PERMISSIONS.REGISTER_ADMIN + ", "+constants.PERMISSIONS.VIEW_ALL_ROLES,
+          },
+          {
+            "id": 2,
+            "operation": "Register Staff",
+            "permissions": constants.PERMISSIONS.REGISTER_STAFF + ", "+constants.PERMISSIONS.VIEW_ALL_ROLES,
+          },
+          {
+            "id": 3,
+            "operation": "Register Student",
+            "permissions": constants.PERMISSIONS.REGISTER_STUDENT + ", "+constants.PERMISSIONS.REGISTER_PARENT,
+          },
+          {
+            "id": 4,
+            "operation": "View Admins",
+            "permissions": constants.PERMISSIONS.VIEW_ALL_ADMINS,
+          },
+          {
+            "id": 5,
+            "operation": "View Staff",
+            "permissions": constants.PERMISSIONS.VIEW_ALL_STAFF,
+          },
+          {
+            "id": 6,
+            "operation": "View Students",
+            "permissions": constants.PERMISSIONS.VIEW_ALL_STUDENTS,
+          },
+          {
+            "id": 7,
+            "operation": "View Parents",
+            "permissions": constants.PERMISSIONS.VIEW_ALL_PARENTS,
+          },
+          {
+            "id": 8,
+            "operation": "Create Role",
+            "permissions": constants.PERMISSIONS.EDIT_ALL_ROLES+", "+constants.PERMISSIONS.VIEW_ALL_PERMISSIONS,
+          },
+          {
+            "id": 9,
+            "operation": "Edit Role",
+            "permissions": constants.PERMISSIONS.VIEW_ALL_ROLES+", "+constants.PERMISSIONS.EDIT_ALL_ROLES+", "+constants.PERMISSIONS.VIEW_ALL_PERMISSIONS,
+          },
+          {
+            "id": 10,
+            "operation": "View Roles",
+            "permissions": constants.PERMISSIONS.VIEW_ALL_ROLES,
+          },
+          {
+            "id": 11,
+            "operation": "View Permissions",
+            "permissions": constants.PERMISSIONS.VIEW_ALL_PERMISSIONS,
+          },
+        ]
 
       }
     },

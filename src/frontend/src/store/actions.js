@@ -1,11 +1,5 @@
-/*=========================================================================================
-  File Name: actions.js
-  Description: Vuex Store - actions
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
+import jwt from "../http/requests/auth/jwt/index.js"
+
 
 const actions = {
 
@@ -50,15 +44,14 @@ const actions = {
     commit('UPDATE_USER_INFO', payload)
   },
 
-  updateUserRole({dispatch}, payload) {
-    // Change client side
-    payload.aclChangeRole(payload.userRole)
 
-    // Make API call to server for changing role
-
-    // Change userInfo in localStorage and store
-    dispatch('updateUserInfo', {userRole: payload.userRole})
-  },
+  getDashboardStats({commit}) {
+    jwt.getSMSStats().then((response) => {
+      commit('SET_DASHBOARD_STATS', response.data.stats)
+    }).catch((error) => {
+      console.log(error)
+    });
+  }
 }
 
 export default actions

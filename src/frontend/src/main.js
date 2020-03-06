@@ -1,12 +1,3 @@
-/*=========================================================================================
-  File Name: main.js
-  Description: main vue(js) file
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
-
 
 import Vue from 'vue'
 import App from './App.vue'
@@ -26,14 +17,14 @@ Vue.prototype.$http = axios
 import "./http/requests"
 
 // mock
-import "./fake-db/index.js"
+// import "./fake-db/index.js"
 
 // Theme Configurations
 import '../themeConfig.js'
 
 
 // Firebase
-import '@/firebase/firebaseConfig'
+// import '@/firebase/firebaseConfig'
 
 
 // // Auth0 Plugin
@@ -72,10 +63,10 @@ import i18n from './i18n/i18n'
 // Vuexy Admin Filters
 import './filters/filters'
 
-
-// Clipboard
-import VueClipboard from 'vue-clipboard2'
-Vue.use(VueClipboard);
+//
+// // Clipboard
+// import VueClipboard from 'vue-clipboard2'
+// Vue.use(VueClipboard);
 
 
 // Tour
@@ -89,15 +80,15 @@ import VeeValidate from 'vee-validate';
 Vue.use(VeeValidate);
 
 
-// Google Maps
-import * as VueGoogleMaps from 'vue2-google-maps'
-Vue.use(VueGoogleMaps, {
-    load: {
-        // Add your API key here
-        key: 'YOUR_KEY',
-        libraries: 'places', // This is required if you use the Auto complete plug-in
-    },
-})
+// // Google Maps
+// import * as VueGoogleMaps from 'vue2-google-maps'
+// Vue.use(VueGoogleMaps, {
+//     load: {
+//         // Add your API key here
+//         key: 'YOUR_KEY',
+//         libraries: 'places', // This is required if you use the Auto complete plug-in
+//     },
+// })
 
 // Vuejs - Vue wrapper for hammerjs
 import { VueHammer } from 'vue2-hammer'

@@ -3,8 +3,8 @@ export default {
     key: "title",
     data: [
       // DASHBOARDS
-      {title: "Analytics Dashboard",        url: "/dashboard/sms",                icon: "HomeIcon",           is_bookmarked: false},
-      {title: "eCommerce Dashboard",        url: "/dashboard/ecommerce",                icon: "HomeIcon",           is_bookmarked: false},
+      {title: "Home",        url: "/dashboard/sms",                icon: "HomeIcon",           is_bookmarked: true},
+      {title: "Profile",        url: "/dashboard/ecommerce",                icon: "HomeIcon",           is_bookmarked: false},
 
       // APPS
       {title: "Todo",                       url: "/apps/todo",                          icon: "CheckSquareIcon",    is_bookmarked: true},
@@ -69,7 +69,7 @@ export default {
       {title: "Form Input Group",          url: "/forms/form-input-group",             icon: "MenuIcon",           is_bookmarked: false},
 
       // PAGES
-      {title: "Login Page",                url: "/login",                        icon: "LockIcon",           is_bookmarked: false},
+      {title: "Profile",                url: "/login",                              icon: "LockIcon",           is_bookmarked: false},
       {title: "Register Page",             url: "/pages/register",                     icon: "UserPlusIcon",       is_bookmarked: false},
       {title: "Forgot Password Page",      url: "/pages/forgot-password",              icon: "HelpCircleIcon",     is_bookmarked: false},
       {title: "Reset Password Page",       url: "/pages/reset-password",               icon: "UnlockIcon",         is_bookmarked: false},

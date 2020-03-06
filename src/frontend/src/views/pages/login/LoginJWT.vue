@@ -55,10 +55,7 @@
     methods: {
       checkLogin() {
         // If user is already logged in notify
-        if (this.$store.state.auth.isUserLoggedIn()) {
-
-          // Close animation if passed as payload
-          // this.$vs.loading.close()
+        if (this.$store.state.AccessToken) {
 
           this.$vs.notify({
             title: 'Login Attempt',

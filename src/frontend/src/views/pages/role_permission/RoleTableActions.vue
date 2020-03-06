@@ -4,17 +4,17 @@
                icon="icon-eye"></vs-button>
     &nbsp;
     &nbsp;
-    <vs-button @click="editRole(params.value)" radius color="warning" type="border" icon-pack="feather"
+    <vs-button v-if="canEdit" @click="editRole(params.value)" radius color="warning" type="border" icon-pack="feather"
                icon="icon-edit-2"></vs-button>
     &nbsp;
     &nbsp;
-    <vx-tooltip text="You can delete a role only if it is not assigned to any of the users.">
+    <vx-tooltip v-if="canDelete" text="You can delete a role only if it is not assigned to any of the users.">
       <vs-button :disabled="params.data.users.length > 0" @click="deleteRole(params.value)" radius color="danger"
                  type="border" icon-pack="feather"
                  icon="icon-trash"></vs-button>
     </vx-tooltip>
 
-    <vs-popup classContent="popup-example" title="Authentication Required" :active.sync="deleteRolePopupActive">
+    <vs-popup v-if="canDelete" classContent="popup-example" title="Authentication Required" :active.sync="deleteRolePopupActive">
 
       <form id="delete-role-form" data-vv-scope="step-1" @submit.prevent>
         <div class="vx-row">
@@ -44,6 +44,7 @@
 <script>
   import Vue from "vue";
   import jwt from "../../../http/requests/auth/jwt";
+  import commons from "../../../commons";
 
   export default Vue.extend({
 
@@ -51,6 +52,17 @@
       return {
         deleteRolePopupActive: false,
         password: "",
+      }
+    },
+
+    computed: {
+
+      canEdit() {
+        return commons.hasAccess("'sms-edit-role'")
+      },
+
+      canDelete() {
+        return commons.hasAccess("'sms-delete-role'")
       }
     },
 

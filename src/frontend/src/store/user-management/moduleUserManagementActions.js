@@ -88,8 +88,8 @@ export default {
     })
   },
 
-  updateAdmin({commit}, payload) {
-    console.log(commit)
+  // eslint-disable-next-line
+  updateAdmin({}, payload) {
     return new Promise((resolve, reject) => {
       jwt.putAdmin(payload)
         .then((response) => {
@@ -104,9 +104,8 @@ export default {
         })
     })
   },
-
-  updateParent({commit}, payload) {
-    console.log(commit)
+// eslint-disable-next-line
+  updateParent({}, payload) {
     return new Promise((resolve, reject) => {
       jwt.putParent(payload)
         .then((response) => {
@@ -121,9 +120,8 @@ export default {
         })
     })
   },
-
-  updateStaff({commit}, payload) {
-    console.log(commit)
+// eslint-disable-next-line
+  updateStaff({}, payload) {
     return new Promise((resolve, reject) => {
       jwt.putStaff(payload)
         .then((response) => {
@@ -138,10 +136,9 @@ export default {
         })
     })
   },
+// eslint-disable-next-line
+  updateStudent({}, payload) {
 
-  updateStudent({commit}, payload) {
-    console.log(commit)
-    console.log(payload)
     return new Promise((resolve, reject) => {
       jwt.putStudent(payload)
         .then((response) => {
@@ -158,36 +155,8 @@ export default {
   },
 
 
-  fetchLoggedInUserRolePermission({commit}, role) {
-    return new Promise((resolve, reject) => {
-      jwt.getLoggedInUserDetailsWithRoleAndPerm(role)
-        .then((response) => {
-
-          console.log("Role is " + role)
-          console.log(response.data)
-          if (response.data[role.toLowerCase()]) {
-            commit('UPDATE_USER_ROLE_INFO', response.data[role.toLowerCase()], {root: true})
-          }
-
-          if (response.data.all_permissions) {
-            commit('UPDATE_USER_PERM_INFO', response.data.all_permissions, {root: true})
-          }
-
-          resolve(response)
-        })
-        .catch((error) => {
-          reject(error)
-        })
-    })
-  },
-
-
   getAllAdmins({dispatch}) {
     return new Promise((resolve, reject) => {
-
-      console.log("in getAllAdmins");
-      // // commit('RESET_ADMINS');
-
       dispatch('getAdminPage', 1).then(() => {
         resolve()
       }).catch((error) => {
@@ -201,7 +170,6 @@ export default {
   getAdminPage({commit, dispatch}, page) {
 
     return new Promise((resolve, reject) => {
-      console.log("in getAdminPage");
       jwt.getAdmins(page)
         .then((response) => {
           commit('UPDATE_ADMINS', response.data.data);
@@ -211,7 +179,7 @@ export default {
           resolve()
         })
         .catch((error) => {
-          console.log("error in getAdminPage");
+          console.log(error);
           reject(error)
         })
     });
@@ -220,7 +188,6 @@ export default {
   getAllParents({dispatch}) {
     return new Promise((resolve, reject) => {
 
-      console.log("in getAllParents");
       // commit('RESET_PARENTS');
 
       dispatch('getParentPage', 1).then(() => {
@@ -236,7 +203,6 @@ export default {
   getParentPage({commit, dispatch}, page) {
 
     return new Promise((resolve, reject) => {
-      console.log("in getParentPage");
       jwt.getParents(page)
         .then((response) => {
           commit('UPDATE_PARENTS', response.data.data);
@@ -246,7 +212,7 @@ export default {
           resolve()
         })
         .catch((error) => {
-          console.log("error in getParentPage");
+          console.log(error);
           reject(error)
         })
     });
@@ -254,10 +220,6 @@ export default {
 
   getAllStaffs({dispatch}) {
     return new Promise((resolve, reject) => {
-
-      console.log("in getAllStaffs");
-      // commit('RESET_STAFF');
-
       dispatch('getStaffPage', 1).then(() => {
         resolve()
       }).catch((error) => {
@@ -271,7 +233,6 @@ export default {
   getStaffPage({commit, dispatch}, page) {
 
     return new Promise((resolve, reject) => {
-      console.log("in getStaffPage");
       jwt.getStaffs(page)
         .then((response) => {
           commit('UPDATE_STAFF', response.data.data);
@@ -281,7 +242,7 @@ export default {
           resolve()
         })
         .catch((error) => {
-          console.log("error in getStaffPage");
+          console.log(error);
           reject(error)
         })
     });
@@ -289,10 +250,6 @@ export default {
 
   getAllStudents({dispatch}) {
     return new Promise((resolve, reject) => {
-
-      console.log("in getAllStudents");
-      // commit('RESET_STUDENTS');
-
       dispatch('getStudentPage', 1).then(() => {
         resolve()
       }).catch((error) => {
@@ -306,7 +263,6 @@ export default {
   getStudentPage({commit, dispatch}, page) {
 
     return new Promise((resolve, reject) => {
-      console.log("in getStudentPage");
       jwt.getStudents(page)
         .then((response) => {
           commit('UPDATE_STUDENTS', response.data.data);
@@ -316,7 +272,7 @@ export default {
           resolve()
         })
         .catch((error) => {
-          console.log("error in getStudentPage");
+          console.log(error);
           reject(error)
         })
     });
@@ -324,10 +280,6 @@ export default {
 
   getAllRoles({dispatch}) {
     return new Promise((resolve, reject) => {
-
-      console.log("in getAllRoles");
-      // commit('RESET_STUDENTS');
-
       dispatch('getRolePage', 1).then(() => {
         resolve()
       }).catch((error) => {
@@ -341,7 +293,6 @@ export default {
   getRolePage({commit, dispatch}, page) {
 
     return new Promise((resolve, reject) => {
-      console.log("in getRolePage");
       jwt.getRoles(page)
         .then((response) => {
           commit('UPDATE_ROLES', response.data.data);
@@ -351,7 +302,7 @@ export default {
           resolve()
         })
         .catch((error) => {
-          console.log("error in getRolePage");
+          console.log(error);
           reject(error)
         })
     });
@@ -359,10 +310,6 @@ export default {
 
   getAllPermissions({dispatch}) {
     return new Promise((resolve, reject) => {
-
-      console.log("in getAllPermissions");
-      // commit('RESET_STUDENTS');
-
       dispatch('getPermissionPage', 1).then(() => {
         resolve()
       }).catch((error) => {
@@ -376,7 +323,6 @@ export default {
   getPermissionPage({commit, dispatch}, page) {
 
     return new Promise((resolve, reject) => {
-      console.log("in getPermissionPage");
       jwt.getPermissions(page)
         .then((response) => {
           commit('UPDATE_PERMISSIONS', response.data.data);
@@ -386,7 +332,7 @@ export default {
           resolve()
         })
         .catch((error) => {
-          console.log("error in getPermissionPage");
+          console.log(error);
           reject(error)
         })
     });
@@ -421,12 +367,10 @@ export default {
 
 
   deleteRecord({commit}, payload) {
-    switch (payload.type) {
-      case "Role":
-        commit('REMOVE_ROLE', payload.data);
-        break;
-      default:
-        throw "invalid role " + payload.type + " in upsertToState"
+    if (payload.type === "Role") {
+      commit('REMOVE_ROLE', payload.data);
+    } else {
+      throw "invalid role " + payload.type + " in upsertToState"
     }
   }
 }

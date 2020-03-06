@@ -121,31 +121,16 @@
           .catch(error => {
             this.$vs.loading.close("#save > .con-vs-loading");
 
-            if (error.response) {
-              let errors = Object.values(error.response.data);
-              errors = errors.flat();
+            console.log(error);
 
-              console.log(errors)
+            this.$vs.notify({
+              title: 'Error',
+              text: "Error updating admin profile",
+              iconPack: 'feather',
+              icon: 'icon-alert-circle',
+              color: 'danger'
+            })
 
-
-              errors.forEach((error) => {
-                this.$vs.notify({
-                  title: 'Error',
-                  text: error,
-                  iconPack: 'feather',
-                  icon: 'icon-alert-circle',
-                  color: 'danger'
-                })
-              });
-            } else {
-              this.$vs.notify({
-                title: 'Error',
-                text: error.message,
-                iconPack: 'feather',
-                icon: 'icon-alert-circle',
-                color: 'danger'
-              })
-            }
           })
 
       },

@@ -212,7 +212,7 @@
                   type: permUpdateResponse.data.user.base_role
                 });
 
-                if (this.profileData.user_id == this.$store.state.AppActiveUser.id) {
+                if (profileData.user_id == this.$store.state.AppActiveUser.id) {
 
                   this.$store.commit('UPDATE_USER_INFO', profileData);
                 }

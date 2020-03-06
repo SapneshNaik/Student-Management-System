@@ -123,7 +123,12 @@
 
       communication_address() {
         if (this.all_user_data) {
-          return this.all_user_data.user.communication_address;
+          if (this.all_user_data.user.communication_address) {
+            return this.all_user_data.user.communication_address;
+          } else {
+            let temp = commons.getAddressModel("Communication");
+            temp.user_id = this.all_user_data.user.id;
+            return temp;          }
         } else {
           return [];
         }
@@ -131,7 +136,13 @@
 
       permanent_address() {
         if (this.all_user_data) {
-          return this.all_user_data.user.permanent_address;
+          if (this.all_user_data.user.permanent_address) {
+            return this.all_user_data.user.permanent_address;
+          } else {
+            let temp = commons.getAddressModel("Permanent");
+            temp.user_id = this.all_user_data.user.id;
+            return temp;
+          }
         } else {
           return [];
         }

@@ -179,8 +179,9 @@
 
       paginationPageSize() {
         if (this.gridApi) return this.gridApi.paginationGetPageSize();
-        else return 20
+        else return 100
       },
+
       totalPages() {
         if (this.gridApi) return this.gridApi.paginationGetTotalPages();
         else return 0

@@ -3,8 +3,7 @@
 
     <div class="vx-col w-full" id="all_role_div">
 
-      <vx-card :title="roleData.name + ' Role'" class="mb-base">
-
+      <vx-card :title=roleTitle class="mb-base">
 
         <div class="vx-row mt-5">
 
@@ -44,7 +43,7 @@
                   <transition-group>
 
 
-                    <vs-chip class="m-1" color="#24c1a0" closable
+                    <vs-chip class="m-1" color="#24c1a0" :closable="canSeeProfile(listItem.id)"
                              icon-pack="feather"
                              close-icon="icon-log-in"
                              @click="goToUserPage(listItem.id, listItem.base_role)" v-for="(listItem) in roleData.users"
@@ -82,12 +81,20 @@
       draggable
     },
     computed: {
+      roleTitle() {
+        return " \"" + this.roleData.name + "\" Role";
+      },
+
       roleData() {
         return commons.getUserDataFromRole("Role", this.$route.params.id, this.$store.state);
       },
     },
 
     methods: {
+
+      canSeeProfile(id){
+        return commons.hasAccess("sms-user-profile", id)
+      },
 
       fetchData() {
 

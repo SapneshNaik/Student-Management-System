@@ -162,7 +162,7 @@
       },
 
       roleTab: function () {
-        return this.$store.state.AppActiveUser.all_permissions.includes(constants.PERMISSIONS.EDIT_ALL_ROLES);
+        return commons.hasAccess('sms-edit-role');
       },
 
     },

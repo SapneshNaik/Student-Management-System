@@ -66,8 +66,6 @@ export default {
         break;
     }
 
-    console.log("found " + role + "  " + all_user_data)
-
     return all_user_data;
 
   },
@@ -203,7 +201,6 @@ export default {
   },
 
   hasAccess(name, id) {
-    console.log(state.AppActiveUser)
     // console.log("checking access to " + name + " with id " + id + " for " + state.AppActiveUser.name);
     switch (name) {
 

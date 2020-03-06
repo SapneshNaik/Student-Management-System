@@ -53,10 +53,69 @@ const PERMISSIONS = {
   'DELETE_ALL_ROLES': 'Edit All Roles',
 };
 
+const ROLE_HELP =  [
+  {
+    "id": 1,
+    "operation": "Register Admin",
+    "permissions": PERMISSIONS.REGISTER_ADMIN + ", "+PERMISSIONS.VIEW_ALL_ROLES,
+  },
+  {
+    "id": 2,
+    "operation": "Register Staff",
+    "permissions": PERMISSIONS.REGISTER_STAFF + ", "+PERMISSIONS.VIEW_ALL_ROLES,
+  },
+  {
+    "id": 3,
+    "operation": "Register Student",
+    "permissions": PERMISSIONS.REGISTER_STUDENT + ", "+PERMISSIONS.REGISTER_PARENT,
+  },
+  {
+    "id": 4,
+    "operation": "View Admins",
+    "permissions": PERMISSIONS.VIEW_ALL_ADMINS,
+  },
+  {
+    "id": 5,
+    "operation": "View Staff",
+    "permissions": PERMISSIONS.VIEW_ALL_STAFF,
+  },
+  {
+    "id": 6,
+    "operation": "View Students",
+    "permissions": PERMISSIONS.VIEW_ALL_STUDENTS,
+  },
+  {
+    "id": 7,
+    "operation": "View Parents",
+    "permissions": PERMISSIONS.VIEW_ALL_PARENTS,
+  },
+  {
+    "id": 8,
+    "operation": "Create Role",
+    "permissions": PERMISSIONS.EDIT_ALL_ROLES+", "+PERMISSIONS.VIEW_ALL_PERMISSIONS,
+  },
+  {
+    "id": 9,
+    "operation": "Edit Role",
+    "permissions": PERMISSIONS.VIEW_ALL_ROLES+", "+PERMISSIONS.EDIT_ALL_ROLES+", "+PERMISSIONS.VIEW_ALL_PERMISSIONS,
+  },
+  {
+    "id": 10,
+    "operation": "View Roles",
+    "permissions": PERMISSIONS.VIEW_ALL_ROLES,
+  },
+  {
+    "id": 11,
+    "operation": "View Permissions",
+    "permissions": PERMISSIONS.VIEW_ALL_PERMISSIONS,
+  },
+];
+
 export default {
   PREFIXES: PREFIXES,
   GENDER: GENDER,
   RELIGIONS: RELIGIONS,
   BLOOD_GROUP: BLOOD_GROUP,
   PERMISSIONS: PERMISSIONS,
+  ROLE_HELP: ROLE_HELP,
 }

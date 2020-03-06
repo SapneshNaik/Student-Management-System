@@ -186,64 +186,7 @@
         password: '',
         name: '',
         assignedPerms: [],
-        help: [
-          {
-            "id": 1,
-            "operation": "Register Admin",
-            "permissions": constants.PERMISSIONS.REGISTER_ADMIN + ", "+constants.PERMISSIONS.VIEW_ALL_ROLES,
-          },
-          {
-            "id": 2,
-            "operation": "Register Staff",
-            "permissions": constants.PERMISSIONS.REGISTER_STAFF + ", "+constants.PERMISSIONS.VIEW_ALL_ROLES,
-          },
-          {
-            "id": 3,
-            "operation": "Register Student",
-            "permissions": constants.PERMISSIONS.REGISTER_STUDENT + ", "+constants.PERMISSIONS.REGISTER_PARENT,
-          },
-          {
-            "id": 4,
-            "operation": "View Admins",
-            "permissions": constants.PERMISSIONS.VIEW_ALL_ADMINS,
-          },
-          {
-            "id": 5,
-            "operation": "View Staff",
-            "permissions": constants.PERMISSIONS.VIEW_ALL_STAFF,
-          },
-          {
-            "id": 6,
-            "operation": "View Students",
-            "permissions": constants.PERMISSIONS.VIEW_ALL_STUDENTS,
-          },
-          {
-            "id": 7,
-            "operation": "View Parents",
-            "permissions": constants.PERMISSIONS.VIEW_ALL_PARENTS,
-          },
-          {
-            "id": 8,
-            "operation": "Create Role",
-            "permissions": constants.PERMISSIONS.EDIT_ALL_ROLES+", "+constants.PERMISSIONS.VIEW_ALL_PERMISSIONS,
-          },
-          {
-            "id": 9,
-            "operation": "Edit Role",
-            "permissions": constants.PERMISSIONS.VIEW_ALL_ROLES+", "+constants.PERMISSIONS.EDIT_ALL_ROLES+", "+constants.PERMISSIONS.VIEW_ALL_PERMISSIONS,
-          },
-          {
-            "id": 10,
-            "operation": "View Roles",
-            "permissions": constants.PERMISSIONS.VIEW_ALL_ROLES,
-          },
-          {
-            "id": 11,
-            "operation": "View Permissions",
-            "permissions": constants.PERMISSIONS.VIEW_ALL_PERMISSIONS,
-          },
-        ]
-
+        help: constants.ROLE_HELP
       }
     },
 

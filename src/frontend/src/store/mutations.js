@@ -138,11 +138,10 @@ const mutations = {
   },
 
 
-  SET_NAV_MENU_ITEMS(state) {
-    const userPermissions = state.AppActiveUser.all_permissions.map(a => a.name);
-
-    state.NavMenuItems =  commons.filterNavMenuItems(navMenuItems, userPermissions);
-
+  SET_NAV_MENU_ITEMS(state, permissions) {
+    let userPermissions = permissions.map(a => a.name);
+    let  temp = JSON.parse(JSON.stringify(navMenuItems));
+    state.NavMenuItems =  commons.filterNavMenuItems(temp, userPermissions);
   },
 
   SET_DASHBOARD_STATS(state, payload) {

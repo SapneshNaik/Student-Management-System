@@ -25,13 +25,13 @@
       class="w-full mt-6"/>
     <span class="text-danger text-sm">{{ errors.first('password') }}</span>
 
-    <div class="flex flex-wrap justify-between my-5">
-      <div>
-      </div>
-      <router-link to="/pages/forgot-password">Forgot Password?</router-link>
-    </div>
+<!--    <div class="flex flex-wrap justify-between my-5">-->
+<!--      <div>-->
+<!--      </div>-->
+<!--      <router-link to="/pages/forgot-password">Forgot Password?</router-link>-->
+<!--    </div>-->
 
-    <div class="flex flex-wrap justify-between mb-3">
+    <div class="flex flex-wrap justify-between my-10">
       <div>
       </div>
       <vs-button :disabled="!validateForm" @click="loginJWT">Login</vs-button>

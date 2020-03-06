@@ -3,6 +3,43 @@
 
     <div class="vx-col w-full" id="all_role_div">
 
+      <vx-card title="Common Operations and Their Required Permissions" class="mb-base">
+        <div>
+          <vs-table stripe  :data="help">
+
+            <template slot="thead">
+              <vs-th>
+                No.
+              </vs-th>
+              <vs-th>
+                Operation Type
+              </vs-th>
+              <vs-th>
+                Permission Required
+              </vs-th>
+            </template>
+
+            <template slot-scope="{data}">
+              <vs-tr :key="indextr" v-for="(tr, indextr) in data" >
+                <vs-td :data="data[indextr].id">
+                  {{data[indextr].id}}
+                </vs-td>
+                <vs-td :data="data[indextr].email">
+                  {{data[indextr].operation}}
+                </vs-td>
+
+                <vs-td :data="data[indextr].username">
+                  {{data[indextr].permissions}}
+                </vs-td>
+
+              </vs-tr>
+            </template>
+          </vs-table>
+        </div>
+
+      </vx-card>
+
+
       <vx-card title="Edit Role" class="mb-base">
 
         <form v-if="data_local" id="create-role" data-vv-scope="step-3" @submit.prevent>
@@ -142,6 +179,7 @@
   import draggable from "vuedraggable";
   import jwt from '@/http/requests/auth/jwt/index.js';
   import commons from "../../../commons";
+  import constants from "../../../constants";
 
 
   export default {
@@ -152,6 +190,8 @@
     data() {
       return {
         data_local: null,
+        help: constants.ROLE_HELP
+
       }
     },
 

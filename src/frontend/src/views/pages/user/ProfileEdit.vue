@@ -59,7 +59,6 @@
   import StaffEdit from "../staff/StaffEdit";
   import UserRoleEdit from "../role_permission/UserRoleEdit";
   import AddressEdit from "../address/AddressEdit";
-  import constants from "../../../constants";
 
   export default {
     components: {

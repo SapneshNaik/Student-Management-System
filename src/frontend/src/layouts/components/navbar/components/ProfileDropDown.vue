@@ -55,7 +55,9 @@
         this.$store.commit('userManagement/RESET_ALL');
         this.$store.commit("RESET_USER_DETAILS", null, {root: true});
 
-        localStorage.clear();
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('userInfo');
+
         this.$router.push('/login');
 
 

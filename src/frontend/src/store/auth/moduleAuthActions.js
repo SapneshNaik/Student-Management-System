@@ -28,12 +28,12 @@ export default {
             // Navigate User to homepage
 
             // Set accessToken
-            localStorage.setItem("accessToken", response.data.access_token)
+            localStorage.setItem("accessToken", response.data.access_token);
 
             // Update user details
             //DONE: Modify backend to return user data on login and enable below code
             commit('UPDATE_USER_INFO', response.data, {root: true});
-            commit('SET_NAV_MENU_ITEMS', null, {root: true});
+            commit('SET_NAV_MENU_ITEMS', response.data.user.all_permissions, {root: true});
             commit('SET_ACCESS_TOKEN', response.data.access_token, {root: true});
 
 

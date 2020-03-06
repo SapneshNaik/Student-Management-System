@@ -1,5 +1,5 @@
-import state from "./store/state";
 import constants from "./constants";
+import store from "./store/store";
 
 export default {
   getBaseUserModel: function (role) {
@@ -145,7 +145,6 @@ export default {
 
 
   filterNavMenuItems(menu, permissions) {
-
     return menu.filter((menuItem) => {
       if (menuItem.url) {
         switch (menuItem.name) {
@@ -197,11 +196,10 @@ export default {
 
 
   isOwnResource(id) {
-    return id == state.AppActiveUser.id;
+    return id == store.state.AppActiveUser.id;
   },
 
-  hasAccess(name, id) {
-    // console.log("checking access to " + name + " with id " + id + " for " + state.AppActiveUser.name);
+  hasAccess: function (name, id) {
     switch (name) {
 
       case "dashboard-sms":
@@ -211,7 +209,10 @@ export default {
         if (this.isOwnResource(id)) {
           return true;
         } else {
-          return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_USERS);
+          return store.state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_ADMINS) ||
+            store.state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_PARENTS) ||
+            store.state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_STUDENTS) ||
+            store.state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_STAFF);
 
         }
 
@@ -219,47 +220,47 @@ export default {
         if (this.isOwnResource(id)) {
           return true;
         } else {
-          return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.EDIT_ALL_USERS)
+          return store.state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.EDIT_ALL_USERS)
         }
 
       case "sms-register-admin":
-        return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.REGISTER_ADMIN);
+        return store.state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.REGISTER_ADMIN);
 
       case "sms-register-student":
-        return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.REGISTER_STUDENT);
+        return store.state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.REGISTER_STUDENT);
 
       case "sms-register-staff":
-        return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.REGISTER_STAFF);
+        return store.state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.REGISTER_STAFF);
 
       case "sms-view-admins":
-        return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_ADMINS);
+        return store.state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_ADMINS);
 
       case "sms-view-parents":
-        return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_PARENTS);
+        return store.state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_PARENTS);
 
       case "sms-view-staff":
-        return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_STAFF);
+        return store.state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_STAFF);
 
       case "sms-view-students":
-        return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_STUDENTS);
+        return store.state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_STUDENTS);
 
       case 'sms-role-create':
-        return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.EDIT_ALL_ROLES);
+        return store.state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.EDIT_ALL_ROLES);
 
       case 'sms-role-list':
-        return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_ROLES);
+        return store.state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_ROLES);
 
       case 'sms-perm-list':
-        return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_PERMISSIONS);
+        return store.state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_PERMISSIONS);
 
       case 'sms-role-specific-view':
-        return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_ROLES);
+        return store.state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.VIEW_ALL_ROLES);
 
       case 'sms-edit-role':
-        return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.EDIT_ALL_ROLES);
+        return store.state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.EDIT_ALL_ROLES);
 
       case 'sms-delete-role':
-        return state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.DELETE_ALL_ROLES);
+        return store.state.AppActiveUser.all_permissions.some(perm => perm.name === constants.PERMISSIONS.DELETE_ALL_ROLES);
 
       default:
         return false;

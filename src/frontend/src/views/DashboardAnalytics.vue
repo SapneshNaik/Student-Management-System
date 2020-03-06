@@ -1,12 +1,3 @@
-<!-- =========================================================================================
-  File Name: DashboardAnalytics.vue
-  Description: Dashboard Analytics
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
-
 <template>
   <div id="dashboard-sms">
     <div class="vx-row">
@@ -367,20 +358,29 @@
       canSeeStudentStats(){
         return commons.hasAccess("sms-view-students");
       },
+
       canSeeAdminStats(){
         return commons.hasAccess("sms-view-admins");
       },
+
       canSeeParentStats(){
         return commons.hasAccess("sms-view-parents");
       },
+
       canSeeStaffStats(){
         return commons.hasAccess("sms-view-staff");
       },
 
+      canSeeAnyOne(){
+        return this.canSeeStudentStats || this.canSeeAdminStats || this.canSeeParentStats || this.canSeeStaffStats;
+      }
+
     },
     created() {
 
-      this.$store.dispatch('getDashboardStats');
+      if(this.canSeeAnyOne){
+        this.$store.dispatch('getDashboardStats');
+      }
 
       //  User Reward Card
       // this.$http.get("/api/user/checkpoint-reward")

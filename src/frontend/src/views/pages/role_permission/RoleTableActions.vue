@@ -58,11 +58,11 @@
     computed: {
 
       canEdit() {
-        return commons.hasAccess("'sms-edit-role'")
+        return commons.hasAccess("sms-edit-role")
       },
 
       canDelete() {
-        return commons.hasAccess("'sms-delete-role'")
+        return commons.hasAccess("sms-delete-role")
       }
     },
 

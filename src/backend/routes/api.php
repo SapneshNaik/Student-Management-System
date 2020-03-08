@@ -3,10 +3,6 @@
 
 use App\Constants;
 
-Route::get('/debug-sentry', function () {
-    throw new Exception('My first Sentry error!');
-});
-
 
 Route::group([
     'prefix' => 'v1',

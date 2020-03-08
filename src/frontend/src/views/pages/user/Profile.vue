@@ -280,21 +280,15 @@
 
       profileFirstHalf() {
 
-        const temp = this.getToBeHalvedData()
+        const temp = this.getToBeHalvedData;
         return temp.splice(0, temp.length / 2);
       },
 
       profileSecondHalf() {
 
-        const temp = this.getToBeHalvedData()
+        const temp = this.getToBeHalvedData;
         return temp.splice(temp.length / 2, temp.length);
       },
-
-    }
-    ,
-
-
-    methods: {
 
       getToBeHalvedData() {
         const data = JSON.parse(JSON.stringify(this.profile_data));
@@ -302,6 +296,12 @@
         delete data['parent_id'];
         return Object.entries(data);
       },
+
+    }
+    ,
+
+
+    methods: {
 
       titleCase(value) {
         return this.$_.startCase(value);
@@ -332,7 +332,7 @@
               .then(result => {
                 this.$vs.loading.close();
 
-                const role = result.data.base_role.toLowerCase()
+                const role = result.data.base_role.toLowerCase();
                 this.all_user_data = result.data[role];
                 this.all_user_data['user'] = this.$_.omit(result.data, [role]);
                 this.all_user_data.user.photoURL = "https://i.pravatar.cc/200";

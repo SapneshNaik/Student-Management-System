@@ -3,7 +3,7 @@
 
     <div class="vx-col w-full" id="all_role_div">
 
-      <vx-card :title=roleTitle class="mb-base">
+      <vx-card v-if="roleData" :title=roleTitle class="mb-base">
 
         <div class="vx-row mt-5">
 
@@ -145,6 +145,8 @@
 
 
     },
+
+
 
 
     created() {

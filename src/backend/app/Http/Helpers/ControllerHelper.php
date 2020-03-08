@@ -45,6 +45,6 @@ class ControllerHelper
      */
     static function userEditsOwnProfileOrHasPermission(Request $request, User $user, Array $permissions): bool
     {
-        return ($request->user()->is($user) || $request->user()->$user->hasAnyPermission($permissions));
+        return ($request->user()->is($user) || $request->user()->hasAnyPermission($permissions));
     }
 }

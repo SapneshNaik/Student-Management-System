@@ -347,7 +347,7 @@
               .catch(err => {
                 this.$vs.loading.close();
 
-                console.log("Other profile fetch error")
+                console.log("Other profile fetch error");
                 console.log(err);
 
 

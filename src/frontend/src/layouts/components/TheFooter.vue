@@ -14,12 +14,13 @@
         <p>
           <span>COPYRIGHT &copy;</span>
           <span>{{ new Date().getFullYear() }} </span>
-          <a href="https://1.envato.market/vuexy_admin" target="_blank" rel="nofollow">Deepak Vasishtha</a>
+          <a href="#">Deepak Vasishtha</a>
           <span class="hidden sm:inline-block">, All rights Reserved</span>
         </p>
         <span class="md:flex hidden items-center">
-            <span>Hand-crafted & Made with</span>
+            <span>Made with</span>
             <feather-icon icon="HeartIcon" svgClasses="stroke-current text-danger w-6 h-6" class="ml-2" />
+            <span> &nbsp; by <a href="https://kerneldev.com/" target="_blank" rel="nofollow" > Sapnesh Naik </a> </span>
         </span>
     </footer>
 </template>

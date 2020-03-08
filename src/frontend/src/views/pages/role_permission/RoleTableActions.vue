@@ -118,32 +118,19 @@
             {type: "Role", data: this.params.data});
 
         }).catch((error) => {
+
+          console.log(error)
           this.$vs.loading.close("#deleteButton > .con-vs-loading");
 
-          if (error.response) {
-            let errors = Object.values(error.response.data);
-            errors = errors.flat();
-            errors.forEach((error) => {
-              this.$vs.notify({
-                title: 'Error',
-                text: error,
-                iconPack: 'feather',
-                icon: 'icon-alert-circle',
-                color: 'danger',
-                position: 'top-right',
-              })
-            });
-          } else {
-            this.$vs.notify({
+           this.$vs.notify({
               title: 'Error',
-              text: error.message,
+              text: "error deleting role",
               iconPack: 'feather',
               icon: 'icon-alert-circle',
               color: 'danger',
               position: 'top-right',
 
-            })
-          }
+            });
         });
       },
     }

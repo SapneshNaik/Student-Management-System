@@ -14,7 +14,7 @@
               <div class="px-8 pt-8 login-tabs-container">
 
                 <div class="vx-card__title mb-4">
-                  <h4 class="mb-4">Student Management System</h4>
+                  <h4 class="mb-4">elixirEdu</h4>
                   <p>Welcome back, please login to your account.</p>
                 </div>
 

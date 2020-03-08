@@ -110,16 +110,22 @@
               let errors = Object.values(error.response.data);
               errors = errors.flat();
 
-              this.$vs.loading.close()
-              errors.forEach((error) => {
-                this.$vs.notify({
-                  title: 'Error',
-                  text: error,
-                  iconPack: 'feather',
-                  icon: 'icon-alert-circle',
-                  color: 'danger'
-                })
-              });
+
+              this.$vs.loading.close();
+
+              if(errors.length < 30) {
+                errors.forEach((error) => {
+                  this.$vs.notify({
+                    title: 'Error',
+                    text: error,
+                    iconPack: 'feather',
+                    icon: 'icon-alert-circle',
+                    color: 'danger'
+                  })
+                });
+              }
+
+
             } else {
               this.$vs.notify({
                 title: 'Error',

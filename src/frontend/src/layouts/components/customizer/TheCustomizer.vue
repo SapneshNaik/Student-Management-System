@@ -31,7 +31,7 @@
 
         <div class="customizer-header mt-6 flex items-center justify-between px-6">
           <div>
-            <h4>SMS CUSTOMIZER</h4>
+            <h4>elixirEdu CUSTOMIZER</h4>
             <small>Customize & Preview in Real Time</small>
           </div>
           <feather-icon icon="XIcon" @click.stop="active = false" class="cursor-pointer"></feather-icon>

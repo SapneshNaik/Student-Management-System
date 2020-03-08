@@ -182,29 +182,15 @@
           .catch(error => {
             this.$vs.loading.close("#save > .con-vs-loading");
 
-            if (error.response) {
-              let errors = Object.values(error.response.data);
-              errors = errors.flat();
-
-              errors.forEach((error) => {
-                this.$vs.notify({
-                  title: 'Error',
-                  text: error,
-                  iconPack: 'feather',
-                  icon: 'icon-alert-circle',
-                  color: 'danger'
-                })
-              });
-            } else {
-              this.$vs.notify({
-                title: 'Error',
-                text: error.message,
-                iconPack: 'feather',
-                icon: 'icon-alert-circle',
-                color: 'danger'
-              })
-            }
-          })
+            console.log(error);
+            this.$vs.notify({
+              title: 'Error',
+              text: "Error updating Student",
+              iconPack: 'feather',
+              icon: 'icon-alert-circle',
+              color: 'danger'
+            })
+          });
 
       },
 

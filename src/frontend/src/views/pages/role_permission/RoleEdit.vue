@@ -5,7 +5,7 @@
 
       <vx-card title="Common Operations and Their Required Permissions" class="mb-base">
         <div>
-          <vs-table stripe  :data="help">
+          <vs-table stripe :data="help">
 
             <template slot="thead">
               <vs-th>
@@ -20,7 +20,7 @@
             </template>
 
             <template slot-scope="{data}">
-              <vs-tr :key="indextr" v-for="(tr, indextr) in data" >
+              <vs-tr :key="indextr" v-for="(tr, indextr) in data">
                 <vs-td :data="data[indextr].id">
                   {{data[indextr].id}}
                 </vs-td>
@@ -328,31 +328,16 @@
         }).catch((error) => {
           this.$vs.loading.close("#save > .con-vs-loading");
 
-          if (error.response) {
-            let errors = Object.values(error.response.data);
-            errors = errors.flat();
-            errors.forEach((error) => {
-              this.$vs.notify({
-                title: 'Error',
-                text: error,
-                iconPack: 'feather',
-                icon: 'icon-alert-circle',
-                color: 'danger',
-                position: 'top-right',
+          console.log(error);
+          this.$vs.notify({
+            title: 'Error',
+            text: "Error Updating Role",
+            iconPack: 'feather',
+            icon: 'icon-alert-circle',
+            color: 'danger',
+            position: 'top-right',
 
-              })
-            });
-          } else {
-            this.$vs.notify({
-              title: 'Error',
-              text: error.message,
-              iconPack: 'feather',
-              icon: 'icon-alert-circle',
-              color: 'danger',
-              position: 'top-right',
-
-            })
-          }
+          });
         });
       },
 

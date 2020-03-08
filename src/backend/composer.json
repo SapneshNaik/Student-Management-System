@@ -15,6 +15,7 @@
         "laravel/passport": "^8.3",
         "laravel/tinker": "^2.0",
         "pearl/aadhaar-validator": "^1.0",
+        "sentry/sentry-laravel": "1.7.0",
         "spatie/laravel-permission": "^3.6",
         "spatie/laravel-query-builder": "^2.5",
         "tom-lingham/searchy": "^2.0"

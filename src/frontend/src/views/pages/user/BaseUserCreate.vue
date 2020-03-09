@@ -54,6 +54,11 @@
 
 <script>
 
+  import {Validator} from 'vee-validate';
+  import constants from "../../../constants";
+
+  Validator.localize('en', constants.VALIDATION_MESSAGES);
+
   export default {
     props: {
       role: {

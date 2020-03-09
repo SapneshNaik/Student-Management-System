@@ -63,7 +63,7 @@
             <vs-checkbox v-model="isPermSameAsComm">Same as the Communication Address</vs-checkbox>
           </div>
 
-          <div class="vx-row m-auto" v-if="!isPermSameAsComm">
+          <div class="vx-row w-full ml-2 mr-1" v-if="!isPermSameAsComm">
             <div class="vx-col md:w-1/2 w-full mt-5">
               <vs-textarea :disabled="read_only" label="Address"
                            v-model="permAddress.address" class="w-full" name="address"

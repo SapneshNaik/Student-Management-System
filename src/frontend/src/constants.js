@@ -111,6 +111,61 @@ const ROLE_HELP =  [
   },
 ];
 
+
+const VALIDATION_MESSAGES = {
+  custom: {
+    email: {
+      required: 'Email address is required',
+      email: "Email should be a valid email address"
+    },
+    login_id: {
+      required: 'Login Id is required',
+    },
+    phone_number: {
+      required: 'Phone number is required',
+      numeric: 'Phone number can only contain numbers',
+      max: 'Enter a 10-13 digit phone number',
+      min: 'Enter a 10-13 digit phone number',
+    },
+    alternate_phone_number: {
+      numeric: 'Alternate phone number can only contain numbers',
+    },
+    password: {
+      required: 'Account password is required',
+    },
+    password_confirmation: {
+      required: 'Confirm your password by entering it here',
+    },
+    address: {
+      required: 'Address is required',
+    },
+    pin_code: {
+      required: 'Pin code is required',
+      numeric: 'Pin code can only contain numbers',
+    },
+    city: {
+      required: 'City is required',
+      max: 'City cannot contain more than 50 characters.',
+      min: 'City should be minimum 3 characters.',
+    },
+    district: {
+      required: 'District is required',
+      max: 'District cannot contain more than 50 characters.',
+      min: 'District should be minimum 3 characters.',
+    },
+    state: {
+      required: 'State is required',
+      max: 'State cannot contain more than 50 characters.',
+      min: 'State should be minimum 3 characters.',
+    },
+    country: {
+      required: 'Country is required',
+      max: 'Country cannot contain more than 50 characters.',
+      min: 'Country should be minimum 3 characters.',
+    },
+  }
+};
+
 export default {
   PREFIXES: PREFIXES,
   GENDER: GENDER,
@@ -118,4 +173,5 @@ export default {
   BLOOD_GROUP: BLOOD_GROUP,
   PERMISSIONS: PERMISSIONS,
   ROLE_HELP: ROLE_HELP,
+  VALIDATION_MESSAGES: VALIDATION_MESSAGES,
 }

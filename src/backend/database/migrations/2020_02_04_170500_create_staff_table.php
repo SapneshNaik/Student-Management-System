@@ -21,7 +21,7 @@ class CreateStaffTable extends Migration
                 ->unique();
             $table->enum('prefix', ConstantsAlias::PREFIXES);
             $table->string('first_name', 50);
-            $table->string('middle_name', 50);
+            $table->string('middle_name', 50)->nullable(true);
             $table->string('last_name', 50);
             $table->enum('gender', ConstantsAlias::GENDER);
             $table->string('aadhaar_no')->nullable(false)->unique();

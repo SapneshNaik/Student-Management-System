@@ -24,6 +24,96 @@
 
     </div>
 
+    <div class="vx-row">
+      <div v-if="canSeeStudentStats" class="vx-col w-full sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 mb-base">
+
+      <div class="vx-col w-full">
+        <vx-card title="Newly Registered Students">
+          <div slot="no-body" class="mt-4">
+            <vs-table :data="studentStats.latest" class="table-dark-inverted">
+              <template slot="thead">
+                <vs-th>Name</vs-th>
+                <vs-th>Phone Number</vs-th>
+              </template>
+
+              <template slot-scope="{data}">
+                <vs-tr :key="indextr" v-for="(tr, indextr) in data">
+                  <vs-td :data="data[indextr].name">
+                    <vs-avatar src="https://i.pravatar.cc/30" size="30px" class="border-2 border-white border-solid -m-1">
+
+                    </vs-avatar>
+                    <span class="ml-4 mb-10">{{data[indextr].name}}</span>
+                  </vs-td>
+                  <vs-td :data="data[indextr].phone_number">
+                    <span> {{data[indextr].phone_number}} </span>
+                  </vs-td>
+                </vs-tr>
+              </template>
+            </vs-table>
+          </div>
+
+        </vx-card>
+      </div>
+      </div>
+    </div>
+
+
+<!--    <div class="vx-row">-->
+<!--      &lt;!&ndash; CARD 9: DISPATCHED ORDERS &ndash;&gt;-->
+<!--      <div class="vx-col w-full">-->
+<!--        <vx-card title="Dispatched Orders">-->
+<!--          <div slot="no-body" class="mt-4">-->
+<!--            <vs-table :data="dispatchedOrders" class="table-dark-inverted">-->
+<!--              <template slot="thead">-->
+<!--                <vs-th>ORDER NO.</vs-th>-->
+<!--                <vs-th>STATUS</vs-th>-->
+<!--                <vs-th>OPERATORS</vs-th>-->
+<!--                <vs-th>LOCATION</vs-th>-->
+<!--                <vs-th>DISTANCE</vs-th>-->
+<!--                <vs-th>START DATE</vs-th>-->
+<!--                <vs-th>EST DELIVERY DATE</vs-th>-->
+<!--              </template>-->
+
+<!--              <template slot-scope="{data}">-->
+<!--                <vs-tr :key="indextr" v-for="(tr, indextr) in data">-->
+<!--                  <vs-td :data="data[indextr].orderNo">-->
+<!--                    <span>#{{data[indextr].orderNo}}</span>-->
+<!--                  </vs-td>-->
+<!--                  <vs-td :data="data[indextr].status">-->
+<!--                    <span class="flex items-center px-2 py-1 rounded"><div class="h-3 w-3 rounded-full mr-2"-->
+<!--                                                                           :class="'bg-' + data[indextr].statusColor"></div>{{data[indextr].status}}</span>-->
+<!--                  </vs-td>-->
+<!--                  <vs-td :data="data[indextr].orderNo">-->
+<!--                    <ul class="users-liked user-list">-->
+<!--                      <li v-for="(user, userIndex) in data[indextr].usersLiked" :key="userIndex">-->
+<!--                        <vx-tooltip :text="user.name" position="bottom">-->
+<!--                          <vs-avatar :src="user.img" size="30px"-->
+<!--                                     class="border-2 border-white border-solid -m-1"></vs-avatar>-->
+<!--                        </vx-tooltip>-->
+<!--                      </li>-->
+<!--                    </ul>-->
+<!--                  </vs-td>-->
+<!--                  <vs-td :data="data[indextr].orderNo">-->
+<!--                    <span>{{data[indextr].location}}</span>-->
+<!--                  </vs-td>-->
+<!--                  <vs-td :data="data[indextr].orderNo">-->
+<!--                    <span>{{data[indextr].distance}}</span>-->
+<!--                    <vs-progress :percent="data[indextr].distPercent" :color="data[indextr].statusColor"></vs-progress>-->
+<!--                  </vs-td>-->
+<!--                  <vs-td :data="data[indextr].orderNo">-->
+<!--                    <span>{{data[indextr].startDate}}</span>-->
+<!--                  </vs-td>-->
+<!--                  <vs-td :data="data[indextr].orderNo">-->
+<!--                    <span>{{data[indextr].estDelDate}}</span>-->
+<!--                  </vs-td>-->
+<!--                </vs-tr>-->
+<!--              </template>-->
+<!--            </vs-table>-->
+<!--          </div>-->
+
+<!--        </vx-card>-->
+<!--      </div>-->
+<!--    </div>-->
 <!--    <div class="vx-row">-->
 
 <!--      &lt;!&ndash; CARD 4: SESSION &ndash;&gt;-->
@@ -180,62 +270,6 @@
 <!--      </div>-->
 <!--    </div>-->
 
-<!--    <div class="vx-row">-->
-<!--      &lt;!&ndash; CARD 9: DISPATCHED ORDERS &ndash;&gt;-->
-<!--      <div class="vx-col w-full">-->
-<!--        <vx-card title="Dispatched Orders">-->
-<!--          <div slot="no-body" class="mt-4">-->
-<!--            <vs-table :data="dispatchedOrders" class="table-dark-inverted">-->
-<!--              <template slot="thead">-->
-<!--                <vs-th>ORDER NO.</vs-th>-->
-<!--                <vs-th>STATUS</vs-th>-->
-<!--                <vs-th>OPERATORS</vs-th>-->
-<!--                <vs-th>LOCATION</vs-th>-->
-<!--                <vs-th>DISTANCE</vs-th>-->
-<!--                <vs-th>START DATE</vs-th>-->
-<!--                <vs-th>EST DELIVERY DATE</vs-th>-->
-<!--              </template>-->
-
-<!--              <template slot-scope="{data}">-->
-<!--                <vs-tr :key="indextr" v-for="(tr, indextr) in data">-->
-<!--                  <vs-td :data="data[indextr].orderNo">-->
-<!--                    <span>#{{data[indextr].orderNo}}</span>-->
-<!--                  </vs-td>-->
-<!--                  <vs-td :data="data[indextr].status">-->
-<!--                    <span class="flex items-center px-2 py-1 rounded"><div class="h-3 w-3 rounded-full mr-2"-->
-<!--                                                                           :class="'bg-' + data[indextr].statusColor"></div>{{data[indextr].status}}</span>-->
-<!--                  </vs-td>-->
-<!--                  <vs-td :data="data[indextr].orderNo">-->
-<!--                    <ul class="users-liked user-list">-->
-<!--                      <li v-for="(user, userIndex) in data[indextr].usersLiked" :key="userIndex">-->
-<!--                        <vx-tooltip :text="user.name" position="bottom">-->
-<!--                          <vs-avatar :src="user.img" size="30px"-->
-<!--                                     class="border-2 border-white border-solid -m-1"></vs-avatar>-->
-<!--                        </vx-tooltip>-->
-<!--                      </li>-->
-<!--                    </ul>-->
-<!--                  </vs-td>-->
-<!--                  <vs-td :data="data[indextr].orderNo">-->
-<!--                    <span>{{data[indextr].location}}</span>-->
-<!--                  </vs-td>-->
-<!--                  <vs-td :data="data[indextr].orderNo">-->
-<!--                    <span>{{data[indextr].distance}}</span>-->
-<!--                    <vs-progress :percent="data[indextr].distPercent" :color="data[indextr].statusColor"></vs-progress>-->
-<!--                  </vs-td>-->
-<!--                  <vs-td :data="data[indextr].orderNo">-->
-<!--                    <span>{{data[indextr].startDate}}</span>-->
-<!--                  </vs-td>-->
-<!--                  <vs-td :data="data[indextr].orderNo">-->
-<!--                    <span>{{data[indextr].estDelDate}}</span>-->
-<!--                  </vs-td>-->
-<!--                </vs-tr>-->
-<!--              </template>-->
-<!--            </vs-table>-->
-<!--          </div>-->
-
-<!--        </vx-card>-->
-<!--      </div>-->
-<!--    </div>-->
 
   </div>
 </template>
@@ -259,47 +293,8 @@
         productsOrder: {},
         salesRadar: {},
 
-        timelineData: [
-          {
-            color: "primary",
-            icon: "PlusIcon",
-            title: "Client Meeting",
-            desc: "Bonbon macaroon jelly beans gummi bears jelly lollipop apple",
-            time: "25 mins Ago"
-          },
-          {
-            color: "warning",
-            icon: "MailIcon",
-            title: "Email Newsletter",
-            desc: "Cupcake gummi bears soufflé caramels candy",
-            time: "15 Days Ago"
-          },
-          {
-            color: "danger",
-            icon: "UsersIcon",
-            title: "Plan Webinar",
-            desc: "Candy ice cream cake. Halvah gummi bears",
-            time: "20 days ago"
-          },
-          {
-            color: "success",
-            icon: "LayoutIcon",
-            title: "Launch Website",
-            desc: "Candy ice cream cake. Halvah gummi bears Cupcake gummi bears soufflé caramels candy.",
-            time: "25 days ago"
-          },
-          {
-            color: "primary",
-            icon: "TvIcon",
-            title: "Marketing",
-            desc: "Candy ice cream cake. Halvah gummi bears Cupcake gummi bears.",
-            time: "28 days ago"
-          }
-        ],
-
 
         analyticsData: analyticsData,
-        dispatchedOrders: [],
       }
     },
     components: {
@@ -318,7 +313,8 @@
             name: 'Students',
             data: (this.$store.state.Stats.Students) ? this.$store.state.Stats.Students.this_month : []
           }],
-          count : (this.$store.state.Stats.Students) ? this.$store.state.Stats.Students.count : 0
+          count : (this.$store.state.Stats.Students) ? this.$store.state.Stats.Students.count : 0,
+          latest : (this.$store.state.Stats.Students) ? this.$store.state.Stats.Students.latest : [],
         }
       },
 
@@ -329,7 +325,8 @@
             name: 'Staffs',
             data: (this.$store.state.Stats.Staff) ? this.$store.state.Stats.Staff.this_month : []
           }],
-          count : (this.$store.state.Stats.Staff) ? this.$store.state.Stats.Staff.count : 0
+          count : (this.$store.state.Stats.Staff) ? this.$store.state.Stats.Staff.count : 0,
+          latest : (this.$store.state.Stats.Staff) ? this.$store.state.Stats.Staff.latest : [],
         }
       },
 
@@ -340,7 +337,8 @@
             name: 'Parents',
             data: (this.$store.state.Stats.Parents) ? this.$store.state.Stats.Parents.this_month : []
           }],
-          count : (this.$store.state.Stats.Parents) ? this.$store.state.Stats.Parents.count : 0
+          count : (this.$store.state.Stats.Parents) ? this.$store.state.Stats.Parents.count : 0,
+          latest : (this.$store.state.Stats.Parents) ? this.$store.state.Stats.Parents.latest : [],
         }
       },
 
@@ -351,7 +349,8 @@
             name: 'Admin',
             data: (this.$store.state.Stats.Admins) ? this.$store.state.Stats.Admins.this_month : []
           }],
-          count : (this.$store.state.Stats.Admins) ? this.$store.state.Stats.Admins.count : 0
+          count : (this.$store.state.Stats.Admins) ? this.$store.state.Stats.Admins.count : 0,
+          latest : (this.$store.state.Stats.Admins) ? this.$store.state.Stats.Admins.latest : [],
         }
       },
 

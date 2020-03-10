@@ -30,18 +30,41 @@
 
     <div class="vx-row">
       <div class="vx-col sm:w-1/2 w-full mb-2">
-        <vs-input class="w-full" label="Father Qualification"
-                  v-model="parent_local.father_qualification"
-                  v-validate="'required|max:50|min:3'"
-                  name="father_qualification"/>
+<!--        <vs-input class="w-full" label="Father Qualification"-->
+<!--                  v-model="parent_local.father_qualification"-->
+<!--                  v-validate="'required|max:50|min:3'"-->
+<!--                  name="father_qualification"/>-->
+<!--        <span class="text-danger">{{ errors.first('step-3.father_qualification') }}</span>-->
+
+        <vs-select class="w-full" v-model="parent_local.father_qualification"
+                   label="Father Qualification"
+                   name="father_qualification"
+                   v-validate="'required'">
+          <vs-select-item :key="index" :value="item" :text="item" v-for="(item,index) in qualifications"
+                          class="w-full"/>
+        </vs-select>
         <span class="text-danger">{{ errors.first('step-3.father_qualification') }}</span>
+
+
       </div>
       <div class="vx-col sm:w-1/2 w-full mb-2">
-        <vs-input class="w-full" label="Mother Qualification"
-                  v-model="parent_local.mother_qualification"
-                  v-validate="'required|max:50|min:3'"
-                  name="mother_qualification"/>
+<!--        <vs-input class="w-full" label="Mother Qualification"-->
+<!--                  v-model="parent_local.mother_qualification"-->
+<!--                  v-validate="'required|max:50|min:3'"-->
+<!--                  name="mother_qualification"/>-->
+<!--        <span class="text-danger">{{ errors.first('step-3.mother_qualification') }}</span>-->
+
+        <vs-select class="w-full"
+                   v-model="parent_local.mother_qualification"
+                   label="Mother Qualification"
+                   name="mother_qualification"
+                   v-validate="'required'">
+          <vs-select-item :key="index" :value="item" :text="item" v-for="(item,index) in qualifications"
+                          class="w-full"/>
+        </vs-select>
         <span class="text-danger">{{ errors.first('step-3.mother_qualification') }}</span>
+
+
       </div>
     </div>
 
@@ -63,17 +86,38 @@
 
     <div class="vx-row">
       <div class="vx-col sm:w-1/2 w-full mb-2">
-        <vs-input class="w-full" label="Father Profession" v-model="parent_local.father_profession"
-                  type="first_name"
-                  v-validate="'required|max:50|min:1|alpha_spaces'"
-                  name="father_profession"/>
+<!--        <vs-input class="w-full" label="Father Profession" v-model="parent_local.father_profession"-->
+<!--                  type="first_name"-->
+<!--                  v-validate="'required|max:50|min:1|alpha_spaces'"-->
+<!--                  name="father_profession"/>-->
+<!--        <span class="text-danger">{{ errors.first('step-3.father_profession') }}</span>-->
+
+        <vs-select class="w-full" v-model="parent_local.father_profession"
+                   label="Father Profession"
+                   name="father_profession"
+                   v-validate="'required'">
+          <vs-select-item :key="index" :value="item" :text="item" v-for="(item,index) in professions"
+                          class="w-full"/>
+        </vs-select>
         <span class="text-danger">{{ errors.first('step-3.father_profession') }}</span>
+
+
       </div>
       <div class="vx-col sm:w-1/2 w-full mb-2">
-        <vs-input class="w-full" label="Mother Profession" v-model="parent_local.mother_profession"
-                  v-validate="'max:50|min:1|alpha_spaces'"
-                  name="mother_profession"/>
+<!--        <vs-input class="w-full" label="Mother Profession" v-model="parent_local.mother_profession"-->
+<!--                  v-validate="'max:50|min:1|alpha_spaces'"-->
+<!--                  name="mother_profession"/>-->
+<!--        <span class="text-danger">{{ errors.first('step-3.mother_profession') }}</span>-->
+
+        <vs-select  class="w-full" v-model="parent_local.mother_profession"
+                   label="Mother Profession"
+                    name="mother_profession"
+                    v-validate="'required'">
+          <vs-select-item :key="index" :value="item" :text="item" v-for="(item,index) in professions"
+                          class="w-full"/>
+        </vs-select>
         <span class="text-danger">{{ errors.first('step-3.mother_profession') }}</span>
+
       </div>
     </div>
 
@@ -189,6 +233,7 @@
 <script>
   import {FormWizard, TabContent} from 'vue-form-wizard'
   import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+  import constants from "../../../constants";
 
 
   export default {
@@ -207,12 +252,12 @@
 
       canUpdateStaff() {
         if (this.$route.params.id == this.$store.state.AppActiveUser.id) {
-              return true;
+          return true;
         } else {
           let userRoles = this.$store.state.AppActiveUser.roles;
 
-          userRoles.forEach(function(role) {
-            if(role.name === "Super Admin") {
+          userRoles.forEach(function (role) {
+            if (role.name === "Super Admin") {
               //TODO: verify with super admin and other user
               console.log("Super Admin can update staff")
               return true
@@ -229,6 +274,8 @@
     data() {
       return {
         parent_local: JSON.parse(JSON.stringify(this.parent)),
+        qualifications: constants.QUALIFICATION,
+        professions: constants.PROFESSION,
       }
     },
     methods: {
@@ -238,7 +285,7 @@
         console.log(this.parent_local);
 
         this.$vs.loading({
-          'container' : "#save",
+          'container': "#save",
           'scale': 0.45
         })
 
@@ -255,7 +302,7 @@
             })
 
             this.$store.dispatch("userManagement/upsertToState",
-              {type: "Parent", data :this.parent_local});
+              {type: "Parent", data: this.parent_local});
 
             if (this.parent_local.user_id == this.$store.state.AppActiveUser.id) {
               const name = {
@@ -275,7 +322,7 @@
               let errors = Object.values(error.response.data);
               errors = errors.flat();
 
-              if(errors.length < 30) {
+              if (errors.length < 30) {
                 errors.forEach((error) => {
                   this.$vs.notify({
                     title: 'Error',

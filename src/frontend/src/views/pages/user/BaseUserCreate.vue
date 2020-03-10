@@ -83,12 +83,12 @@
       },
 
       validateInput() {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
           this.$validator.validateAll('step-1').then(result => {
             if (result) {
               resolve(true)
             } else {
-              reject("correct all values");
+              resolve(false);
             }
 
           })

@@ -53,21 +53,21 @@ const PERMISSIONS = {
   'DELETE_ALL_ROLES': 'Edit All Roles',
 };
 
-const ROLE_HELP =  [
+const ROLE_HELP = [
   {
     "id": 1,
     "operation": "Register Admin",
-    "permissions": PERMISSIONS.REGISTER_ADMIN + ", "+PERMISSIONS.VIEW_ALL_ROLES,
+    "permissions": PERMISSIONS.REGISTER_ADMIN + ", " + PERMISSIONS.VIEW_ALL_ROLES,
   },
   {
     "id": 2,
     "operation": "Register Staff",
-    "permissions": PERMISSIONS.REGISTER_STAFF + ", "+PERMISSIONS.VIEW_ALL_ROLES,
+    "permissions": PERMISSIONS.REGISTER_STAFF + ", " + PERMISSIONS.VIEW_ALL_ROLES,
   },
   {
     "id": 3,
     "operation": "Register Student",
-    "permissions": PERMISSIONS.REGISTER_STUDENT + ", "+PERMISSIONS.REGISTER_PARENT,
+    "permissions": PERMISSIONS.REGISTER_STUDENT + ", " + PERMISSIONS.REGISTER_PARENT,
   },
   {
     "id": 4,
@@ -92,12 +92,12 @@ const ROLE_HELP =  [
   {
     "id": 8,
     "operation": "Create Role",
-    "permissions": PERMISSIONS.EDIT_ALL_ROLES+", "+PERMISSIONS.VIEW_ALL_PERMISSIONS,
+    "permissions": PERMISSIONS.EDIT_ALL_ROLES + ", " + PERMISSIONS.VIEW_ALL_PERMISSIONS,
   },
   {
     "id": 9,
     "operation": "Edit Role",
-    "permissions": PERMISSIONS.VIEW_ALL_ROLES+", "+PERMISSIONS.EDIT_ALL_ROLES+", "+PERMISSIONS.VIEW_ALL_PERMISSIONS,
+    "permissions": PERMISSIONS.VIEW_ALL_ROLES + ", " + PERMISSIONS.EDIT_ALL_ROLES + ", " + PERMISSIONS.VIEW_ALL_PERMISSIONS,
   },
   {
     "id": 10,
@@ -142,6 +142,8 @@ const VALIDATION_MESSAGES = {
     pin_code: {
       required: 'Pin code is required',
       numeric: 'Pin code can only contain numbers',
+      max: 'Pin code cannot contain more than 10 characters.',
+      min: 'Pin code should be minimum 5 characters.',
     },
     city: {
       required: 'City is required',
@@ -163,8 +165,145 @@ const VALIDATION_MESSAGES = {
       max: 'Country cannot contain more than 50 characters.',
       min: 'Country should be minimum 3 characters.',
     },
+
+    staff_id: {
+      numeric: 'Staff Id can only contain numbers',
+      max: 'Staff Id cannot contain more than 50 characters.',
+      min: 'Staff Id should be minimum 3 characters.',
+    },
+
+    father_full_name: {
+      required: "Father's full name is required",
+      max: "Father's full name cannot contain more than 150 characters.",
+      min: "Father's full name should be minimum 3 characters.",
+      alpha_spaces: "Father's full name can contain only alphabets and spaces",
+    },
+
+    father_qualification: {
+      required: "Father's qualification is required",
+    },
+
+    mother_qualification: {
+      required: "Mother's qualification is required",
+    },
+
+    father_contact_number: {
+      required: "Father's contact number is required",
+      max: "Father's contact number cannot contain more than 13 digits.",
+      min: "Father's contact number should be minimum 10 digits.",
+      numeric: "Father's contact number can only contain numbers",
+    },
+
+    mother_contact_number: {
+      required: "Mother's contact number is required",
+      max: "Mother's contact number cannot contain more than 13 digits.",
+      min: "Mother's contact number should be minimum 10 digits.",
+      numeric: "Mother's contact number can only contain numbers",
+    },
+
+    father_profession: {
+      required: "Father's profession is required",
+    },
+
+    mother_profession: {
+      required: "Mother's profession is required",
+    },
+
+    father_designation: {
+      required: "Father's designation is required",
+      max: "Father's designation cannot contain more than 50 characters.",
+      min: "Father's designation should be minimum 3 characters.",
+      alpha_spaces: "Father's designation can contain only alphabets and spaces",
+    },
+
+    mother_designation: {
+      max: "Mother's designation cannot contain more than 150 characters.",
+      min: "Mother's designation should be minimum 3 characters.",
+      alpha_spaces: "Mother's designation can contain only alphabets and spaces",
+    },
+
+    father_net_annual_income: {
+      required: "Father's net annual income is required",
+      max: "Father's net annual income cannot contain more than 50 characters.",
+      min: "Father's net annual income should be minimum 3 characters.",
+      numeric: "Father's net annual income can only contain numbers",
+    },
+
+    mother_net_annual_income: {
+      max: "Mother's net annual income cannot contain more than 150 characters.",
+      min: "Mother's net annual income should be minimum 3 characters.",
+      numeric: "Mother's net annual income can only contain numbers",
+    },
+
+    father_pan: {
+      required: "Father's PAN is required",
+      regex: "Invalid PAN",
+    },
+
+    mother_pan: {
+      max: "Mother's PAN cannot contain more than 150 characters.",
+      regex: "Invalid PAN",
+    },
+
   }
 };
+
+export const QUALIFICATION = [
+  'No Formal Education',
+  'Primary Education',
+  'Secondary Education or High School',
+  'Vocational Qualification',
+  'Diploma',
+  'Graduate',
+  'Post Graduate',
+  'Doctorate or higher'
+];
+
+export const PROFESSION = [
+  "Architect",
+  "Accountant",
+  "Teacher",
+  "Physician",
+  "Lawyer",
+  "Engineer",
+  "Technician",
+  "Pharmacist",
+  "Veterinarian",
+  "Surveyor",
+  "Software Developer",
+  "Dietitian",
+  "Electrician",
+  "Scientist",
+  "Psychologist",
+  "Chef",
+  "Labour",
+  "Consultant",
+  "Technologist",
+  "Designer",
+  "Librarian",
+  "Mechanic",
+  "Hairdresser",
+  "Surgeon",
+  "Police Officer",
+  "Artist",
+  "Firefighter",
+  "Actor",
+  "Plumber",
+  "Dentist",
+ " Midwife",
+  "Medical Laboratory Scientist",
+  "Actuary",
+  "Physiotherapist",
+  "Waiting Staff",
+  "Health Professional",
+  "Secretary",
+  "Journalist",
+  "Radiographer",
+  "Broker",
+  "Judge",
+  "Social worker",
+  "Homemaker",
+];
 
 export default {
   PREFIXES: PREFIXES,
@@ -174,4 +313,6 @@ export default {
   PERMISSIONS: PERMISSIONS,
   ROLE_HELP: ROLE_HELP,
   VALIDATION_MESSAGES: VALIDATION_MESSAGES,
+  QUALIFICATION: QUALIFICATION,
+  PROFESSION: PROFESSION,
 }

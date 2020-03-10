@@ -249,21 +249,9 @@
   import commons from "../../../commons";
   import AddressCreateForm from "../address/AddressCreateForm";
 
-  const dict = {
-    custom: {
-      first_name: {
-        required: 'First name is required',
-        alpha: "First name may only contain alphabetic characters"
-      },
-      last_name: {
-        required: 'Last name is required',
-        alpha: "Last name may only contain alphabetic characters"
-      },
-    }
-  };
 
   // register custom messages
-  Validator.localize('en', dict);
+  Validator.localize('en', constants.VALIDATION_MESSAGES);
 
   export default {
     components: {
@@ -399,13 +387,23 @@
         })
       },
 
-      validateStep3() {
+      async validateStep3() {
         if (this.parentExists === "true" && !this.parentUserModel.id) {
           this.noParentSelectedError = "Please search and select a Parent";
           return false;
         } else if (this.parentExists === "false") {
 
-          return this.$refs.parent_cup.validateInput() && this.$refs.pcf.validateInput() && this.$refs.paf.validateInput()
+          let valPromises = [this.$refs.parent_cup.validateInput(), this.$refs.pcf.validateInput(), this.$refs.paf.validateInput()];
+          let res = true;
+
+          for (let i = 0; i < valPromises.length; i++) {
+            let r = await valPromises[i];
+            if(r === false){
+              res = r;
+              break;
+            }
+          }
+          return res;
 
         } else if (this.parentExists === "true" && this.parentUserModel.id) {
           return true;
@@ -425,17 +423,17 @@
         if (error.response) {
           let errors = Object.values(error.response.data);
           errors = errors.flat();
-          if(errors.length < 30) {
-                errors.forEach((error) => {
-                  this.$vs.notify({
-                    title: 'Error',
-                    text: error,
-                    iconPack: 'feather',
-                    icon: 'icon-alert-circle',
-                    color: 'danger'
-                  })
-                });
-              }
+          if (errors.length < 30) {
+            errors.forEach((error) => {
+              this.$vs.notify({
+                title: 'Error',
+                text: error,
+                iconPack: 'feather',
+                icon: 'icon-alert-circle',
+                color: 'danger'
+              })
+            });
+          }
         } else {
           this.$vs.notify({
             title: 'Error',

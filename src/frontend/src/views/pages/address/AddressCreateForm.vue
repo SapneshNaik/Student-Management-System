@@ -16,7 +16,7 @@
           <div class="vx-col md:w-1/2 w-full mt-10">
             <vs-input :disabled="read_only" label="Pin Code"
                       v-model="commAddress.pin_code" class="w-full" name="pin_code"
-                      v-validate="'required|numeric'"/>
+                      v-validate="'required|numeric|max:10|min:5'"/>
             <span class="text-danger">{{ errors.first('comm-address-form.pin_code') }}</span>
           </div>
 
@@ -75,7 +75,7 @@
             <div class="vx-col md:w-1/2 w-full mt-10">
               <vs-input :disabled="read_only" label="Pin Code"
                         v-model="permAddress.pin_code" class="w-full" name="pin_code"
-                        v-validate="'required|numeric'"/>
+                        v-validate="'required|numeric|max:10|min:5'"/>
               <span class="text-danger">{{ errors.first('perm-address-form.pin_code') }}</span>
             </div>
 
@@ -144,18 +144,18 @@
     },
     methods: {
       validateInput() {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
           this.$validator.validateAll('comm-address-form').then(commResult => {
             if (commResult) {
               this.$validator.validateAll('perm-address-form').then(result => {
                 if (result) {
                   resolve(true)
                 } else {
-                  reject("correct perm form values");
+                  resolve(false);
                 }
               })
             } else {
-              reject("correct comm form values");
+              resolve(false);
             }
           })
         })

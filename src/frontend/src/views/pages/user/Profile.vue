@@ -280,13 +280,13 @@
 
       profileFirstHalf() {
 
-        const temp = this.getToBeHalvedData;
+        const temp = JSON.parse(JSON.stringify(this.getToBeHalvedData));
         return temp.splice(0, temp.length / 2);
       },
 
       profileSecondHalf() {
 
-        const temp = this.getToBeHalvedData;
+        const temp = JSON.parse(JSON.stringify(this.getToBeHalvedData));
         return temp.splice(temp.length / 2, temp.length);
       },
 

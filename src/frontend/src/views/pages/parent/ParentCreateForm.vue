@@ -15,7 +15,6 @@
     <div class="vx-row">
       <div class="vx-col sm:w-1/2 w-full mb-2">
         <vs-input :disabled="read_only" class="w-full" label="Father Full Name" v-model="parent.father_full_name"
-                  type="first_name"
                   v-validate="'required|max:150|min:3|alpha_spaces'"
                   name="father_full_name"/>
         <span class="text-danger">{{ errors.first('step-3.father_full_name') }}</span>
@@ -30,25 +29,30 @@
 
     <div class="vx-row">
       <div class="vx-col sm:w-1/2 w-full mb-2">
-        <vs-input :disabled="read_only" class="w-full" label="Father Qualification"
-                  v-model="parent.father_qualification"
-                  v-validate="'required|max:50|min:3'"
-                  name="father_qualification"/>
+
+        <vs-select :disabled="read_only" class="w-full" v-model="parent.father_qualification"
+                   label="Father Qualification" name="father_qualification"  v-validate="'required'">
+        <vs-select-item :key="index" :value="item" :text="item" v-for="(item,index) in qualifications"
+                        class="w-full"/>
+        </vs-select>
         <span class="text-danger">{{ errors.first('step-3.father_qualification') }}</span>
+
       </div>
       <div class="vx-col sm:w-1/2 w-full mb-2">
-        <vs-input :disabled="read_only" class="w-full" label="Mother Qualification"
-                  v-model="parent.mother_qualification"
-                  v-validate="'required|max:50|min:3'"
-                  name="mother_qualification"/>
+
+        <vs-select :disabled="read_only" class="w-full" v-model="parent.mother_qualification"
+                   label="Mother Qualification" name="mother_qualification" v-validate="'required'">
+          <vs-select-item :key="index" :value="item" :text="item" v-for="(item,index) in qualifications"
+                          class="w-full"/>
+        </vs-select>
         <span class="text-danger">{{ errors.first('step-3.mother_qualification') }}</span>
+
       </div>
     </div>
 
     <div class="vx-row">
       <div class="vx-col sm:w-1/2 w-full mb-2">
         <vs-input :disabled="read_only" class="w-full" label="Father Phone No." v-model="parent.father_contact_number"
-                  type="first_name"
                   v-validate="'required|max:13|min:10|numeric'"
                   name="father_contact_number"/>
         <span class="text-danger">{{ errors.first('step-3.father_contact_number') }}</span>
@@ -63,31 +67,36 @@
 
     <div class="vx-row">
       <div class="vx-col sm:w-1/2 w-full mb-2">
-        <vs-input :disabled="read_only" class="w-full" label="Father Profession" v-model="parent.father_profession"
-                  type="first_name"
-                  v-validate="'required|max:50|min:1|alpha_spaces'"
-                  name="father_profession"/>
+        <vs-select :disabled="read_only" class="w-full" v-model="parent.father_profession"
+                   label="Father Profession" name="father_profession" v-validate="'required'">
+          <vs-select-item :key="index" :value="item" :text="item" v-for="(item,index) in professions"
+                          class="w-full"/>
+        </vs-select>
         <span class="text-danger">{{ errors.first('step-3.father_profession') }}</span>
+
       </div>
       <div class="vx-col sm:w-1/2 w-full mb-2">
-        <vs-input :disabled="read_only" class="w-full" label="Mother Profession" v-model="parent.mother_profession"
-                  v-validate="'max:50|min:1|alpha_spaces'"
-                  name="mother_profession"/>
+
+        <vs-select :disabled="read_only" class="w-full" v-model="parent.mother_profession"
+                   label="Mother Profession" name="mother_profession" v-validate="'required'">
+          <vs-select-item :key="index" :value="item" :text="item" v-for="(item,index) in professions"
+                          class="w-full"/>
+        </vs-select>
         <span class="text-danger">{{ errors.first('step-3.mother_profession') }}</span>
+
       </div>
     </div>
 
     <div class="vx-row">
       <div class="vx-col sm:w-1/2 w-full mb-2">
         <vs-input :disabled="read_only" class="w-full" label="Father Designation" v-model="parent.father_designation"
-                  type="first_name"
-                  v-validate="'required|max:50|min:1|alpha_spaces'"
+                  v-validate="'required|max:50|min:3|alpha_spaces'"
                   name="father_designation"/>
         <span class="text-danger">{{ errors.first('step-3.father_designation') }}</span>
       </div>
       <div class="vx-col sm:w-1/2 w-full mb-2">
         <vs-input :disabled="read_only" class="w-full" label="Mother Designation" v-model="parent.mother_designation"
-                  v-validate="'max:50|min:1|alpha_spaces'"
+                  v-validate="'max:50|min:3|alpha_spaces'"
                   name="mother_designation"/>
         <span class="text-danger">{{ errors.first('step-3.mother_designation') }}</span>
       </div>
@@ -128,12 +137,14 @@
 
     <div class="vx-row">
       <div class="vx-col sm:w-1/2 w-full mb-2">
-        <vs-checkbox :disabled="read_only" ref="is_father_alumni" name="is_father_alumni" v-validate="'required'" class="inline-flex"
+        <vs-checkbox :disabled="read_only" ref="is_father_alumni" name="is_father_alumni" v-validate="'required'"
+                     class="inline-flex"
                      v-model="parent.is_father_alumni">Is father an alumni?
         </vs-checkbox>
       </div>
       <div class="vx-col sm:w-1/2 w-full mb-2">
-        <vs-checkbox :disabled="read_only" ref="is_mother_alumni" name="is_mother_alumni" v-validate="'required'" class="inline-flex"
+        <vs-checkbox :disabled="read_only" ref="is_mother_alumni" name="is_mother_alumni" v-validate="'required'"
+                     class="inline-flex"
                      v-model="parent.is_mother_alumni">Is mother an alumni?
         </vs-checkbox>
       </div>
@@ -174,8 +185,13 @@
 <script>
   import {FormWizard, TabContent} from 'vue-form-wizard'
   import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+  import constants from "../../../constants";
+  import {Validator} from "vee-validate";
   // import {Validator} from 'vee-validate';
   // import jwt from '@/http/requests/auth/jwt/index.js';
+
+  Validator.localize('en', constants.VALIDATION_MESSAGES);
+
 
   export default {
     components: {
@@ -193,18 +209,21 @@
         default: false
       }
     },
+    data() {
+      return {
+        qualifications: constants.QUALIFICATION,
+        professions: constants.PROFESSION,
+      }
+    },
     methods: {
       validateInput() {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
           this.$validator.validateAll('step-3').then(result => {
             if (result) {
-              console.log("parent form validation " + result)
               resolve(true)
             } else {
-              console.log(this.errors);
-              reject("correct all values");
+              resolve(false);
             }
-
           })
         })
       }

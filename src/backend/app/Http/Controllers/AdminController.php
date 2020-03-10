@@ -152,13 +152,14 @@ class AdminController extends Controller
         $staffsThisMonth = [];
         $adminsThisMonth = [];
 
-        foreach ( range(-30, 1) as $day) {
-            $userThisMonth[] = User::whereDate('created_at',Carbon::now()->subdays($day))->count();
-            $studentsThisMonth[] = Student::whereDate('created_at',Carbon::now()->subdays($day))->count();
-            $parentsThisMonth[] = StudentParent::whereDate('created_at',Carbon::now()->subdays($day))->count();
-            $staffsThisMonth[] = Staff::whereDate('created_at',Carbon::now()->subdays($day))->count();
-            $adminsThisMonth[] = Admin::whereDate('created_at',Carbon::now()->subdays($day))->count();
+        foreach (range(-30, 1) as $day) {
+            $userThisMonth[] = User::whereDate('created_at', Carbon::now()->subdays($day))->count();
+            $studentsThisMonth[] = Student::whereDate('created_at', Carbon::now()->subdays($day))->count();
+            $parentsThisMonth[] = StudentParent::whereDate('created_at', Carbon::now()->subdays($day))->count();
+            $staffsThisMonth[] = Staff::whereDate('created_at', Carbon::now()->subdays($day))->count();
+            $adminsThisMonth[] = Admin::whereDate('created_at', Carbon::now()->subdays($day))->count();
         }
+
 
         return response()->json([
             'stats' => [
@@ -168,19 +169,23 @@ class AdminController extends Controller
                 ],
                 "Students" => [
                     "this_month" => $studentsThisMonth,
-                    "count" => Student::count()
+                    "count" => Student::count(),
+                    "latest" => Student::orderBy('created_at', 'desc')->with('user:id,phone_number')->take(5)->get()
                 ],
                 "Parents" => [
                     "this_month" => $parentsThisMonth,
-                    "count" => StudentParent::count()
+                    "count" => StudentParent::count(),
+                    "latest" => StudentParent::orderBy('created_at', 'desc')->with('user:id,phone_number')->take(5)->get()
                 ],
                 "Staff" => [
                     "this_month" => $staffsThisMonth,
-                    "count" => Staff::count()
+                    "count" => Staff::count(),
+                    "latest" => Staff::orderBy('created_at', 'desc')->with('user:id,phone_number')->take(5)->get()
                 ],
                 "Admins" => [
                     "this_month" => $adminsThisMonth,
-                    "count" => Admin::count()
+                    "count" => Admin::count(),
+                    "latest" => Admin::orderBy('created_at', 'desc')->with('user:id,phone_number')->take(5)->get()
                 ],
             ]
         ], 200);

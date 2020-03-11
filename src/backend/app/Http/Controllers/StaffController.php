@@ -138,7 +138,13 @@ class StaffController extends Controller
     {
         $value = $request->input('value');
 
-        return User::hydrate((Searchy::users()->query($value)
+        return User::hydrate((Searchy::users(
+            'login_id',
+            'email',
+            'phone_number',
+            'alternate_phone_number',
+            'name',
+        )->query($value)
             ->getQuery()
             ->where('base_role', 'Staff')
             ->limit(10)

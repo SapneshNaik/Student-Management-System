@@ -170,22 +170,22 @@ class AdminController extends Controller
                 "Students" => [
                     "this_month" => $studentsThisMonth,
                     "count" => Student::count(),
-                    "latest" => Student::orderBy('created_at', 'desc')->with('user:id,phone_number')->take(5)->get()
+                    "latest" => Student::orderBy('created_at', 'desc')->with('user:id,phone_number')->take(4)->get()
                 ],
                 "Parents" => [
                     "this_month" => $parentsThisMonth,
                     "count" => StudentParent::count(),
-                    "latest" => StudentParent::orderBy('created_at', 'desc')->with('user:id,phone_number')->take(5)->get()
+                    "latest" => StudentParent::orderBy('created_at', 'desc')->with('user:id,phone_number')->take(4)->get()
                 ],
                 "Staff" => [
                     "this_month" => $staffsThisMonth,
                     "count" => Staff::count(),
-                    "latest" => Staff::orderBy('created_at', 'desc')->with('user:id,phone_number')->take(5)->get()
+                    "latest" => Staff::orderBy('created_at', 'desc')->with('user:id,phone_number')->take(4)->get()
                 ],
                 "Admins" => [
                     "this_month" => $adminsThisMonth,
                     "count" => Admin::count(),
-                    "latest" => Admin::orderBy('created_at', 'desc')->with('user:id,phone_number')->take(5)->get()
+                    "latest" => Admin::orderBy('created_at', 'desc')->with('user:id,phone_number')->take(4)->get()
                 ],
             ]
         ], 200);

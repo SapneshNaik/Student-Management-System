@@ -183,12 +183,12 @@
 
                 <template slot-scope="{data}">
                   <vs-tr :key="indextr" v-for="(tr, indextr) in data">
-                    <vs-td :data="data[indextr].father_full_name">
+                    <vs-td :data="data[indextr].first_name">
                       <vs-avatar :src="`https://i.pravatar.cc?u=${data[indextr].user.id}`" size="30px"
                                  class="border-2 border-white border-solid -m-1">
 
                       </vs-avatar>
-                      <span class="ml-4 mb-10">{{data[indextr].father_full_name}}</span>
+                      <span class="ml-4 mb-10">{{data[indextr].first_name}} {{data[indextr].last_name}}</span>
                     </vs-td>
                     <vs-td :data="data[indextr].user.phone_number">
                       <span> {{data[indextr].user.phone_number}} </span>

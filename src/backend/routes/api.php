@@ -234,6 +234,10 @@ Route::group([
         Route::put('/staffs/{user}', '\App\Http\Controllers\StaffController@update')
             ->name('staffs.update');
 
+        Route::get('/staff-search', '\App\Http\Controllers\StaffController@search')
+            ->name('staff.search')
+            ->middleware('permission:' . Constants::PERMISSIONS['REGISTER_PARENT'] . '');
+
         //TODO: Permission based un-authorized request can be logged in a logging module with VARIOUS LEVEL
         //TODO: on password update (by himself or others): flush user token
 

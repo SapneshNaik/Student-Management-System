@@ -11,6 +11,7 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Searchy;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -127,5 +128,31 @@ class StaffController extends Controller
     public function destroy(Staff $staff)
     {
         //
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function search(Request $request)
+    {
+        $value = $request->input('value');
+
+        return User::hydrate((Searchy::users(
+            'login_id',
+            'email',
+            'phone_number',
+            'alternate_phone_number'
+        )->select(
+            'id',
+            'login_id',
+            'email',
+            'phone_number',
+            'alternate_phone_number'
+        )->query($value)
+            ->getQuery()
+            ->where('base_role', 'Staff')
+            ->limit(10)
+            ->get()->toArray()));
     }
 }

@@ -142,8 +142,7 @@ class StaffController extends Controller
             'login_id',
             'email',
             'phone_number',
-            'alternate_phone_number',
-            'name',
+            'alternate_phone_number'
         )->query($value)
             ->getQuery()
             ->where('base_role', 'Staff')

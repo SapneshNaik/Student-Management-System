@@ -91,7 +91,7 @@ export default {
 
   getBaseParentProfile() {
     return {
-      staff_id: "",
+      staff_linked_id: "",
       father_full_name: "",
       mother_full_name: "",
       father_qualification: constants.QUALIFICATION[0],
@@ -158,7 +158,10 @@ export default {
 
           case "Register Student":
             return permissions.includes(constants.PERMISSIONS.REGISTER_STUDENT)
-              && permissions.includes(constants.PERMISSIONS.REGISTER_PARENT);
+              && permissions.includes(constants.PERMISSIONS.REGISTER_PARENT)
+              && permissions.includes(constants.PERMISSIONS.SEARCH_PARENT)
+              && permissions.includes(constants.PERMISSIONS.VIEW_SPECIFIC_PARENT)
+              && permissions.includes(constants.PERMISSIONS.SEARCH_STAFF);
 
           case "View Admins":
             return permissions.includes(constants.PERMISSIONS.VIEW_ALL_ADMINS);

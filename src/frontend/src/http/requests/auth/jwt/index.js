@@ -88,7 +88,7 @@ export default {
   },
 
   getUser(userId) {
-    return axios.get(`api/v1/users/${userId}?include=roles,admin,staff,parent,student&append=all_permissions`)
+    return axios.get(`api/v1/users/${userId}?include=roles,admin,staff.linkedParent.user,parent.linkedStaff.user,student&append=all_permissions`)
   },
 
   getParent(userId) {
@@ -129,16 +129,21 @@ export default {
     return axios.get(`/api/v1/parent-search?value=${searchTerm}`);
   },
 
+  getStaffSearch(searchTerm) {
+    return axios.get(`/api/v1/staff-search?value=${searchTerm}`);
+  },
+
+
   getAdmins(page) {
     return axios.get(`/api/v1/admins?include=user.roles,user.updater,user.addresses&page=${page}`);
   },
 
   getParents(page) {
-    return axios.get(`/api/v1/parents?include=wards,user.roles,user.updater,user.addresses&page=${page}`);
+    return axios.get(`/api/v1/parents?include=wards,user.roles,user.updater,user.addresses,linkedStaff.user&page=${page}`);
   },
 
   getStaffs(page) {
-    return axios.get(`/api/v1/staffs?include=user.roles,user.updater,user.addresses&page=${page}`);
+    return axios.get(`/api/v1/staffs?include=user.roles,user.updater,user.addresses,linkedParent.user&page=${page}`);
   },
 
   getStudents(page) {

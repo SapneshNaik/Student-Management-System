@@ -193,7 +193,7 @@
 
       resetData() {
         this.staffProfileData = this.getBaseStaffProfile();
-        this.staffUserModel = commons.getBaseUserModel("Student");
+        this.staffUserModel = commons.getBaseUserModel("Staff");
         this.commAddressData = commons.getAddressModel("Communication");
         this.permAddressData = commons.getAddressModel("Permanent");
       },

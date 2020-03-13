@@ -28,26 +28,34 @@ const PERMISSIONS = {
   'REGISTER_PARENT': 'Register Parent',
 
   'VIEW_ALL_USERS': 'View All Users',
+  'VIEW_SPECIFIC_USER': 'View Specific User',
   'EDIT_ALL_USERS': 'Edit All Users',
   'DELETE_ALL_USERS': 'Delete All Users',
 
   'VIEW_ALL_STUDENTS': 'View All Students',
+  'VIEW_SPECIFIC_STUDENT': 'View Specific Student',
   'EDIT_ALL_STUDENTS': 'Edit All Students',
   'DELETE_ALL_STUDENTS': 'Delete All Students',
 
   'VIEW_ALL_STAFF': 'View All Staff',
+  'VIEW_SPECIFIC_STAFF': 'View Specific Staff',
   'EDIT_ALL_STAFF': 'Edit All Staff',
   'DELETE_ALL_STAFF': 'Delete All Staff',
+  'SEARCH_STAFF' : 'Search All Staff',
 
   'VIEW_ALL_PARENTS': 'View All Parents',
+  'VIEW_SPECIFIC_PARENT': 'View Specific Parent',
   'EDIT_ALL_PARENTS': 'Edit All Parents',
   'DELETE_ALL_PARENTS': 'Delete All Parents',
+  'SEARCH_PARENT' : 'Search All Parents',
 
   'VIEW_ALL_ADMINS': 'View All Admins',
+  'VIEW_SPECIFIC_ADMIN': 'View Specific Admin',
   'EDIT_ALL_ADMINS': 'Edit All Admins',
   'DELETE_ALL_ADMINS': 'Delete All Admins',
 
   'VIEW_ALL_PERMISSIONS': 'View All Permissions',
+  'VIEW_SPECIFIC_ROLE': 'View Specific Role',
   'VIEW_ALL_ROLES': 'View All Roles',
   'EDIT_ALL_ROLES': 'Edit All Roles',
   'DELETE_ALL_ROLES': 'Edit All Roles',
@@ -67,7 +75,8 @@ const ROLE_HELP = [
   {
     "id": 3,
     "operation": "Register Student",
-    "permissions": PERMISSIONS.REGISTER_STUDENT + ", " + PERMISSIONS.REGISTER_PARENT,
+    "permissions": PERMISSIONS.REGISTER_STUDENT + ", " + PERMISSIONS.REGISTER_PARENT + ", " + PERMISSIONS.SEARCH_PARENT +
+      ", " + PERMISSIONS.VIEW_SPECIFIC_PARENT + ", " + PERMISSIONS.SEARCH_STAFF
   },
   {
     "id": 4,
@@ -166,7 +175,7 @@ const VALIDATION_MESSAGES = {
       min: 'Country should be minimum 3 characters.',
     },
 
-    staff_id: {
+    staff_linked_id: {
       numeric: 'Staff Id can only contain numbers',
       max: 'Staff Id cannot contain more than 50 characters.',
       min: 'Staff Id should be minimum 3 characters.',

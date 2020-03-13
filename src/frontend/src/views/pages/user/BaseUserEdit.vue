@@ -1,16 +1,6 @@
-<!-- =========================================================================================
-  File Name: UserEditTabInformation.vue
-  Description: User Edit Information Tab content
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
-
 <template>
   <div id="user-edit-tab-info">
 
-    <!-- Profile Picture Row -->
     <div class="vx-row">
       <div class="vx-col w-full">
         <div class="flex items-start flex-col sm:flex-row">
@@ -30,7 +20,6 @@
       </div>
     </div>
 
-    <!-- Content Row -->
     <div class="vx-row">
       <div class="vx-col md:w-1/2 w-full">
         <vs-input class="w-full mt-4" label="login_id" v-model="data_local.login_id"
@@ -99,7 +88,6 @@
       return {
         password: null,
         confirm_password: null,
-
         data_local: JSON.parse(JSON.stringify(this.data)),
       }
     },
@@ -145,12 +133,12 @@
             let profileData = {
               user_id: this.data_local.id,
               user: this.data_local
-            }
+            };
 
             this.$store.dispatch('userManagement/upsertToState', {
               data: profileData,
               type: this.data_local.base_role
-            })
+            });
 
 
             this.$vs.loading.close("#save > .con-vs-loading");
@@ -161,7 +149,7 @@
               iconPack: 'feather',
               icon: 'icon-alert-circle',
               color: 'success'
-            })
+            });
 
           })
           .catch(error => {
@@ -176,8 +164,8 @@
                 iconPack: 'feather',
                 icon: 'icon-alert-circle',
                 color: 'danger'
-              })
-          })
+              });
+          });
 
       },
 

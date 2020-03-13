@@ -1,13 +1,3 @@
-<!-- =========================================================================================
-  File Name: FormWizardValidation.vue
-  Description: Form wizard with validation
-  ----------------------------------------------------------------------------------------
-  Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-  Author: Pixinvent
-  Author URL: http://www.themeforest.net/user/pixinvent
-========================================================================================== -->
-
-
 <template>
   <vx-card title="Register New Student">
 
@@ -307,7 +297,7 @@
       },
 
       progress: function (val) {
-        console.log("Progress is " + val)
+        console.log("Progress is " + val);
         if (val >= 100) {
 
           this.$vs.notify({
@@ -319,7 +309,6 @@
             color: 'success'
           });
 
-          console.log(this.$refs);
           this.creating = false;
 
           this.resetProgress();
@@ -450,7 +439,7 @@
       },
 
       progressUpdate(message, step) {
-        console.log(message);
+        // console.log(message);
 
         this.progressMessage = message;
         this.progress += step;
@@ -536,7 +525,6 @@
       },
 
       createParAddressNProfile(userParentResponse, step, commAddData, permAddData, profData) {
-        console.log("in createParAddressNProfile")
         return new Promise((resolve, reject) => {
           this.createAddresses("Parent", userParentResponse.data.user.id,
             commAddData, permAddData, step);

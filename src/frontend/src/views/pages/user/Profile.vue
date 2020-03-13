@@ -76,7 +76,7 @@
                 <table>
                   <tr v-for="(item) in profileFirstHalf" :key="item[0]" v-if="canShowIndex(item[0])">
                     <td class="font-semibold">{{ titleCase(item[0]) }}</td>
-                    <td>{{ getItemText(item[0], item[1]) }}</td>
+                    <td>{{ getItemText(item[0], item[1]) | capitalize }}</td>
                   </tr>
                 </table>
               </div>
@@ -85,7 +85,7 @@
                 <table>
                   <tr v-for="(item) in profileSecondHalf" :key="item[0]" v-if="canShowIndex(item[0])">
                     <td class="font-semibold">{{ titleCase(item[0]) }}</td>
-                    <td>{{ getItemText(item[0], item[1]) }}</td>
+                    <td>{{ getItemText(item[0], item[1]) | capitalize }}</td>
                   </tr>
                 </table>
               </div>
@@ -221,7 +221,7 @@
     },
     computed: {
 
-      canViewRole(){
+      canViewRole() {
         return commons.hasAccess('sms-role-specific-view');
       },
 
@@ -351,7 +351,6 @@
                 console.log(err);
 
 
-
               })
           }
 
@@ -362,6 +361,7 @@
         switch (index) {
           case 'user_id':
           case 'parent_id':
+          case 'staff_linked_id':
             return false;
           default:
             return true;
@@ -387,6 +387,8 @@
               } else {
                 return item.map(a => a.first_name + " " + a.last_name).join(', ')
               }
+            case "linked_staff":
+              return item.first_name + " " + item.last_name;
 
             default:
               return item

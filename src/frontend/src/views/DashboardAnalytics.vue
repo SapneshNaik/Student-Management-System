@@ -28,6 +28,7 @@
 
       <div class="vx-col w-full md:w-1/4 lg:w-1/4 xl:w-1/4">
         <statistics-card-line
+          v-if="canSeeStudentStats"
           class="md:mb-0 mb-base"
           icon="UserIcon"
           icon-right
@@ -41,6 +42,7 @@
 
       <div class="vx-col w-full md:w-1/4 lg:w-1/4 xl:w-1/4">
         <statistics-card-line
+          v-if="canSeeParentStats"
           class="md:mb-0 mb-base"
           icon="UsersIcon"
           icon-right
@@ -53,6 +55,7 @@
 
       <div class="vx-col w-full md:w-1/4 lg:w-1/4 xl:w-1/4">
         <statistics-card-line
+          v-if="canSeeStaffStats"
           class="md:mb-0 mb-base"
           icon="UserIcon"
           icon-right
@@ -64,6 +67,7 @@
 
       <div class="vx-col w-full md:w-1/4 lg:w-1/4 xl:w-1/4">
         <statistics-card-line
+          v-if="canSeeAdminStats"
           icon="UserIcon"
           icon-right
           :statistic="adminStats.count"
@@ -423,26 +427,11 @@
 <script>
   import VueApexCharts from 'vue-apexcharts'
   import StatisticsCardLine from '@/components/statistics-cards/StatisticsCardLine.vue'
-  import analyticsData from './ui-elements/card/analyticsData.js'
   import ChangeTimeDurationDropdown from '@/components/ChangeTimeDurationDropdown.vue'
   import VxTimeline from "@/components/timeline/VxTimeline"
   import commons from "../commons";
 
   export default {
-    data() {
-      return {
-        checkpointReward: {},
-        subscribersGained: {},
-        ordersRecevied: {},
-        salesBarSession: {},
-        supportTracker: {},
-        productsOrder: {},
-        salesRadar: {},
-
-
-        analyticsData: analyticsData,
-      }
-    },
     components: {
       VueApexCharts,
       StatisticsCardLine,

@@ -160,7 +160,6 @@ export default {
       dispatch('getAdminPage', 1).then(() => {
         resolve()
       }).catch((error) => {
-        console.log(error)
         reject(error)
       })
 
@@ -179,7 +178,6 @@ export default {
           resolve()
         })
         .catch((error) => {
-          console.log(error);
           reject(error)
         })
     });
@@ -193,7 +191,6 @@ export default {
       dispatch('getParentPage', 1).then(() => {
         resolve()
       }).catch((error) => {
-        console.log(error)
         reject(error)
       })
 
@@ -212,7 +209,6 @@ export default {
           resolve()
         })
         .catch((error) => {
-          console.log(error);
           reject(error)
         })
     });
@@ -223,7 +219,6 @@ export default {
       dispatch('getStaffPage', 1).then(() => {
         resolve()
       }).catch((error) => {
-        console.log(error);
         reject(error)
       })
 
@@ -242,7 +237,6 @@ export default {
           resolve()
         })
         .catch((error) => {
-          console.log(error);
           reject(error)
         })
     });
@@ -253,7 +247,6 @@ export default {
       dispatch('getStudentPage', 1).then(() => {
         resolve()
       }).catch((error) => {
-        console.log(error);
         reject(error)
       })
 
@@ -272,7 +265,6 @@ export default {
           resolve()
         })
         .catch((error) => {
-          console.log(error);
           reject(error)
         })
     });
@@ -283,7 +275,6 @@ export default {
       dispatch('getRolePage', 1).then(() => {
         resolve()
       }).catch((error) => {
-        console.log(error);
         reject(error)
       })
 
@@ -302,7 +293,6 @@ export default {
           resolve()
         })
         .catch((error) => {
-          console.log(error);
           reject(error)
         })
     });
@@ -313,7 +303,6 @@ export default {
       dispatch('getPermissionPage', 1).then(() => {
         resolve()
       }).catch((error) => {
-        console.log(error);
         reject(error)
       })
 
@@ -332,7 +321,6 @@ export default {
           resolve()
         })
         .catch((error) => {
-          console.log(error);
           reject(error)
         })
     });

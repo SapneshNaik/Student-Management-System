@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import 'firebase/auth'
 
 import store from "@/store/store.js"
 import commons from "./commons";
@@ -204,14 +203,6 @@ const router = new Router({
           },
         },
 
-        {
-          path: '/dashboard/ecommerce',
-          name: 'dashboard-ecommerce',
-          component: () => import('./views/DashboardECommerce.vue'),
-          meta: {
-            rule: 'admin'
-          }
-        },
       ],
     },
     // =============================================================================
@@ -233,49 +224,9 @@ const router = new Router({
           }
         },
         {
-          path: '/callback',
-          name: 'auth-callback',
-          component: () => import('@/views/Callback.vue'),
-          meta: {
-            rule: 'editor'
-          }
-        },
-        {
-          path: '/pages/register',
-          name: 'page-register',
-          component: () => import('@/views/pages/register/Register.vue'),
-          meta: {
-            rule: 'editor'
-          }
-        },
-        {
-          path: '/pages/forgot-password',
-          name: 'page-forgot-password',
-          component: () => import('@/views/pages/ForgotPassword.vue'),
-          meta: {
-            rule: 'editor'
-          }
-        },
-        {
-          path: '/pages/reset-password',
-          name: 'page-reset-password',
-          component: () => import('@/views/pages/ResetPassword.vue'),
-          meta: {
-            rule: 'editor'
-          }
-        },
-        {
           path: '/pages/lock-screen',
           name: 'page-lock-screen',
           component: () => import('@/views/pages/LockScreen.vue'),
-          meta: {
-            rule: 'editor'
-          }
-        },
-        {
-          path: '/pages/comingsoon',
-          name: 'page-coming-soon',
-          component: () => import('@/views/pages/ComingSoon.vue'),
           meta: {
             rule: 'editor'
           }
@@ -289,14 +240,6 @@ const router = new Router({
           }
         },
         {
-          path: '/pages/error-500',
-          name: 'page-error-500',
-          component: () => import('@/views/pages/Error500.vue'),
-          meta: {
-            rule: 'editor'
-          }
-        },
-        {
           path: '/not-authorized',
           name: 'page-not-authorized',
           component: () => import('@/views/pages/NotAuthorized.vue'),
@@ -304,14 +247,7 @@ const router = new Router({
             rule: 'editor'
           }
         },
-        {
-          path: '/pages/maintenance',
-          name: 'page-maintenance',
-          component: () => import('@/views/pages/Maintenance.vue'),
-          meta: {
-            rule: 'editor'
-          }
-        },
+
       ]
     },
     // Redirect to 404 page, if no match found

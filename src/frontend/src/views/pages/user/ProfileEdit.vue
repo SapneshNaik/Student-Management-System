@@ -103,7 +103,6 @@
 
       user_data() {
         if (this.all_user_data) {
-
           return this.all_user_data.user;
         } else {
           return {};
@@ -218,7 +217,7 @@
       },
 
     },
-    created() {
+    mounted() {
       this.fetchData(this.$route.params.id);
     },
     beforeRouteUpdate(to, from, next) {

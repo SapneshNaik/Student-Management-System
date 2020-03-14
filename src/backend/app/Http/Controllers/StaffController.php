@@ -39,7 +39,7 @@ class StaffController extends Controller
         return  QueryBuilder::for(Staff::class)
             ->allowedFilters([AllowedFilter::exact('gender')])
             ->allowedIncludes(['user', 'user.roles',  'user.updater', 'user.addresses', 'linkedParent', 'linkedParent.user'])
-            ->paginate(100)
+            ->paginate(30)
             ->appends(request()->query());
     }
 

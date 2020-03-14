@@ -41,7 +41,7 @@ class StudentParentController extends Controller
             ->allowedFilters([AllowedFilter::exact('is_father_alumni'),
                 AllowedFilter::exact('is_mother_alumni')])
             ->allowedIncludes(['user', 'wards', 'wards.user', 'user.roles', 'user.updater', 'user.addresses', 'linkedStaff', 'linkedStaff.user'])
-            ->paginate(100)
+            ->paginate(30)
             ->appends(request()->query());
     }
 

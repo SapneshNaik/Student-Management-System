@@ -42,7 +42,7 @@ class StudentController extends Controller
                 AllowedFilter::exact('caste_category'),
                 AllowedFilter::exact('religion'),])
             ->allowedIncludes(['user', 'user.addresses', 'parent', 'parent.user', 'user.roles',  'user.updater'])
-            ->paginate(100)
+            ->paginate(30)
             ->appends(request()->query());
     }
 

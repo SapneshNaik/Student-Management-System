@@ -11,6 +11,8 @@
     "rebuild": "npm run clean && npm install && npm run build"
   },
   "dependencies": {
+    "@sentry/browser": "^5.14.2",
+    "@sentry/integrations": "^5.14.2",
     "ag-grid-community": "^21.0.1",
     "ag-grid-vue": "^21.0.1",
     "apexcharts": "^3.6.12",

@@ -9,7 +9,7 @@ $factory->define(Address::class, function (Faker $faker) {
     return [
         //
         'address' => $faker->address,
-        'pin_code' => $faker->postcode,
+        'pin_code' => $faker->numerify('######'),
         'city' => $faker->city,
         'district' => $faker->citySuffix,
         'state' => $faker->state,

@@ -38,7 +38,7 @@
 
             <template v-if="suggestions.length > 0">
               <div class="misc-item">
-                <span>{{ suggestions.length }} suggestions are shown...</span>
+                <span>{{ suggestions.length }} staff profiles found...</span>
               </div>
               <hr>
             </template>
@@ -58,6 +58,8 @@
             <span>Loading...</span>
           </div>
         </vue-simple-suggest>
+
+
         <span class="text-danger">{{ errors.first('step-3.staff_linked_id') }}</span>
 
         <vs-popup class="holamundo" title="Please Confirm if the Staff is Correct"

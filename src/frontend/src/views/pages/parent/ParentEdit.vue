@@ -28,7 +28,7 @@
           @select="onStaffSelect">
 
           <div class="g">
-            <input v-model="parent_search_string" placeholder="Linked Staff" type="text">
+            <input v-model="parent_search_string" placeholder="Staff ID" type="text">
           </div>
 
           <template slot="misc-item-above" slot-scope="{ suggestions, query }">
@@ -38,7 +38,7 @@
 
             <template v-if="suggestions.length > 0">
               <div class="misc-item">
-                <span>{{ suggestions.length }} staffs profiles found...</span>
+                <span>{{ suggestions.length }} staff profiles found...</span>
               </div>
               <hr>
             </template>
@@ -319,8 +319,8 @@
   import 'vue-form-wizard/dist/vue-form-wizard.min.css'
   import constants from "../../../constants";
   import jwt from "../../../http/requests/auth/jwt";
-  import VueSimpleSuggest from "vue-simple-suggest";
   import commons from "../../../commons";
+  import VueSimpleSuggest from "vue-simple-suggest";
 
 
   export default {
@@ -364,7 +364,8 @@
         parent_local: JSON.parse(JSON.stringify(this.parent)),
         qualifications: constants.QUALIFICATION,
         professions: constants.PROFESSION,
-        suggest: {},
+
+
         staff_user: commons.getBaseUserModel("Staff"),
         parent_search_string: '',
         loading: true,
@@ -504,6 +505,8 @@
     }
 
   }
-
-
 </script>
+
+<style lang="scss">
+  @import "@/assets/scss/vuexy/extraComponents/autocomplete.scss";
+</style>

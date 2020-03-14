@@ -1,4 +1,5 @@
 <?php
+
 namespace App;
 
 class Constants
@@ -6,6 +7,10 @@ class Constants
     public const PREFIXES = ["Mr.", "Mrs.", "Miss", "Dr.", "Ms.", "Prof.", "Rev.", "Lady.", "Sir."];
 
     public const GENDER = ['Male', 'Female'];
+
+    public const CASTE = ['Brahmin', 'Lingayat', 'Thakur', 'Suryavanshi', 'Dalit', "Chammar", "Devadiga", "GSB"];
+
+    public const CASTE_CATEGORY = ['SC', 'ST', 'OBC', 'General', '2A', "2B", "3B", "3A"];
 
     public const RELATIONSHIP = ['Father', 'Mother', 'Other'];
 
@@ -22,7 +27,7 @@ class Constants
         'Other'
     ];
 
-    public const BLOOD_GROUP =  [
+    public const BLOOD_GROUP = [
         "A+",
         "A-",
         "B+",
@@ -88,4 +93,61 @@ class Constants
     public const USER_STATUS = ["Active", "Inactive", "Final Account"];
 
     public const BASE_ROLE = ["Admin", "Staff", "Student", "Parent"];
+
+    public const QUALIFICATION = [
+        'No Formal Education',
+        'Primary Education',
+        'Secondary Education or High School',
+        'Vocational Qualification',
+        'Diploma',
+        'Graduate',
+        'Post Graduate',
+        'Doctorate or higher'
+    ];
+
+    public const PROFESSION = [
+        "Architect",
+        "Accountant",
+        "Teacher",
+        "Physician",
+        "Lawyer",
+        "Engineer",
+        "Technician",
+        "Pharmacist",
+        "Veterinarian",
+        "Surveyor",
+        "Software Developer",
+        "Dietitian",
+        "Electrician",
+        "Scientist",
+        "Psychologist",
+        "Chef",
+        "Labour",
+        "Consultant",
+        "Technologist",
+        "Designer",
+        "Librarian",
+        "Mechanic",
+        "Hairdresser",
+        "Surgeon",
+        "Police Officer",
+        "Artist",
+        "Firefighter",
+        "Actor",
+        "Plumber",
+        "Dentist",
+        " Midwife",
+        "Medical Laboratory Scientist",
+        "Actuary",
+        "Physiotherapist",
+        "Waiting Staff",
+        "Health Professional",
+        "Secretary",
+        "Journalist",
+        "Radiographer",
+        "Broker",
+        "Judge",
+        "Social worker",
+        "Homemaker",
+    ];
 }

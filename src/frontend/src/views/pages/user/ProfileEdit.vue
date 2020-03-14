@@ -182,7 +182,6 @@
           this.all_user_data = commons.getUserDataFromRole(this.role, this.$route.params.id, this.$store.state);
 
           if (this.all_user_data) {
-            console.log(this.all_user_data)
             this.all_user_data.user.photoURL = "https://i.pravatar.cc/200";
             return this.all_user_data;
           } else {

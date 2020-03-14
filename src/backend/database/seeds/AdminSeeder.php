@@ -12,7 +12,7 @@ class AdminSeeder extends Seeder
     public function run()
     {
         //
-        factory(App\Models\User::class, 500)->create([
+        factory(App\Models\User::class, 7)->create([
             'base_role' => \App\Constants::BASE_ROLE[0]
         ])->each(function ($user) {
             $user->admin()->save(factory(App\Models\Admin::class)->make());

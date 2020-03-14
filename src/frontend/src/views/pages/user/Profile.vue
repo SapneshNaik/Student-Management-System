@@ -362,6 +362,7 @@
           case 'user_id':
           case 'parent_id':
           case 'staff_linked_id':
+          case 'linked_parent_id':
             return false;
           default:
             return true;

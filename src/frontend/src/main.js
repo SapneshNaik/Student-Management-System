@@ -92,6 +92,11 @@ Vue.use(VeeValidate);
 
 // Vuejs - Vue wrapper for hammerjs
 import { VueHammer } from 'vue2-hammer'
+
+import * as Sentry from '@sentry/browser';
+import * as Integrations from '@sentry/integrations';
+
+
 Vue.use(VueHammer)
 
 
@@ -121,3 +126,10 @@ new Vue({
     i18n,
     render: h => h(App)
 }).$mount('#app');
+
+
+
+Sentry.init({
+  dsn: 'https://223da50ebf144cb69622fb11e4fe678c@sentry.io/4049470',
+  integrations: [new Integrations.Vue({Vue, attachProps: true, logErrors: true})],
+});

@@ -136,7 +136,7 @@ class RequestValidators
             'user_id' => 'required|exists:users,id|unique:student_parents',
             'father_full_name' => 'required|max:150|min:3',
             'mother_full_name' => 'required|max:150|min:3',
-//            'staff_id' => 'sometimes|exists:users,id|unique:student_parents',
+            'staff_linked_id' => 'nullable|exists:users,id|unique:student_parents',
             'father_qualification' => 'required|max:50|min:3',
             'mother_qualification' => 'required|max:50|min:3',
             'father_contact_number' => 'required|max:13|min:10',
@@ -167,7 +167,7 @@ class RequestValidators
             'mother_full_name' => 'sometimes|max:150|min:3',
             //DONE: make sure staff ID can be updated only by a user with
             // Edit ALL PARENTS Permission [DONE]
-//            'staff_id' => 'sometimes|exists:users,id|unique:student_parents',
+//            'staff_linked_id' => 'nullable|exists:users,id|unique:student_parents',
             'father_qualification' => 'sometimes|max:50|min:3',
             'mother_qualification' => 'sometimes|max:50|min:3',
             'father_contact_number' => 'sometimes|max:13|min:10',

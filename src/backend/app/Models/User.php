@@ -113,6 +113,7 @@ class User extends Authenticatable
                 return null;
         }
     }
+
     public function getAllPermissionsAttribute(){
         return $this->getAllPermissions()->map->only(['id', 'name']);
     }

@@ -42,7 +42,7 @@ Route::group([
 
         Route::get('/roles/{role}', '\App\Http\Controllers\Auth\AuthController@roleShow')
             ->name('roles.show')
-            ->middleware('permission:' . Constants::PERMISSIONS['VIEW_ALL_ROLES'] . '');
+            ->middleware('permission:' . Constants::PERMISSIONS['VIEW_SPECIFIC_ROLE'] . '');
 
         Route::put('/roles/{role}', '\App\Http\Controllers\Auth\AuthController@rolesUpdate')
             ->name('roles.update')
@@ -76,7 +76,7 @@ Route::group([
 
         Route::get('/users/{user}', '\App\Http\Controllers\UserController@show')
             ->name('users.show')
-            ->middleware('permission:' . Constants::PERMISSIONS['VIEW_ALL_USERS'] . '');
+            ->middleware('permission:' . Constants::PERMISSIONS['VIEW_SPECIFIC_USER'] . '');
 
         //DONE: Add check for own profile or edit all user perm in controller [DONE]
         Route::put('/users/{user}', '\App\Http\Controllers\UserController@update')
@@ -104,7 +104,7 @@ Route::group([
         // below API can only be used by VIEW_ALL_STUDENTS permission [DONE]
         Route::get('/students/{user}', '\App\Http\Controllers\StudentController@show')
             ->name('students.show')
-            ->middleware('permission:'.Constants::PERMISSIONS['VIEW_ALL_STUDENTS'].'');
+            ->middleware('permission:'.Constants::PERMISSIONS['VIEW_SPECIFIC_STUDENT'].'');
 
         //DONE: Add check for own profile or edit all user perm in controller [DONE]
         Route::put('/students/{user}', '\App\Http\Controllers\StudentController@update')
@@ -140,7 +140,11 @@ Route::group([
                 . Constants::PERMISSIONS['VIEW_ALL_STAFF'] . '|'
                 . Constants::PERMISSIONS['VIEW_ALL_ADMINS'] . '|'
                 . Constants::PERMISSIONS['VIEW_ALL_PARENTS'] . '|'
-                . Constants::PERMISSIONS['VIEW_ALL_STUDENTS'] . '');
+                . Constants::PERMISSIONS['VIEW_ALL_STUDENTS'] . '|'
+                . Constants::PERMISSIONS['VIEW_SPECIFIC_STAFF'] . '|'
+                . Constants::PERMISSIONS['VIEW_SPECIFIC_ADMIN'] . '|'
+                . Constants::PERMISSIONS['VIEW_SPECIFIC_PARENT'] . '|'
+                . Constants::PERMISSIONS['VIEW_SPECIFIC_STUDENT'] . '');
 
 
         //DONE: Add check for own profile or edit all user perm in controller [DONE]
@@ -159,7 +163,7 @@ Route::group([
 
         Route::get('/parent-search', '\App\Http\Controllers\StudentParentController@search')
             ->name('parents.search')
-            ->middleware('permission:' . Constants::PERMISSIONS['REGISTER_PARENT'] . '');
+            ->middleware('permission:' . Constants::PERMISSIONS['SEARCH_PARENT'] . '');
 
         Route::post('/parents/{user}', '\App\Http\Controllers\StudentParentController@store')
             ->name('parents.store')
@@ -169,7 +173,7 @@ Route::group([
         // below API can only be used by VIEW_ALL_STUDENTS permission [DONE]
         Route::get('/parents/{user}', '\App\Http\Controllers\StudentParentController@show')
             ->name('parents.show')
-            ->middleware('permission:'.Constants::PERMISSIONS['VIEW_ALL_PARENTS'].'');
+            ->middleware('permission:'.Constants::PERMISSIONS['VIEW_SPECIFIC_PARENT'].'');
 
         //DONE: Add check for own profile or edit all parent perm in controller [DONE]
         Route::put('/parents/{user}', '\App\Http\Controllers\StudentParentController@update')
@@ -197,7 +201,7 @@ Route::group([
         // below API can only be used by VIEW_ALL_STUDENTS permission [DONE]
         Route::get('/admins/{user}', '\App\Http\Controllers\AdminController@show')
             ->name('admins.show')
-            ->middleware('permission:'.Constants::PERMISSIONS['VIEW_ALL_ADMINS'].'');
+            ->middleware('permission:'.Constants::PERMISSIONS['VIEW_SPECIFIC_ADMIN'].'');
 
         //DONE: Add check for own profile or edit all user perm in controller [DONE]
         Route::put('/admins/{user}', '\App\Http\Controllers\AdminController@update')
@@ -228,7 +232,7 @@ Route::group([
         // below API can only be used by VIEW_ALL_STUDENTS permission
         Route::get('/staffs/{user}', '\App\Http\Controllers\StaffController@show')
             ->name('staffs.show')
-            ->middleware('permission:'.Constants::PERMISSIONS['VIEW_ALL_STAFF'].'');
+            ->middleware('permission:'.Constants::PERMISSIONS['VIEW_SPECIFIC_STAFF'].'');
 
         //DONE: Add check for own profile or edit all user perm in controller [DONE]
         Route::put('/staffs/{user}', '\App\Http\Controllers\StaffController@update')
@@ -236,7 +240,7 @@ Route::group([
 
         Route::get('/staff-search', '\App\Http\Controllers\StaffController@search')
             ->name('staff.search')
-            ->middleware('permission:' . Constants::PERMISSIONS['VIEW_ALL_STAFF'] . '');
+            ->middleware('permission:' . Constants::PERMISSIONS['SEARCH_STAFF'] . '');
 
         //TODO: Permission based un-authorized request can be logged in a logging module with VARIOUS LEVEL
         //TODO: on password update (by himself or others): flush user token

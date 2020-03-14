@@ -6,7 +6,8 @@
   Author: Pixinvent
   Author URL: http://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
-
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
 
 module.exports = {
   publicPath: '/',
@@ -19,7 +20,9 @@ module.exports = {
       splitChunks: {
         chunks: 'all'
       }
-    }
+    },
+
+    plugins: [new BundleAnalyzerPlugin()]
   }
 }
 

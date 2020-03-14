@@ -21,7 +21,7 @@ class CreateStudentParentsTable extends Migration
 
             $table->string('father_full_name', 150);
             $table->string('mother_full_name', 150);
-            $table->unsignedBigInteger('staff_id')->nullable();
+            $table->unsignedBigInteger('staff_linked_id')->nullable();
             $table->string('father_qualification', 50);
             $table->string('mother_qualification', 50);
             $table->string('father_contact_number', 13);
@@ -43,7 +43,7 @@ class CreateStudentParentsTable extends Migration
 //            $table->string('mother_pan', 10);
 
 
-            $table->foreign('staff_id')
+            $table->foreign('staff_linked_id')
                 ->references('id')
                 ->on('users');
 

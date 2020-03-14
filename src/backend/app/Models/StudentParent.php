@@ -36,4 +36,9 @@ class StudentParent extends Model
     {
         return $this->hasMany('App\Models\Student', 'parent_id', 'user_id');
     }
+
+    public function linkedStaff()
+    {
+        return $this->belongsTo('App\Models\Staff', 'staff_linked_id', 'user_id');
+    }
 }

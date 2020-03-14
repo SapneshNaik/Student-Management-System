@@ -40,7 +40,7 @@ class StudentParentController extends Controller
         return QueryBuilder::for(StudentParent::class)
             ->allowedFilters([AllowedFilter::exact('is_father_alumni'),
                 AllowedFilter::exact('is_mother_alumni')])
-            ->allowedIncludes(['user', 'wards', 'wards.user', 'user.roles', 'user.updater', 'user.addresses'])
+            ->allowedIncludes(['user', 'wards', 'wards.user', 'user.roles', 'user.updater', 'user.addresses', 'linkedStaff', 'linkedStaff.user'])
             ->paginate(100)
             ->appends(request()->query());
     }
@@ -65,37 +65,36 @@ class StudentParentController extends Controller
         //TODO: test
 
 
-        $staff_id = null;
+        $staff_linked_id = null;
 
-        if ($request->has("staff_id") && !empty($request->get('staff_id'))) {
+        if ($request->has("staff_linked_id") && !empty($request->get('staff_linked_id'))) {
 
-            $matchThese = ['login_id' => $request->get('staff_id'), 'base_role' => 'Staff'];
+            $matchThese = ['login_id' => $request->get('staff_linked_id'), 'base_role' => 'Staff'];
 
-            $user = User::where($matchThese)->first();
+            $staffUser = User::where($matchThese)->first();
 
-            if ($user === null) {
+            if ($staffUser === null) {
                 return response()->json([
-                    'message' => "No staff with login ID " . $request->get('staff_id')],
+                    'message' => "No staff with login ID " . $request->get('staff_linked_id')],
                     400);
             }
 
-            if (StudentParent::where('staff_id', $user->id)->exists()) {
+            if (StudentParent::where('staff_linked_id', $staffUser->id)->exists()) {
                 return response()->json([
-                    'message' => "Login ID " . $request->get('staff_id') . " is already linked to a Parent"],
+                    'message' => "Staff " . $request->get('staff_linked_id') . " is already linked to a Parent"],
                     400);
             }
 
-            $staff_id = $user->id;
+            $staff_linked_id = $staffUser->id;
         }
 
-        $validator = RequestValidators::parentValidator(array_merge($request->all(), ['user_id' => $user->id, 'staff_id' => $staff_id]));
+        $validator = RequestValidators::parentValidator(array_merge($request->all(), ['user_id' => $user->id, 'staff_linked_id' => $staff_linked_id]));
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
 
-
-        $parent = StudentParent::create(array_merge($validator->validated(), ['user_id' => $user->id]));
+        $parent = StudentParent::create(array_merge($validator->validated()));
 
         return response()->json([
             'message' => "Parent profile created successfully!",
@@ -142,7 +141,7 @@ class StudentParentController extends Controller
             }
 
             //TODO: Try to move it to validation
-            if ($request->has('staff_id') && !$request->user()->can(Constants::PERMISSIONS['EDIT_ALL_PARENTS'])) {
+            if ($request->has('staff_linked_id') && !$request->user()->can(Constants::PERMISSIONS['EDIT_ALL_PARENTS'])) {
                 return response()->json([
                     'message' => $user->base_role . ' can not update Staff field. Please contact Admin'],
                     400);
@@ -150,32 +149,32 @@ class StudentParentController extends Controller
 
             //TODO: test
 
-            $staff_id = null;
+            $staff_linked_id = null;
 
-            if ($request->has("staff_id") && !empty($request->get('staff_id'))) {
+            if ($request->has("staff_linked_id") && !empty($request->get('staff_linked_id'))) {
 
-                $matchThese = ['login_id' => $request->get('staff_id'), 'base_role' => 'Staff'];
+                $matchThese = ['login_id' => $request->get('staff_linked_id'), 'base_role' => 'Staff'];
 
                 $staff_user = User::where($matchThese)->first();
 
                 if ($staff_user === null) {
                     return response()->json([
-                        'message' => "No staff with login ID " . $request->get('staff_id')],
+                        'message' => "No staff with login ID " . $request->get('staff_linked_id')],
                         400);
                 }
 
-                $parent = StudentParent::where('staff_id', $staff_user->id)->first();
+                $parent = StudentParent::where('staff_linked_id', $staff_user->id)->first();
                 if ($parent != null && $parent->user_id != $user->id) {
                     return response()->json([
-                        'message' => "Login ID " . $request->get('staff_id') . " is already linked to a Parent"],
+                        'message' => "Staff " . $request->get('staff_linked_id') . " is already linked to a Parent"],
                         400);
                 }
 
-                $staff_id = $user->id;
+                $staff_linked_id = $staff_user->id;
             }
 
 
-            $user->parent->update(array_merge($validator->validated(), ['staff_id' => $staff_id]));
+            $user->parent->update(array_merge($validator->validated(), ['staff_linked_id' => $staff_linked_id]));
 
             return response()->json([], 204);
 

@@ -38,7 +38,19 @@ class UserController extends Controller
     {
         return QueryBuilder::for(User::where('id', $request->user()->id)) // base query instead of model
         ->allowedFields(['roles.id', 'roles.name'])
-            ->allowedIncludes(['addresses', 'roles', 'student', 'staff', 'admin', 'parent'])
+            ->allowedIncludes(['addresses',
+                'roles',
+                'permissions',
+                'student',
+                'staff',
+                'staff.linkedParent',
+                'staff.linkedParent.user',
+                'admin',
+                'parent',
+                'parent.linkedStaff',
+                'parent.linkedStaff.user',
+                'updater'
+            ])
             ->allowedAppends(['all_permissions'])
             ->first();
     }
@@ -77,7 +89,19 @@ class UserController extends Controller
                 AllowedFilter::exact('status'),
                 AllowedFilter::exact('last_updated_by'),
                 AllowedFilter::exact('email'),])
-            ->allowedIncludes(['addresses', 'student', 'admin', 'staff', 'parent', 'roles', 'permissions', 'updater'])
+            ->allowedIncludes(['addresses',
+                'roles',
+                'permissions',
+                'student',
+                'staff',
+                'staff.linkedParent',
+                'staff.linkedParent.user',
+                'admin',
+                'parent',
+                'parent.linkedStaff',
+                'parent.linkedStaff.user',
+                'updater'
+            ])
             ->paginate(100)
             ->appends(request()->query());
     }
@@ -108,7 +132,19 @@ class UserController extends Controller
     {
         //TODO: add relation to all other model show methods
         return QueryBuilder::for(User::where('id', $user->id)) // base query instead of model
-        ->allowedIncludes(['addresses', 'student', 'admin', 'staff', 'parent', 'roles', 'permissions'])
+            ->allowedIncludes(['addresses',
+                'roles',
+                'permissions',
+                'student',
+                'staff',
+                'staff.linkedParent',
+                'staff.linkedParent.user',
+                'admin',
+                'parent',
+                'parent.linkedStaff',
+                'parent.linkedStaff.user',
+                'updater'
+            ])
             ->allowedAppends(['all_permissions'])
             ->first();
     }

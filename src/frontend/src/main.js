@@ -103,7 +103,9 @@ Vue.use(VueHammer)
 // Feather font icon
 require('./assets/css/iconfont.css')
 
-
+//
+// import {startCase, omit} from 'lodash/core';
+// Object.defineProperty(Vue.prototype, '$_.omit', { value: omit});
 // Vue select css
 // Note: In latest version you have to add it separately
 // import 'vue-select/dist/vue-select.css';

@@ -63,58 +63,77 @@ const PERMISSIONS = {
 
 const ROLE_HELP = [
   {
-    "id": 1,
     "operation": "Register Admin",
     "permissions": PERMISSIONS.REGISTER_ADMIN + ", " + PERMISSIONS.VIEW_ALL_ROLES,
   },
   {
-    "id": 2,
     "operation": "Register Staff",
     "permissions": PERMISSIONS.REGISTER_STAFF + ", " + PERMISSIONS.VIEW_ALL_ROLES,
   },
   {
-    "id": 3,
     "operation": "Register Student",
     "permissions": PERMISSIONS.REGISTER_STUDENT + ", " + PERMISSIONS.REGISTER_PARENT + ", " + PERMISSIONS.SEARCH_PARENT +
       ", " + PERMISSIONS.VIEW_SPECIFIC_PARENT + ", " + PERMISSIONS.SEARCH_STAFF
   },
   {
-    "id": 4,
-    "operation": "View Admins",
+    "operation": "View Admins (Table)",
     "permissions": PERMISSIONS.VIEW_ALL_ADMINS,
   },
+
   {
-    "id": 5,
-    "operation": "View Staff",
+    "operation": "View Admin Profile",
+    "permissions": PERMISSIONS.VIEW_SPECIFIC_ADMIN,
+  },
+
+  {
+    "operation": "View Staff (Table)",
     "permissions": PERMISSIONS.VIEW_ALL_STAFF,
   },
+
   {
-    "id": 6,
-    "operation": "View Students",
+    "operation": "View Staff Profile",
+    "permissions": PERMISSIONS.VIEW_SPECIFIC_STAFF,
+  },
+
+  {
+    "operation": "View Students (Table)",
     "permissions": PERMISSIONS.VIEW_ALL_STUDENTS,
   },
+
   {
-    "id": 7,
-    "operation": "View Parents",
+    "operation": "View Student Profile",
+    "permissions": PERMISSIONS.VIEW_SPECIFIC_STUDENT,
+  },
+
+  {
+    "operation": "View Parents (Table)",
     "permissions": PERMISSIONS.VIEW_ALL_PARENTS,
   },
+
   {
-    "id": 8,
+    "operation": "View Parent Profile",
+    "permissions": PERMISSIONS.VIEW_SPECIFIC_PARENT,
+  },
+
+  {
     "operation": "Create Role",
     "permissions": PERMISSIONS.EDIT_ALL_ROLES + ", " + PERMISSIONS.VIEW_ALL_PERMISSIONS,
   },
   {
-    "id": 9,
     "operation": "Edit Role",
     "permissions": PERMISSIONS.VIEW_ALL_ROLES + ", " + PERMISSIONS.EDIT_ALL_ROLES + ", " + PERMISSIONS.VIEW_ALL_PERMISSIONS,
   },
   {
-    "id": 10,
-    "operation": "View Roles",
+    "operation": "View Roles (Table)",
     "permissions": PERMISSIONS.VIEW_ALL_ROLES,
   },
+
   {
-    "id": 11,
+    "operation": "View Role Details",
+    "permissions": PERMISSIONS.VIEW_SPECIFIC_ROLE,
+  },
+
+  {
     "operation": "View Permissions",
     "permissions": PERMISSIONS.VIEW_ALL_PERMISSIONS,
   },

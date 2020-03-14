@@ -21,8 +21,8 @@
 
             <template slot-scope="{data}">
               <vs-tr :key="indextr" v-for="(tr, indextr) in data">
-                <vs-td :data="data[indextr].id">
-                  {{data[indextr].id}}
+                <vs-td :data="indextr">
+                  {{indextr}}
                 </vs-td>
                 <vs-td :data="data[indextr].email">
                   {{data[indextr].operation}}

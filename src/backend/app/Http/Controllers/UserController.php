@@ -78,7 +78,7 @@ class UserController extends Controller
     {
         //DONE:: Implement query filters [DONE]
 
-        // return DB::table('users')->paginate(30)
+        // return DB::table('users')->paginate(100)
 //            ->appends(request()->query()); --> this ignores eloquent $hideen so use eloquent
 //        return User::paginate(15);
         return QueryBuilder::for(User::class)
@@ -102,7 +102,7 @@ class UserController extends Controller
                 'parent.linkedStaff.user',
                 'updater'
             ])
-            ->paginate(30)
+            ->paginate(100)
             ->appends(request()->query());
     }
 

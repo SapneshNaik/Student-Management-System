@@ -49,7 +49,7 @@ class AddressController extends Controller
                 AllowedFilter::exact('state'),
                 AllowedFilter::exact('country'),])
             ->allowedIncludes(['user', 'user.roles', 'user.updater'])
-            ->paginate(30)
+            ->paginate(100)
             ->appends(request()->query());
     }
 

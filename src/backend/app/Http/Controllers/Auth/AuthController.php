@@ -139,7 +139,7 @@ class AuthController extends Controller
     {
         return QueryBuilder::for(Permission::select('id', 'name'))
             ->allowedIncludes(['users', 'roles'])
-            ->paginate(30)
+            ->paginate(100)
             ->appends(request()->query());
     }
 
@@ -165,7 +165,7 @@ class AuthController extends Controller
             }]))
             ->allowedFields('permissions.id', 'permissions.name')
             ->allowedIncludes(['users', 'permissions'])
-            ->paginate(30)
+            ->paginate(100)
             ->appends(request()->query());
     }
 
@@ -199,7 +199,7 @@ class AuthController extends Controller
             "role" => $role
         ], 201);
 
-//        return Role::select('id', 'name')->paginate(30)
+//        return Role::select('id', 'name')->paginate(100)
 //            ->appends(request()->query());
     }
 

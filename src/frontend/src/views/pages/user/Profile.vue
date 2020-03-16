@@ -292,8 +292,11 @@
 
       getToBeHalvedData() {
         const data = JSON.parse(JSON.stringify(this.profile_data));
+
         delete data['user_id'];
         delete data['parent_id'];
+        delete data['staff_linked_id'];
+        delete data['linked_parent_id'];
         return Object.entries(data);
       },
 
@@ -359,10 +362,7 @@
 
       canShowIndex(index) {
         switch (index) {
-          case 'user_id':
-          case 'parent_id':
-          case 'staff_linked_id':
-          case 'linked_parent_id':
+          case 'user_id', 'parent_id','staff_linked_id', 'linked_parent_id':
             return false;
           default:
             return true;

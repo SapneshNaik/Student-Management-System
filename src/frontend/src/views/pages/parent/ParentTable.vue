@@ -140,6 +140,16 @@
           },
 
           {
+            headerName: 'Linked to Staff',
+            // field: 'first_name',
+            filter: true,
+            valueGetter:
+              function sumField(params) {
+                return params.data.linked_staff ? "Yes" : "No";
+              },
+          },
+
+          {
             headerName: 'Status',
             // field: 'first_name',
             filter: true,

@@ -1,33 +1,29 @@
-# Student-Management-System
+## Student Management Installlation and Set up
 
-## Setup 
+ 1. **Download the source code from the github repository.**
+	 - src/frontend : frontend code
+	 -  src/backend: backend code
+	 - src/docs: project related docs
+2. **Backend Deployment:**
+	- Install XAMPP server and change document root  to `/src/backend/public`
+	- Install Composer.
+	- Create database in mysql (php-myadmin)
+	- set the databse name, server url and password in `/src/backend/.env`
+	- **In `src/backend` run :**
+		- `chmod -R 777 storage`
+		- `chmod -R 777 bootstrap/cache` 
+		-  `composer install --optimize-autoloader --no-dev`
+		- `php artisan migrate`
+		- `php artisan passport:install`
+		- `php artisan sms:setup`
+		- `php artisan super:admin` and set super admin details.
+		- `php artisan route:cache` and `php artisan config:cache`
 
-`$ php artisan migrate
-`
+3. **Frontend deployment:**
+	- Install `node.js` and `npm` 
+	- **In `src/frontend` run:**
+		- `npm install`
+		- `npm run build`
+	- Install a web server (XAMPP)  and point its docuent root to `/src/frontend/dist` .
 
-`$ php artisan passport:install
-`
-
-`$ php artisan sms:setup_system
-`
-
-`$ php artisan sms:super_admin
-`
-
-## Development Steps:
-
-1. Laravel IDE Helper plugin for PhpStorm (https://github.com/bar********ryvdh/laravel-ide-helper)
-2. Laravel Passport for authentication (https://medium.com/@flicher/laravel-rest-api-passport-authentication-for-ionic-app-3934713bcdf7)
-3. php artisan migrate
-4. php artisan passport:install
-5. php artisan make:middleware Cors
-   php artisan make:model -a app/Models/Admin --api
-   
-   https://stackoverflow.com/questions/34748097/phpstorm-exclude-vendor-from-search-but-keep-intellisense
-
-
-
-## Tech Stack:
-
-Laravel 6,
-Vue.js 2
+		

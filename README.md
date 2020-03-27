@@ -13,7 +13,8 @@ https://www.youtube.com/watch?v=q5hc4QWdJdM
 	- Create database in mysql (php-myadmin)
 	- set the databse name, server url and password in `/src/backend/.env`
 	- **In `src/backend` run :**
-	        - `composer install`
+	
+		- `composer install`
 		- `chmod -R 777 storage`
 		- `chmod -R 777 bootstrap/cache` 
 		-  `composer install --optimize-autoloader --no-dev`

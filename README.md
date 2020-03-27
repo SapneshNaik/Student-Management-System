@@ -1,8 +1,34 @@
-## Demo Link:
+![SMS logo](https://kerneldev.com/wp-content/uploads/2017/11/v240-62Artboard-1.png) 
 
+# Student Management System
+
+The web app has 4 types of users, namely, Admin, Student, Staff, and Parent. And each user can have a set of roles (Ex. Admin Desk, Exam Staff), and these roles, in turn, grant the user a set of permissions. So each permission is mapped one action (for example, create admin, view students, create roles, etc.). So based upon the user's permission, the front-end dashboard is dynamically populated. The same check present on the backend as well so that the user only has access to the operations which he has permissions to access. Apart from this there is also functionalities to create/list/view and update Student, Admins, Staff and Parents.
+
+## Demo Link:
 https://www.youtube.com/watch?v=q5hc4QWdJdM
 
-## Installlation and Set up
+## Screenshots:
+
+<kbd>
+ <img src="https://github.com/SapneshNaik/Student-Management-System/blob/master/others/Screenshot%20(38).png" width="50%" height=40%><img src="https://github.com/SapneshNaik/Student-Management-System/blob/master/others/Screenshot%20(39).png" width="50%" height=40%> </kbd>
+ 
+<kbd>
+ <img src="https://github.com/SapneshNaik/Student-Management-System/blob/master/others/Screenshot%20(40).png" width="50%" height=40%><img src="https://github.com/SapneshNaik/Student-Management-System/blob/master/others/Screenshot%20(41).png" width="50%" height=40%> </kbd>
+ 
+ <kbd>
+ <img src="https://github.com/SapneshNaik/Student-Management-System/blob/master/others/Screenshot%20(42).png" width="50%" height=40%><img src="https://github.com/SapneshNaik/Student-Management-System/blob/master/others/Screenshot%20(43).png" width="50%" height=40%> </kbd>
+ 
+ <kbd>
+ <img src="https://github.com/SapneshNaik/Student-Management-System/blob/master/others/Screenshot%20(45).png" width="50%" height=40%><img src="https://github.com/SapneshNaik/Student-Management-System/blob/master/others/Screenshot%20(46).png" width="50%" height=40%> </kbd>
+ 
+ <kbd>
+ <img src="https://github.com/SapneshNaik/Student-Management-System/blob/master/others/Screenshot%20(47).png" width="50%" height=40%><img src="https://github.com/SapneshNaik/Student-Management-System/blob/master/others/Screenshot%20(49).png" width="50%" height=40%> </kbd>
+ 
+  <kbd>
+ <img src="https://github.com/SapneshNaik/Student-Management-System/blob/master/others/Screenshot%20(50).png" width="100%" height=80%> </kbd>
+ 
+ 
+## Installlation and Set up:
 
  1. **Download the source code from the github repository.**
 	 - src/frontend : frontend code

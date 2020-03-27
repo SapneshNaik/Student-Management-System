@@ -8,27 +8,6 @@ The web app has 4 types of users, namely, Admin, Student, Staff, and Parent. And
 
 [![Watch the video](https://img.youtube.com/vi/q5hc4QWdJdM/maxresdefault.jpg)](https://youtu.be/q5hc4QWdJdM)
 
-
-## Screenshots:
-
-<kbd>
- <img src="https://github.com/SapneshNaik/Student-Management-System/blob/master/others/Screenshot%20(38).png" width="50%" height=40%><img src="https://github.com/SapneshNaik/Student-Management-System/blob/master/others/Screenshot%20(39).png" width="50%" height=40%> </kbd>
- 
-<kbd>
- <img src="https://github.com/SapneshNaik/Student-Management-System/blob/master/others/Screenshot%20(40).png" width="50%" height=40%><img src="https://github.com/SapneshNaik/Student-Management-System/blob/master/others/Screenshot%20(41).png" width="50%" height=40%> </kbd>
- 
- <kbd>
- <img src="https://github.com/SapneshNaik/Student-Management-System/blob/master/others/Screenshot%20(42).png" width="50%" height=40%><img src="https://github.com/SapneshNaik/Student-Management-System/blob/master/others/Screenshot%20(43).png" width="50%" height=40%> </kbd>
- 
- <kbd>
- <img src="https://github.com/SapneshNaik/Student-Management-System/blob/master/others/Screenshot%20(45).png" width="50%" height=40%><img src="https://github.com/SapneshNaik/Student-Management-System/blob/master/others/Screenshot%20(46).png" width="50%" height=40%> </kbd>
- 
- <kbd>
- <img src="https://github.com/SapneshNaik/Student-Management-System/blob/master/others/Screenshot%20(47).png" width="50%" height=40%><img src="https://github.com/SapneshNaik/Student-Management-System/blob/master/others/Screenshot%20(49).png" width="50%" height=40%> </kbd>
- 
-  <kbd>
- <img src="https://github.com/SapneshNaik/Student-Management-System/blob/master/others/Screenshot%20(50).png" width="100%" height=80%> </kbd>
- 
  
 ## Installlation and Set up:
 

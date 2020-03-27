@@ -4,8 +4,10 @@
 
 The web app has 4 types of users, namely, Admin, Student, Staff, and Parent. And each user can have a set of roles (Ex. Admin Desk, Exam Staff), and these roles, in turn, grant the user a set of permissions. So each permission is mapped one action (for example, create admin, view students, create roles, etc.). So based upon the user's permission, the front-end dashboard is dynamically populated. The same check present on the backend as well so that the user only has access to the operations which he has permissions to access. Apart from this there is also functionalities to create/list/view and update Student, Admins, Staff and Parents.
 
-## Demo Link:
-https://www.youtube.com/watch?v=q5hc4QWdJdM
+## Demo Video (Click below image to view):
+
+[![Watch the video](https://img.youtube.com/vi/q5hc4QWdJdM/maxresdefault.jpg)](https://youtu.be/q5hc4QWdJdM)
+
 
 ## Screenshots:
 
